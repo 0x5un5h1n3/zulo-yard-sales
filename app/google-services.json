@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "759023485238",
+    "project_id": "zulo-c0e0f",
+    "storage_bucket": "zulo-c0e0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759023485238:android:bb8f676161fbbcb55d7397",
+        "android_client_info": {
+          "package_name": "com.ox5un5h1n3.zulo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759023485238-1812lsc5tk6dfoqb404ss22q32ci0c7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1vA-hOGx3J9rftLxgZ8i29krjWUk2pz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759023485238-1812lsc5tk6dfoqb404ss22q32ci0c7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
