@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Zulo</string>
+    <string name="copyright">"Copyright © 2022 | 0x5un5h1n3"</string>
+
+    <!-- Strings related to sign in -->
+    <string name="sign_in_email">Email address</string>
+    <string name="sign_in_pass">Password</string>
+    <string name="sign_in_sign_in">Sign in</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="sign_in_invalid_user">Not a valid username</string>
+    <string name="sign_in_invalid_pass">Password must be >5 characters</string>
+    <string name="sign_in_failed">"Login failed"</string>
+
+    <!-- Strings related to sign up-->
+    <string name="sign_up_username">Username</string>
+    <string name="sign_up_email">Email address</string>
+    <string name="sign_up_phone">Phone</string>
+    <string name="sign_up_sign_up">Sign up</string>
+    <string name="sign_up_re_pass">Repeat Password</string>
+
+    <!-- Navigation -->
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_search">Search</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="action_logout">Logout</string>
+    <string name="action_forgot_pass">Forgot password</string>
+
+
 </resources>
