@@ -79,7 +79,7 @@ Additional Features:
 ### Built With
 
 * [Java](https://www.oracle.com/java/)
-* [Firebase Firestore](https://firebase.google.com/docs/firestore/)
+* [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/)
 * [Google Maps API](https://developers.google.com/maps/)
 * [Glide Image Library](https://bumptech.github.io/glide/)
 
