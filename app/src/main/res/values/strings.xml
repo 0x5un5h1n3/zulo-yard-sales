@@ -17,7 +17,7 @@
     <string name="sign_up_email">Email address</string>
     <string name="sign_up_phone">Phone</string>
     <string name="sign_up_sign_up">Sign up</string>
-    <string name="sign_up_re_pass">Repeat Password</string>
+    <string name="sign_up_confirm_pass">Confirm Password</string>
 
     <!-- Navigation -->
     <string name="title_home">Home</string>

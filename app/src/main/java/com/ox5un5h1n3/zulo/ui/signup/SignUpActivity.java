@@ -183,21 +183,21 @@ public class SignUpActivity extends AppCompatActivity{
                         user.put("email", email);
                         user.put("phone", phone);
 
-//                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                Log.d(TAG , "onSuccess: "+userId);
+                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG , "onSuccess: "+"User Id: "+ userId);
 //                                Toast.makeText(SignUpActivity.this, "User Id"+ userId, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//
-//                                Log.d(TAG , "onFailure: "+userId);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Log.d(TAG , "onFailure: "+e.toString());
 //                                Toast.makeText(SignUpActivity.this, "User Id"+ userId +"Error"+e.toString(), Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        });
+
+                            }
+                        });
                         startActivity((new Intent(SignUpActivity.this, SignInActivity.class)));
                     } else {
                         progressBar.setVisibility(View.GONE);
