@@ -1,9 +1,8 @@
 package com.ox5un5h1n3.zulo.data.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class Product extends ArrayList<String> implements Serializable {
+public class Product implements Serializable {
     private String productKey;
     private String productOwnerUid;
     private String productName;

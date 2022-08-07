@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/navigation_transactions"
-        android:icon="@drawable/ic_baseline_transaction_24"
-        android:title="@string/title_transaction" />
+        android:icon="@drawable/ic_baseline_transactions_24"
+        android:title="@string/title_transactions" />
 
     <item
         android:id="@+id/navigation_profile_graph"

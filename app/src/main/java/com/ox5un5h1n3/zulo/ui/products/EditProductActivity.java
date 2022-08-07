@@ -1,11 +1,4 @@
-package com.ox5un5h1n3.zulo.ui.profile;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+package com.ox5un5h1n3.zulo.ui.products;
 
 import android.app.ProgressDialog;
 import android.net.Uri;
@@ -17,9 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.ox5un5h1n3.zulo.R;
-import com.ox5un5h1n3.zulo.data.model.Product;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.data.model.Product;
 
 import org.jetbrains.annotations.NotNull;
 

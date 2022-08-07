@@ -55,14 +55,9 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Button editProfile = view.findViewById(R.id.btnEditProfile);
+        Button editProfile = view.findViewById(R.id.btnProfileEditProfile);
         editProfile.setOnClickListener(l ->
                 Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_profile_edit)
-        );
-
-        Button manageProducts = view.findViewById(R.id.btn_manage_product);
-        manageProducts.setOnClickListener(l ->
-                Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_manage_products)
         );
 
 

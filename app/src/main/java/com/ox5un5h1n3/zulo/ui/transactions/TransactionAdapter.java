@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyAllTransactionViewHolder> {
 
     private final List<Product> mTransactionList;
