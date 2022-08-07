@@ -11,11 +11,18 @@
         <fragment
             android:id="@+id/navigation_home"
             android:name="com.ox5un5h1n3.zulo.ui.home.HomeFragment"
-            android:label="@string/title_home"
+            android:label="@string/title_dashboard"
             tools:layout="@layout/fragment_home">
             <action
-                android:id="@+id/action_navigation_home_main_to_subnav_sample"
+                android:id="@+id/action_navigation_home_main_to_dashboard_tab_view_new_item"
                 app:destination="@id/subnav_sample"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_navigation_home_main_to_manage_products"
+                app:destination="@id/subnav_manage_products"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -27,6 +34,27 @@
             android:name="com.ox5un5h1n3.zulo.ui.home.DashboardTabViewNewItem"
             android:label="New Post"
             tools:layout="@layout/fragment_dashboard_new_item" />
+
+        <fragment
+            android:id="@+id/subnav_manage_products"
+            android:name="com.ox5un5h1n3.zulo.ui.products.ManageProductFragment"
+            android:label="Manage Products"
+            tools:layout="@layout/fragment_manage_product">
+            <action
+                android:id="@+id/action_navigation_search_main_to_search_item_details"
+                app:destination="@id/subnav_edit_product"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+            <fragment
+                android:id="@+id/subnav_edit_product"
+                android:name="com.ox5un5h1n3.zulo.ui.profile.EditProductActivity"
+                android:label="Edit Product"
+                tools:layout="@layout/fragment_profile" />
+
+        </fragment>
     </navigation>
 
 
@@ -76,8 +104,8 @@
         <fragment
             android:id="@+id/navigation_transactions"
             android:name="com.ox5un5h1n3.zulo.ui.transactions.TransactionsFragment"
-            android:label="@string/title_transaction"
-            tools:layout="@layout/fragment_transactions" />
+            android:label="@string/title_transactions"
+            tools:layout="@layout/fragment_favorites" />
 
     <navigation
         android:id="@+id/navigation_profile_graph"
@@ -95,13 +123,6 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-            <action
-                android:id="@+id/action_navigation_profile_main_to_manage_products"
-                app:destination="@id/subnav_manage_products"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         </fragment>
 
         <fragment
@@ -109,30 +130,13 @@
             android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileEditFragment"
             android:label="Edit Profile"
             tools:layout="@layout/fragment_profile_edit" />
-
-        <fragment
-            android:id="@+id/subnav_manage_products"
-            android:name="com.ox5un5h1n3.zulo.ui.profile.ManageProductFragment"
-            android:label="Manage Products"
-            tools:layout="@layout/fragment_manage_product">
-            <action
-                android:id="@+id/action_navigation_search_main_to_search_item_details"
-                app:destination="@id/subnav_edit_product"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-
-            <fragment
-                android:id="@+id/subnav_edit_product"
-                android:name="com.ox5un5h1n3.zulo.ui.profile.EditProductActivity"
-                android:label="Edit Product"
-                tools:layout="@layout/fragment_profile" />
-
-        </fragment>
     </navigation>
 
-
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileFragment"-->
+<!--        android:label="@string/title_profile"-->
+<!--        tools:layout="@layout/fragment_profile" />-->
 
 
 

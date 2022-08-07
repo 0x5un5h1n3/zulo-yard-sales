@@ -19,14 +19,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dashboard" />
+            android:text="For you" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="For you" />
-
-
+            android:text="Dashboard" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

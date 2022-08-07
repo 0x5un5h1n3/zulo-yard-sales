@@ -86,28 +86,14 @@
         app:layout_constraintTop_toBottomOf="@+id/profilePhone" />
 
     <Button
-        android:id="@+id/btnEditProfile"
+        android:id="@+id/btnProfileEditProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="64dp"
-        android:text="Edit profile"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="Edit Profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileIcon" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_manage_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="24dp"
-        android:paddingHorizontal="26dp"
-        android:paddingVertical="10dp"
-        android:text="Manage products"
-        android:textAllCaps="false"
-        app:cornerRadius="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditProfile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

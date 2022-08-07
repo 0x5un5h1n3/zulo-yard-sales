@@ -1,7 +1,6 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,27 +33,17 @@ public class DashboardTabView extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Button findYardSale = view.findViewById(R.id.btnFindYardSale);
-
-
-        findYardSale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getActivity(), DashboardTabViewNewItem.class);
-                startActivity(intent);
-//                SearchFragment fragment = new SearchFragment();
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.Container, fragment);
-//                transaction.commit();
-            }
-        });
 
 
 
-        Button viewAll = view.findViewById(R.id.btnAddYardSale);
+        Button addYardSaleItem = view.findViewById(R.id.btnAddYardSale);
+        addYardSaleItem.setOnClickListener(l ->
+                Navigation.findNavController(l).navigate(R.id.action_navigation_home_main_to_dashboard_tab_view_new_item)
+        );
+
+        Button viewAll = view.findViewById(R.id.btnManageYardSaleProducts);
         viewAll.setOnClickListener(l ->
-                Navigation.findNavController(l).navigate(R.id.action_navigation_home_main_to_subnav_sample)
+                Navigation.findNavController(l).navigate(R.id.action_navigation_home_main_to_manage_products)
         );
 
     }
