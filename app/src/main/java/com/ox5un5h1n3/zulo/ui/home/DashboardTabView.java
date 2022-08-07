@@ -6,12 +6,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.ui.search.SearchFragment;
 //import com.hci3.aris.data.EnrollmentDataSource;
 
 public class DashboardTabView extends Fragment {
@@ -33,6 +39,20 @@ public class DashboardTabView extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+        Button findYardSale = view.findViewById(R.id.btnFindYardSale);
+
+
+        findYardSale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                SearchFragment fragment = new SearchFragment();
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.Container, fragment);
+//                transaction.commit();
+            }
+        });
+
+
 //        EnrollmentDataSource sourceData = new EnrollmentDataSource();
 //        EnrollmentRecyclerAdapter enrollmentAdapter = new EnrollmentRecyclerAdapter(getContext(), sourceData.getEnrollment());
 
@@ -48,5 +68,6 @@ public class DashboardTabView extends Fragment {
 //            linearRecyclerView.setLayoutManager(linearLayoutManager);
 //            linearRecyclerView.setAdapter(enrollmentAdapter);
 //        }
+
     }
 }

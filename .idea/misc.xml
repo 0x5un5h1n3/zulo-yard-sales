@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_dashboard_24.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2085" />
+        <entry key="app/src/main/res/layout-w1240dp/activity_edit_profile.xml" value="0.14825970548862116" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w1240dp/activity_signin.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.1" />

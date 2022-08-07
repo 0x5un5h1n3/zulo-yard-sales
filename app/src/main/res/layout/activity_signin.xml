@@ -137,11 +137,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/profileEmail"
         app:layout_constraintTop_toBottomOf="@id/btnForgotPassword" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textView8"
+        android:id="@+id/profileEmail"
         android:layout_width="167dp"
         android:layout_height="48dp"
         android:layout_marginStart="60dp"
@@ -160,14 +160,14 @@
         android:layout_marginTop="24dp"
         android:text="— Or —"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/google"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignInWithGoogle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignInSignUp"
         tools:ignore="HardcodedText" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/google"
+        android:id="@+id/btnSignInWithGoogle"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
