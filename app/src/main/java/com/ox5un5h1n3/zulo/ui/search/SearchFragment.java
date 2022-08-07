@@ -2,59 +2,51 @@ package com.ox5un5h1n3.zulo.ui.search;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.data.model.Product;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView mProductRecycler;
+    private EditText mEtSearch;
+    private MaterialButton mBtnSearch;
+    private MaterialButton mBtnReset;
+    private AllProductAdapter mAllProductAdapter;
+    private final List<Product> mProductList = new ArrayList<>();
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -62,5 +54,82 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mProductRecycler = view.findViewById(R.id.rcv_product);
+        mEtSearch = view.findViewById(R.id.et_search);
+        mBtnSearch = view.findViewById(R.id.btn_search);
+        mBtnReset = view.findViewById(R.id.btn_reset);
+        getAllProducts();
+        searchButton();
+        resetButton();
+    }
+
+    private void searchButton() {
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchedText = mEtSearch.getText().toString().trim();
+                if (searchedText.isEmpty()){
+                    Toast.makeText(getActivity(), "Please enter search text", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                final List<Product> mSearchedProductList = new ArrayList<>();
+                for (int i = 0; i < mProductList.size(); i++){
+                    if (searchedText.equals(mProductList.get(i).getProductName())){
+                        mSearchedProductList.add(mProductList.get(i));
+                    }
+                }
+                mAllProductAdapter.addNewList(mSearchedProductList);
+            }
+        });
+    }
+    private void resetButton() {
+        mBtnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEtSearch.setText("");
+                getAllProducts();
+            }
+        });
+    }
+    private void getAllProducts() {
+        mProductList.clear();
+
+        FirebaseFirestore.getInstance().collection("Products").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Product products = document.toObject(Product.class);
+//                                if (currentUser == null) {
+//                                    makeList(products);
+//                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
+//                                    makeList(products);
+//                                }
+                                makeList(products);
+
+                            }
+                            mAllProductAdapter = new AllProductAdapter(mProductList, getActivity());
+                            mProductRecycler.setAdapter(mAllProductAdapter);
+
+                        } else {
+                            Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    private void makeList(Product product){
+        if (product.getProductDisplay()){
+            mProductList.add(product);
+        }
     }
 }

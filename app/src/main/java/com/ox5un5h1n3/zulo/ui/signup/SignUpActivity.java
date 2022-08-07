@@ -1,33 +1,30 @@
 package com.ox5un5h1n3.zulo.ui.signup;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.data.model.UserDetail;
 import com.ox5un5h1n3.zulo.databinding.ActivitySignupBinding;
 import com.ox5un5h1n3.zulo.ui.signin.SignInActivity;
 
@@ -37,20 +34,21 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity{
 
     private EditText editTextUsername, editTextPhone, editTextEmail, editTextPassword, editTextRePassword;
-    private FirebaseFirestore fstore;
+    private FirebaseFirestore firestore;
     private ProgressBar progressBar;
     private String userId;
     public static final String TAG = "TAG";
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog mDialog;
 //    private SignUpActivity registerViewModel;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        mAuth = FirebaseAuth.getInstance();
-        fstore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
 
 //        signUp = (MaterialButton) findViewById(R.id.btnSignUp);
@@ -101,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity{
 
         editTextUsername = findViewById(R.id.username);
         editTextEmail = findViewById(R.id.emailAddress);
-        editTextPhone = findViewById(R.id.phone);
+//        editTextPhone = findViewById(R.id.phone);
         editTextPassword = findViewById(R.id.pass);
         editTextRePassword = findViewById(R.id.rePass);
 
@@ -112,9 +110,14 @@ public class SignUpActivity extends AppCompatActivity{
 
         String username = editTextUsername.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
-        String phone = editTextPhone.getText().toString().trim();
+//        String phone = editTextPhone.getText().toString().trim();
         String pass = editTextPassword.getText().toString().trim();
         String rePass = editTextRePassword.getText().toString().trim();
+
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Registering User");
+        mDialog.setCancelable(false);
+
 
 
         if(username.isEmpty()){
@@ -129,11 +132,11 @@ public class SignUpActivity extends AppCompatActivity{
             return;
         }
 
-        if(phone.isEmpty()){
-            editTextPhone.setError("Phone number is required!");
-            editTextPhone.requestFocus();
-            return;
-        }
+//        if(phone.isEmpty()){
+//            editTextPhone.setError("Phone number is required!");
+//            editTextPhone.requestFocus();
+//            return;
+//        }
 
         if(!email.contains("@")){
             editTextEmail.setError("Please provide a valid email!");
@@ -169,44 +172,78 @@ public class SignUpActivity extends AppCompatActivity{
             editTextRePassword.requestFocus();
         }else {
 
-            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        Toast.makeText(SignUpActivity.this, "User signed up successfully!", Toast.LENGTH_SHORT).show();
-                        userId = mAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference  = fstore.collection("users").document(userId);
+//            firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()) {
+//                        progressBar.setVisibility(View.VISIBLE);
+//                        Toast.makeText(SignUpActivity.this, "User signed up successfully!", Toast.LENGTH_SHORT).show();
+//                        userId = firebaseAuth.getCurrentUser().getUid();
+//                        DocumentReference documentReference  = firestore.collection("Users").document(userId);
+//
+//                        Map<String, Object> user = new HashMap<>();
+//                        user.put("username", username);
+//                        user.put("email", email);
+////                        user.put("phone", phone);
+//
+//                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Log.d(TAG , "onSuccess: "+"User Id: "+ userId);
+////                                Toast.makeText(SignUpActivity.this, "User Id"+ userId, Toast.LENGTH_SHORT).show();
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//
+//                                Log.d(TAG , "onFailure: "+e.toString());
+////                                Toast.makeText(SignUpActivity.this, "User Id"+ userId +"Error"+e.toString(), Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        });
+//                        startActivity((new Intent(SignUpActivity.this, SignInActivity.class)));
+//                    } else {
+//                        progressBar.setVisibility(View.GONE);
+//                        Toast.makeText(SignUpActivity.this, "Sign up Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
 
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("username", username);
-                        user.put("email", email);
-                        user.put("phone", phone);
+            firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                    .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG , "onSuccess: "+"User Id: "+ userId);
-//                                Toast.makeText(SignUpActivity.this, "User Id"+ userId, Toast.LENGTH_SHORT).show();
+                                String userUid = task.getResult().getUser().getUid();
+                                final UserDetail userDetail = new UserDetail(username, email, userUid, "", "","");
+
+                                FirebaseFirestore.getInstance().collection("Users").document(userUid).set(userDetail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        mDialog.cancel();
+                                        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                                        finish();
+                                        Toast.makeText(SignUpActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        mDialog.cancel();
+                                        Toast.makeText(SignUpActivity.this, "Failed to register user \n" + e, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                mDialog.cancel();
+                                Log.e("createUserWithEmail", task.getException().getMessage());
+                                Toast.makeText(SignUpActivity.this, "Authentication failed"+task.getResult(), Toast.LENGTH_SHORT).show();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                                Log.d(TAG , "onFailure: "+e.toString());
-//                                Toast.makeText(SignUpActivity.this, "User Id"+ userId +"Error"+e.toString(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-                        startActivity((new Intent(SignUpActivity.this, SignInActivity.class)));
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(SignUpActivity.this, "Sign up Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                        }
+                    });
         }
     }
+
+
 
 
 //    private void showRegisterSuccess(RegisterUserState model) {

@@ -1,61 +1,184 @@
 package com.ox5un5h1n3.zulo.ui.signin;
 
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Layout;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.databinding.ActivitySigninBinding;
-import com.ox5un5h1n3.zulo.databinding.ActivitySignupBinding;
 import com.ox5un5h1n3.zulo.ui.signup.SignUpActivity;
 
 public class SignInActivity extends AppCompatActivity{
 
     private EditText editTextEmail, editTextPassword;
-//    private MaterialButton btnForgotPassword, signUp, signUpSignIn;
+    //    private MaterialButton btnForgotPassword, signUp, signUpSignIn;
     private ProgressBar progressBar;
-
     private MaterialAlertDialogBuilder reset_alert;
+    //    private AlertDialog.Builder reset_alert;
     LayoutInflater inflater;
 
-    private FirebaseAuth mAuth;
+    private String userId;
+    private FirebaseFirestore firestore;
+
+
+
+
+    private FirebaseAuth firebaseAuth;
+    private SignInClient signInClient;
+
+
+    private final ActivityResultLauncher<IntentSenderRequest> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartIntentSenderForResult(), new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    handleSignInResult(result.getData());
+                }
+            }
+    );
+
+    private void handleSignInResult(Intent intent) {
+        try {
+            SignInCredential credential = signInClient.getSignInCredentialFromIntent(intent);
+            String idToken = credential.getGoogleIdToken();
+            firebaseAuthWithGoogle(idToken);
+
+        }catch (ApiException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(idToken, null);
+        Task<AuthResult> authResultTask = firebaseAuth.signInWithCredential(authCredential);
+        authResultTask.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+//
+//
+//                    userId = firebaseAuth.getCurrentUser().getUid();
+//                    DocumentReference documentReference  = firestore.collection("users").document(userId);
+//
+//
+//                    FirebaseUser user = firebaseAuth.getCurrentUser();
+//                    updateUI(user);
+//
+//                    Map<String, Object> mapUser = new HashMap<>();
+//                    mapUser.put("username", user.getDisplayName());
+//                    mapUser.put("email", user.getEmail());
+//
+//                    documentReference.set(mapUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Toast.makeText(SignInActivity.this, "User Id"+ userId +"Display Name"+user.getDisplayName() , Toast.LENGTH_SHORT).show();
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(SignInActivity.this, "User Id Failed"+ userId +"Display Name"+user.getDisplayName() , Toast.LENGTH_SHORT).show();
+//
+////                            Log.d(TAG , "onFailure: "+e.toString());
+//                            Toast.makeText(SignInActivity.this, "User Id"+ userId +"Error"+e.toString(), Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    });
+                    finish();
+                    startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(SignInActivity.this, "Sign up Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+//                    Toast.makeText(SignInActivity.this, user.getEmail()+" signed in!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, user.getDisplayName()+" signed in!", Toast.LENGTH_SHORT).show();
+                    goToMainActivity(user);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    private void goToMainActivity(FirebaseUser user) {
+        if(user != null){
+            finish();
+            startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+        }
+    }
+
 //    private SignUpActivity registerViewModel;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        mAuth = FirebaseAuth.getInstance();
+        // Configure Google SignInClient
+        signInClient = Identity.getSignInClient(getApplicationContext());
+
+        // Initialize Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance();
 
         reset_alert = new MaterialAlertDialogBuilder(this);
         inflater = this.getLayoutInflater();
 
+
+
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                                              @Override
+                                              public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+                                                  if (firebaseAuth.getCurrentUser() != null) {
+                                                      // already logged in, go to home screen
+                                                      finish();
+                                                      startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+                                                  } else {
+                                                      // initiate sign-in
+                                                      signInUser();
+                                                  }
+                                              }
+                                          }
+        );
 
 //        signUp = (MaterialButton) findViewById(R.id.btnSignUp);
 //        signUp.setOnClickListener(SignUpActivity.this);
@@ -77,6 +200,7 @@ public class SignInActivity extends AppCompatActivity{
         final Button signInButton = (Button) binding.btnSignIn;
         final Button signInSignUpButton = binding.btnSignInSignUp;
         final Button forgotButton = binding.btnForgotPassword;
+        final Button signInWithGoogleButton = binding.btnSignInWithGoogle;
 
         signInSignUpButton.setOnClickListener(view -> {
 //            MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
@@ -93,6 +217,10 @@ public class SignInActivity extends AppCompatActivity{
         signInButton.setOnClickListener(view -> {
             signInUser();
 
+        });
+
+        signInWithGoogleButton.setOnClickListener(view -> {
+            signInWithGoogle();
         });
 
         // if you forgot your password
@@ -114,7 +242,7 @@ public class SignInActivity extends AppCompatActivity{
                                 return;
                             }
                             //send the reset link
-                            mAuth.sendPasswordResetEmail(email.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            firebaseAuth.sendPasswordResetEmail(email.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(SignInActivity.this, "Reset email sent!", Toast.LENGTH_SHORT).show();
@@ -129,9 +257,48 @@ public class SignInActivity extends AppCompatActivity{
                     }).setNegativeButton("Cancel", null)
                     .setView(pop_view)
                     .create().show();
+
+//            MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
+//
+//            dialog.setMessage("A link to reset your Zulo account password will be sent to your inputted email earlier...");
+//
+//            dialog.setNegativeButton("Cancel", null);
+//            dialog.setPositiveButton("Proceed", null);
+//
+//            dialog.show();
         });
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        goToMainActivity(user);
+    }
 
+    private void signInWithGoogle() {
+
+        GetSignInIntentRequest signInIntentRequest = GetSignInIntentRequest.builder()
+                .setServerClientId(getString(R.string.web_client_id)).build();
+
+        Task<PendingIntent> signInIntent = signInClient.getSignInIntent(signInIntentRequest);
+        signInIntent.addOnSuccessListener(new OnSuccessListener<PendingIntent>() {
+            @Override
+            public void onSuccess(PendingIntent pendingIntent) {
+                launchSignIn(pendingIntent);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void launchSignIn(PendingIntent pendingIntent) {
+        IntentSenderRequest intentSenderRequest = new IntentSenderRequest.Builder(pendingIntent).build();
+        signInLauncher.launch(intentSenderRequest);
+    }
 
 
     private void signInUser() {
@@ -170,13 +337,30 @@ public class SignInActivity extends AppCompatActivity{
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
+
+                    //email verification
+//                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//
+//                    if(user.isEmailVerified()){
+//                        // redirect to MainActivity
+//                        progressBar.setVisibility(View.VISIBLE);
+//                        Toast.makeText(SignInActivity.this, "User signed in successfully!", Toast.LENGTH_SHORT).show();
+//                        startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+//                    }else{
+//                        Toast.makeText(SignInActivity.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();
+//
+//                    }
+
+
+
                     // redirect to MainActivity
                     progressBar.setVisibility(View.VISIBLE);
+                    finish();
                     Toast.makeText(SignInActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
                     startActivity((new Intent(SignInActivity.this, MainActivity.class)));
                 } else {
