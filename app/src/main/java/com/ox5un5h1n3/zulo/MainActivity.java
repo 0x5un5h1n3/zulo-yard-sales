@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -18,13 +17,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.ox5un5h1n3.zulo.databinding.ActivityMainBinding;
 import com.ox5un5h1n3.zulo.ui.signin.SignInActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
+    FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // Use binding as an alternative for getting widgets
         // in activity_main instead of findViewById
@@ -116,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(MainActivity.this, "Signed out!", Toast.LENGTH_SHORT).show();
-                    mAuth.signOut();
+                    firebaseAuth.signOut();
                     finish();
 
-                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                    startActivity(intent);
+                    startActivity((new Intent(MainActivity.this, SignInActivity.class)));
+
                 }
             });
             builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {

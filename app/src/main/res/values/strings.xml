@@ -28,6 +28,7 @@
 
     <string name="action_logout">Logout</string>
     <string name="action_forgot_pass">Forgot password</string>
+    <string name="web_client_id">759023485238-1812lsc5tk6dfoqb404ss22q32ci0c7t.apps.googleusercontent.com</string>
 
 
 </resources>
