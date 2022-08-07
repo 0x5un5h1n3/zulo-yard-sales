@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "759023485238",
+    "firebase_url": "https://zulo-c0e0f-default-rtdb.firebaseio.com",
     "project_id": "zulo-c0e0f",
     "storage_bucket": "zulo-c0e0f.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "759023485238-cbg8s91suvhrel6kkvj1v7bc7h30lbk7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ox5un5h1n3.zulo",
+            "certificate_hash": "7ec2d2a601a333b820eb22bb9d3e40f41a50ede7"
+          }
+        },
         {
           "client_id": "759023485238-1812lsc5tk6dfoqb404ss22q32ci0c7t.apps.googleusercontent.com",
           "client_type": 3

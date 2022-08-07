@@ -1,25 +1,20 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ox5un5h1n3.zulo.R;
-import com.ox5un5h1n3.zulo.ui.search.SearchFragment;
-//import com.hci3.aris.data.EnrollmentDataSource;
-
 public class DashboardTabView extends Fragment {
 
     public DashboardTabView() {
@@ -30,7 +25,7 @@ public class DashboardTabView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboad, container, false);
+        return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
     @SuppressLint("SetTextI18n")
@@ -45,6 +40,9 @@ public class DashboardTabView extends Fragment {
         findYardSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), DashboardTabViewNewItem.class);
+                startActivity(intent);
 //                SearchFragment fragment = new SearchFragment();
 //                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 //                transaction.replace(R.id.Container, fragment);
@@ -53,21 +51,11 @@ public class DashboardTabView extends Fragment {
         });
 
 
-//        EnrollmentDataSource sourceData = new EnrollmentDataSource();
-//        EnrollmentRecyclerAdapter enrollmentAdapter = new EnrollmentRecyclerAdapter(getContext(), sourceData.getEnrollment());
 
-//        RecyclerView linearRecyclerView = view.findViewById(R.id.enrollment_list);
-//        RecyclerView gridRecyclerView = view.findViewById(R.id.enrollment_grid);
-//
-//        if (gridRecyclerView != null) {
-//            GridLayouEnrollmentRecyclerAdaptertManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
-//            gridRecyclerView.setLayoutManager(gridLayoutManager);
-//            gridRecyclerView.setAdapter(enrollmentAdapter);
-//        } else {
-//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-//            linearRecyclerView.setLayoutManager(linearLayoutManager);
-//            linearRecyclerView.setAdapter(enrollmentAdapter);
-//        }
+        Button viewAll = view.findViewById(R.id.btnAddYardSale);
+        viewAll.setOnClickListener(l ->
+                Navigation.findNavController(l).navigate(R.id.action_navigation_home_main_to_subnav_sample)
+        );
 
     }
 }

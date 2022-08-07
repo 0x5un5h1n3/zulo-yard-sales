@@ -4,19 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.search.SearchFragment">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_search"
+        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
-        android:hint="Search by product name"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:imeOptions="actionSearch"/>
+        android:hint="Search by product name" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,24 +25,24 @@
             android:id="@+id/btn_search"
             android:layout_width="120dp"
             android:layout_height="55dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
             android:text="Search"
             android:textAllCaps="false"
             android:textSize="16sp"
-            android:textStyle="normal"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginEnd="16dp"
             app:cornerRadius="32dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_reset"
             android:layout_width="120dp"
             android:layout_height="55dp"
-            android:layout_weight="1"
             android:text="Reload"
-            android:textAllCaps="false"
             android:textSize="16sp"
-            android:textStyle="normal"
-            app:cornerRadius="32dp" />
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:cornerRadius="32dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

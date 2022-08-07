@@ -21,9 +21,9 @@ public class HomeStateAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new ForYouTabView();
-            case 1:
                 return new DashboardTabView();
+            case 1:
+                return new ForYouTabView();
             default:
                 return new CategoriesTabView();
         }

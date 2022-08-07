@@ -1,108 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="4dp"
-    android:fillViewport="true"
-    tools:context=".ui.profile.ProfileFragment">
+    android:layout_height="match_parent"
+    tools:context="ui.profile.ProfileFragment">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="username@email.com"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        app:layout_constraintTop_toBottomOf="@+id/profileUsername" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profileIcon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/profile_icon"
+        android:gravity="center|center_horizontal"
+        android:text="U"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textIsSelectable="false"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:checkable="false"
+        android:text="Registered User"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profileUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:singleLine="false"
+        android:text="Username"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profilePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Phone"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        app:layout_constraintTop_toBottomOf="@+id/profileEmail" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/profileAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Address"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/profileIcon"
+        app:layout_constraintTop_toBottomOf="@+id/profilePhone" />
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="64dp"
+        android:text="Edit profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileIcon" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_manage_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="24dp"
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="10dp"
+        android:text="Manage products"
+        android:textAllCaps="false"
+        app:cornerRadius="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditProfile" />
 
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Elevated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="12dp">
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="4dp"
-                    android:contentDescription="Profile picture"
-                    app:shapeAppearanceOverlay="@style/roundedImageView"
-                    app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/textView3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checkable="false"
-                            android:text="Registered User"
-                            android:textAllCaps="true"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/profileUsename"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:singleLine="false"
-                        android:text="Username"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/profileEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="username@email.com"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/profilePhone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Phone"
-                        android:textSize="16sp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/textView12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Address"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>

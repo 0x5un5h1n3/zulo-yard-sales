@@ -2,122 +2,138 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_home">
+    app:startDestination="@id/navigation_home_graph">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.ox5un5h1n3.zulo.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+    <navigation
+        android:id="@+id/navigation_home_graph"
+        app:startDestination="@id/navigation_home">
 
-    <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.ox5un5h1n3.zulo.ui.search.SearchFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        <fragment
+            android:id="@+id/navigation_home"
+            android:name="com.ox5un5h1n3.zulo.ui.home.HomeFragment"
+            android:label="@string/title_home"
+            tools:layout="@layout/fragment_home">
+            <action
+                android:id="@+id/action_navigation_home_main_to_subnav_sample"
+                app:destination="@id/subnav_sample"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        </fragment>
 
-    <fragment
-        android:id="@+id/navigation_favorites"
-        android:name="com.ox5un5h1n3.zulo.ui.favorites.FavoritesFragment"
-        android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        <fragment
+            android:id="@+id/subnav_sample"
+            android:name="com.ox5un5h1n3.zulo.ui.home.DashboardTabViewNewItem"
+            android:label="New Post"
+            tools:layout="@layout/fragment_dashboard_new_item" />
+    </navigation>
 
-    <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+
+
+
+    <navigation
+        android:id="@+id/navigation_search_graph"
+        app:startDestination="@id/navigation_search">
+
+        <fragment
+            android:id="@+id/navigation_search"
+            android:name="com.ox5un5h1n3.zulo.ui.search.SearchFragment"
+            android:label="@string/title_search"
+            tools:layout="@layout/fragment_search">
+            <action
+                android:id="@+id/action_navigation_search_main_to_search_item_details"
+                app:destination="@id/subnav_search_item_details"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/subnav_search_item_details"
+            android:name="com.ox5un5h1n3.zulo.ui.search.SearchProductDetail"
+            android:label="Product Details"
+            tools:layout="@layout/fragment_product_detail" />
+
+    </navigation>
+
+
+
 
 <!--    <fragment-->
-<!--        android:id="@+id/navigation_balance"-->
-<!--        android:name="com.hci3.aris.ui.balance.BalanceFragment"-->
-<!--        android:label="@string/title_balance"-->
-<!--        tools:layout="@layout/fragment_balance" />-->
+<!--        android:id="@+id/navigation_home"-->
+<!--        android:name="com.ox5un5h1n3.zulo.ui.home.HomeFragment"-->
+<!--        android:label="@string/title_home"-->
+<!--        tools:layout="@layout/fragment_home" />-->
 
-<!--    <navigation-->
-<!--        android:id="@+id/navigation_grades_graph"-->
-<!--        app:startDestination="@id/navigation_grades">-->
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_search"-->
+<!--        android:name="com.ox5un5h1n3.zulo.ui.search.SearchFragment"-->
+<!--        android:label="@string/title_search"-->
+<!--        tools:layout="@layout/fragment_search" />-->
 
-<!--        <fragment-->
-<!--            android:id="@+id/navigation_grades"-->
-<!--            android:name="com.hci3.aris.ui.grades.GradesFragment"-->
-<!--            android:label="@string/title_grades"-->
-<!--            tools:layout="@layout/fragment_grades">-->
-<!--            <action-->
-<!--                android:id="@+id/action_navigation_grades_to_subnav_semester"-->
-<!--                app:destination="@id/subnav_semester"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--            <action-->
-<!--                android:id="@+id/action_navigation_grades_to_subnav_grade_details_list"-->
-<!--                app:destination="@id/subnav_grade_details_list"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--        </fragment>-->
+        <fragment
+            android:id="@+id/navigation_transactions"
+            android:name="com.ox5un5h1n3.zulo.ui.transactions.TransactionsFragment"
+            android:label="@string/title_transaction"
+            tools:layout="@layout/fragment_transactions" />
 
-<!--        <fragment-->
-<!--            android:id="@+id/subnav_semester"-->
-<!--            android:name="com.hci3.aris.ui.semester.SemesterFragment"-->
-<!--            android:label="Semesters"-->
-<!--            tools:layout="@layout/fragment_semester">-->
-<!--            <action-->
-<!--                android:id="@+id/action_subnav_semester_to_subnav_grade_list"-->
-<!--                app:destination="@id/subnav_grade_list"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--        </fragment>-->
+    <navigation
+        android:id="@+id/navigation_profile_graph"
+        app:startDestination="@id/navigation_profile">
 
-<!--        <fragment-->
-<!--            android:id="@+id/subnav_grade_list"-->
-<!--            android:name="com.hci3.aris.ui.semester.SemesterGradesFragment"-->
-<!--            android:label="Semestral Grades"-->
-<!--            tools:layout="@layout/fragment_grades_list">-->
-<!--            <action-->
-<!--                android:id="@+id/action_navigation_grades_to_subnav_grade_details_list"-->
-<!--                app:destination="@id/subnav_grade_details_list"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--        </fragment>-->
+        <fragment
+            android:id="@+id/navigation_profile"
+            android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileFragment"
+            android:label="@string/title_profile"
+            tools:layout="@layout/fragment_profile">
+            <action
+                android:id="@+id/action_navigation_profile_main_to_profile_edit"
+                app:destination="@id/subnav_profile_edit"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_navigation_profile_main_to_manage_products"
+                app:destination="@id/subnav_manage_products"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        </fragment>
 
-<!--        <fragment-->
-<!--            android:id="@+id/subnav_grade_details_list"-->
-<!--            android:name="com.hci3.aris.ui.grades.GradesDetailsFragment"-->
-<!--            android:label="Grade Details"-->
-<!--            tools:layout="@layout/fragment_grade_details_tabs" />-->
+        <fragment
+            android:id="@+id/subnav_profile_edit"
+            android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileEditFragment"
+            android:label="Edit Profile"
+            tools:layout="@layout/fragment_profile_edit" />
 
-<!--    </navigation>-->
+        <fragment
+            android:id="@+id/subnav_manage_products"
+            android:name="com.ox5un5h1n3.zulo.ui.profile.ManageProductFragment"
+            android:label="Manage Products"
+            tools:layout="@layout/fragment_manage_product">
+            <action
+                android:id="@+id/action_navigation_search_main_to_search_item_details"
+                app:destination="@id/subnav_edit_product"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
-<!--    <navigation-->
-<!--        android:id="@+id/navigation_schedule_graph"-->
-<!--        app:startDestination="@id/navigation_schedule">-->
+            <fragment
+                android:id="@+id/subnav_edit_product"
+                android:name="com.ox5un5h1n3.zulo.ui.profile.EditProductActivity"
+                android:label="Edit Product"
+                tools:layout="@layout/fragment_profile" />
 
-<!--        <fragment-->
-<!--            android:id="@+id/navigation_schedule"-->
-<!--            android:name="com.hci3.aris.ui.schedule.ScheduleFragment"-->
-<!--            android:label="@string/title_schedule"-->
-<!--            tools:layout="@layout/fragment_schedule">-->
-<!--            <action-->
-<!--                android:id="@+id/action_navigation_schedule_main_to_subnav_schedule_plot"-->
-<!--                app:destination="@id/subnav_schedule_plot"-->
-<!--                app:enterAnim="@anim/nav_default_enter_anim"-->
-<!--                app:exitAnim="@anim/nav_default_exit_anim"-->
-<!--                app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
-<!--                app:popExitAnim="@anim/nav_default_pop_exit_anim" />-->
-<!--        </fragment>-->
+        </fragment>
+    </navigation>
 
-<!--        <fragment-->
-<!--            android:id="@+id/subnav_schedule_plot"-->
-<!--            android:name="com.hci3.aris.ui.schedule.SchedulePlotFragment"-->
-<!--            android:label="Schedule Plot"-->
-<!--            tools:layout="@layout/fragment_schedule_plot" />-->
-<!--    </navigation>-->
+
+
+
 
 </navigation>

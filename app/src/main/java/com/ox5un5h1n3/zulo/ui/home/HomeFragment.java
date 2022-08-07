@@ -39,8 +39,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         List<String> titles = new ArrayList<>();
-        titles.add("For you");
         titles.add("Dashboard");
+        titles.add("For you");
         titles.add("Categories");
 
 

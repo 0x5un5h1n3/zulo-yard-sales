@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Prevent back button on bottom navigation fragments.
         // these are considered as top-level navigation thus shouldn't have one
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_favorites, R.id.navigation_profile)
+                R.id.navigation_home, R.id.navigation_search, R.id.navigation_transactions, R.id.navigation_profile)
                 .build();
 
         // Responsible for the navigation
@@ -53,19 +53,35 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        if (binding.navView != null) {
-            NavigationUI.setupWithNavController(binding.navView, navController);
+        if (binding.navRailView != null) {
+            NavigationUI.setupWithNavController(binding.navRailView, navController);
         } else {
             assert binding.navView != null;
             NavigationUI.setupWithNavController(binding.navView, navController);
         }
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        startActivity(intent);
+//
+//
+////        MaterialAlertDialogBuilder newAlertDialog;
+////        newAlertDialog = new MaterialAlertDialogBuilder(this);
+////        newAlertDialog
+////                .setTitle("Closing Activity").setMessage("Are you sure you want to closethis activity?")
+////                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+////                    @Override
+////                    public void onClick(DialogInterface dialog, int which) {
+////                        finish();
+////                        Toast.makeText(MainActivity.this, "Activity closed",Toast.LENGTH_SHORT).show();
+////                    }
+////                }).setNegativeButton("No", null).show();
+//    }
+
+
+
 
 //    @Override
 //    protected void onStart() {
@@ -130,6 +146,6 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }
