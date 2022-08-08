@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,115 +7,139 @@
     android:fillViewport="true"
     tools:context=".ui.search.SearchProductDetail">
 
-    <LinearLayout
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="45dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="No image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_upload" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_product_desc"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        android:gravity="center|top"
-        android:paddingHorizontal="32dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_price"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Desc" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_product_name_det"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Name" />
 
-            <ImageView
-                android:id="@+id/iv_product"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_upload"
-                android:scaleType="centerCrop"
-                android:contentDescription="No image" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_product_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_name_det"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Price" />
 
-        </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_reserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="68dp"
+        android:text="Reserve"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_seller_mobile" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_product_name_det"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:text="Name" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_contact_seller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="32dp"
+        android:text="Contact"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_seller_mobile" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="Price" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="--------------------------------------------------------------"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_desc"
+        tools:layout_editor_absoluteX="0dp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_product_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="Desc"
-            android:layout_marginBottom="24dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_reserve"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:text="Reserve"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            app:cornerRadius="32dp"
-            android:layout_marginTop="8dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:text="--------------------------------------------------------------"
-            android:maxLines="1"
-            android:gravity="center"
-            android:textStyle="bold"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Seller Information"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:gravity="center"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Seller Information"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        tools:layout_editor_absoluteX="10dp" />
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_seller_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="Name" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_seller_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="Address" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_seller_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_seller_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_seller_name"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Address" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_seller_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_seller_address"
+        tools:layout_editor_absoluteX="0dp"
+        tools:text="Mobile no." />
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_seller_mobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            tools:text="Mobile no." />
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
