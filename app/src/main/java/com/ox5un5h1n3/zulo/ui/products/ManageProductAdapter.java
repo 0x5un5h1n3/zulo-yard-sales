@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -139,8 +140,8 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 //                intent.putExtra("Product", product);
 //                mActivity.startActivity(intent);
 
-//                Navigation.findNavController(v).navigate(R.id.action_navigation_profile_main_to_manage_products);
-                Toast.makeText(mActivity.getBaseContext(), "mBtnEditProduct.setOnClickListener", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(v).navigate(R.id.action_navigation_home_main_to_manage_products_to_edit_product);
+//                Toast.makeText(mActivity.getBaseContext(), "mBtnEditProduct.setOnClickListener", Toast.LENGTH_SHORT).show();
             }
         });
     }
