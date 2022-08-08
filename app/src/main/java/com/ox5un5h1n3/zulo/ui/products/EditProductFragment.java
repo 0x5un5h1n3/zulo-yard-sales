@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EditProductActivity extends Fragment {
+public class EditProductFragment extends Fragment {
 
     private EditText mProductName;
     private EditText mProductPrice;
@@ -98,7 +98,7 @@ public class EditProductActivity extends Fragment {
         mProductName.setText(mProduct.getProductName());
         mProductPrice.setText(String.valueOf(mProduct.getProductPrice()));
         mProductDescription.setText(mProduct.getProductDescription());
-        Glide.with(EditProductActivity.this).load(mProduct.getProductImage()).into(mIvProduct);
+        Glide.with(EditProductFragment.this).load(mProduct.getProductImage()).into(mIvProduct);
     }
 
     private void pickImage() {

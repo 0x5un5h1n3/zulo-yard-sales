@@ -50,6 +50,8 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
     private MaterialTextView mSellerAddress;
     private MaterialTextView mSellerMo;
 
+    private AlertDialog alertDialog;
+
     Product product;
 
     // 1st called
@@ -225,7 +227,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
                 }
             });
 
-            AlertDialog alertDialog = builder.create();
+            alertDialog = builder.create();
             alertDialog.show();
 //            getSellerInfo();
         }
@@ -305,7 +307,9 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
                                 @Override
                                 public void onSuccess(Void unused) {
                                     mDialog.cancel();
+                                    alertDialog.dismiss();
 //                                    activity.finish();
+
                                     Toast.makeText(mActivity.getApplicationContext(), "Reserve request sent successfully", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -313,12 +317,14 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
                         else {
                             Toast.makeText(mActivity.getApplicationContext(), "Someone already requested for this product", Toast.LENGTH_LONG).show();
 //                            activity.finish();
+                            alertDialog.dismiss();
                         }
                     } else {
                         Toast.makeText(mActivity.getApplicationContext(), "This product might be removed", Toast.LENGTH_LONG).show();
 //                        activity.finish();
                     }
                     mDialog.dismiss();
+                    alertDialog.dismiss();
                 }
             });
         }
