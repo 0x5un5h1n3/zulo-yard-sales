@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Fill up the information"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         android:gravity="center"
         android:layout_marginTop="24dp"/>
 
@@ -19,9 +18,9 @@
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="26dp"
         android:gravity="center"
-        android:hint="User name"
+        android:hint="Your name"
         android:inputType="text"
         android:minHeight="48dp" />
 
@@ -40,20 +39,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:textColor="@android:color/holo_red_dark"
         android:gravity="center"
-        android:text="Note : This information will be shown to item owner for further communication"/>
+        android:text="Note : This information will be shown to item owner for further communication"
+        android:textSize="12sp" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_request_reserve"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:text="Request Reserve"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        app:cornerRadius="32dp"
         android:layout_gravity="center"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp"
+        android:text="Request Reserve"
+        android:textAllCaps="false"
+        app:cornerRadius="32dp" />
 
 </LinearLayout>

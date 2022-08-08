@@ -15,7 +15,7 @@
             tools:layout="@layout/fragment_home">
             <action
                 android:id="@+id/action_navigation_home_main_to_dashboard_tab_view_new_item"
-                app:destination="@id/subnav_sample"
+                app:destination="@id/dashboard_tab_view_new_item"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -30,7 +30,7 @@
         </fragment>
 
         <fragment
-            android:id="@+id/subnav_sample"
+            android:id="@+id/dashboard_tab_view_new_item"
             android:name="com.ox5un5h1n3.zulo.ui.home.DashboardTabViewNewItem"
             android:label="New Post"
             tools:layout="@layout/fragment_dashboard_new_item" />
