@@ -34,7 +34,7 @@
             android:name="com.ox5un5h1n3.zulo.ui.home.DashboardTabViewNewItem"
             android:label="New Post"
             tools:layout="@layout/fragment_dashboard_new_item">
-        </fragment>
+       </fragment>
 
         <fragment
             android:id="@+id/subnav_manage_products"

@@ -32,13 +32,17 @@ import java.util.Map;
 
 public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdapter.ProductViewHolder> {
 
-    private final List<Product> mProductList;
+    public static List<Product> mManageProductList;
+    public static int getManageProductPosition;
+
+    Product product;
+
     private final Activity mActivity;
     private ProgressDialog mDialog;
     private String toastMsg = "";
     // data is passed into the constructor
     public ManageProductAdapter(List<Product> productList, Activity activity) {
-        this.mProductList = productList;
+        this.mManageProductList = productList;
         this.mActivity = activity;
     }
 
@@ -50,7 +54,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         //        Button editProducts = view.findViewById(R.id.btn_edit_product);
 //        editProducts.setOnClickListener(l ->
@@ -62,7 +66,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         mDialog.setMessage("Updating visibility of product");
         mDialog.setCancelable(false);
 
-        Product product = mProductList.get(position);
+        Product product = mManageProductList.get(position);
         holder.mTvProductName.setText(product.getProductName());
         holder.mTvProductPrice.setText("$ " + product.getProductPrice());
 
@@ -140,6 +144,11 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 //                intent.putExtra("Product", product);
 //                mActivity.startActivity(intent);
 
+                getManageProductPosition = position;
+
+
+//                Toast.makeText(mActivity.getApplicationContext(), product.getProductName(), Toast.LENGTH_SHORT).show();
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_home_main_to_manage_products_to_edit_product);
 //                Toast.makeText(mActivity.getBaseContext(), "mBtnEditProduct.setOnClickListener", Toast.LENGTH_SHORT).show();
             }
@@ -161,7 +170,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
     @Override
     public int getItemCount() {
-        return mProductList.size();
+        return mManageProductList.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder{

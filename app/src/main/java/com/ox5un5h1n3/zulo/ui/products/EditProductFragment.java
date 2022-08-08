@@ -1,5 +1,8 @@
 package com.ox5un5h1n3.zulo.ui.products;
 
+import static com.ox5un5h1n3.zulo.ui.products.ManageProductAdapter.getManageProductPosition;
+import static com.ox5un5h1n3.zulo.ui.products.ManageProductAdapter.mManageProductList;
+
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -94,7 +97,13 @@ public class EditProductFragment extends Fragment {
 
 
     private void getSelectedProductDataFromFirebase() {
-        mProduct = (Product) getActivity().getIntent().getSerializableExtra("Product");
+//        mProduct = (Product) getActivity().getIntent().getSerializableExtra("Product");
+
+//        Product product = mProductList.get(getPosition);
+//        Toast.makeText(getActivity(), product.getProductName(), Toast.LENGTH_SHORT).show();
+
+        Product mProduct = mManageProductList.get(getManageProductPosition);
+
         mProductName.setText(mProduct.getProductName());
         mProductPrice.setText(String.valueOf(mProduct.getProductPrice()));
         mProductDescription.setText(mProduct.getProductDescription());
@@ -122,6 +131,7 @@ public class EditProductFragment extends Fragment {
             public void onClick(View v) {
 
                 mDialog.show();
+                Product mProduct = mManageProductList.get(getManageProductPosition);
 
                 String pName = mProductName.getText().toString().trim();
                 String pPrice = mProductPrice.getText().toString().trim();

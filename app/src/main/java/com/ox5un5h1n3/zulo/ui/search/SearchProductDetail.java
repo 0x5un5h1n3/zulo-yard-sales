@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class SearchProductDetail extends Fragment {
 
-    public MaterialTextView mProductName;
+    private MaterialTextView mProductName;
     private MaterialTextView mProductPrice;
     private MaterialTextView mProductDescription;
     private ImageView mProductImage;
@@ -227,7 +227,7 @@ public class SearchProductDetail extends Fragment {
             alertDialog.show();
         }
 
-        Product product = mProductList.get(getPosition);
+        Product product = mProductList.get(getPosition); //re-check the usability
         private void checkIsProductReservedAndUpdate(Activity activity, String userName, String userPhoneNo) {
             FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
