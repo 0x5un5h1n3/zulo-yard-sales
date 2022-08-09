@@ -74,11 +74,12 @@
             android:id="@+id/btn_edit_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Product"
-            app:cornerRadius="16dp"
-            android:textAllCaps="false"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="Edit Product"
+            android:textAllCaps="false"
+            app:cornerRadius="16dp"
+            app:icon="@drawable/ic_baseline_edit_24" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_guest_name"
@@ -109,25 +110,27 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_approve"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Approve"
-                app:cornerRadius="16dp"
-                android:textAllCaps="false"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
-                android:backgroundTint="@android:color/holo_green_dark" />
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:text="Approve"
+                android:textAllCaps="false"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_baseline_approve_24" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_reject"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Reject"
-                app:cornerRadius="16dp"
-                android:textAllCaps="false"
                 android:layout_gravity="center"
-                android:backgroundTint="@android:color/holo_red_dark" />
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="Reject"
+                android:textAllCaps="false"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_baseline_reject_24" />
 
         </LinearLayout>
 
