@@ -148,7 +148,7 @@ public class DashboardTabViewNewItem extends Fragment {
                 mDialog.show();
 
                 String pName = mProductName.getText().toString().trim();
-                String pPrice = mProductPrice.getText().toString().trim();
+                Double pPrice = Double.parseDouble(mProductPrice.getText().toString().trim());
                 String pDescription = mProductDescription.getText().toString().trim();
                 String pKey = FirebaseFirestore.getInstance().collection("Products").document().getId();
                 String pUid = FirebaseAuth.getInstance().getUid();
@@ -160,7 +160,7 @@ public class DashboardTabViewNewItem extends Fragment {
                     mDialog.cancel();
                     return;
                 }
-                if (pPrice.isEmpty()) {
+                if (pPrice <= 0.0) {
                     Toast.makeText(getActivity(), "Invalid price", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;

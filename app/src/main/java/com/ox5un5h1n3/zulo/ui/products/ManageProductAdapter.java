@@ -73,8 +73,8 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
         holder.mSwitch.setChecked(product.getProductDisplay());
-//        holder.mBtnRejected.setVisibility(View.GONE);
-//        holder.mBtnApprove.setVisibility(View.GONE);
+        holder.mBtnRejected.setVisibility(View.GONE);
+        holder.mBtnApprove.setVisibility(View.GONE);
 
         holder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
