@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Prevent back button on bottom navigation fragments.
         // these are considered as top-level navigation thus shouldn't have one
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_transactions, R.id.navigation_profile)
+                R.id.navigation_home, R.id.navigation_search, R.id.navigation_find_sales, R.id.navigation_profile)
                 .build();
 
         // Responsible for the navigation

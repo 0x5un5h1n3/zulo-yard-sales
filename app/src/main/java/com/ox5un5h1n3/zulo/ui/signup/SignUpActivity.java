@@ -216,7 +216,7 @@ public class SignUpActivity extends AppCompatActivity{
                             if (task.isSuccessful()) {
 
                                 String userUid = task.getResult().getUser().getUid();
-                                final UserDetail userDetail = new UserDetail(username, email, userUid, "", "","");
+                                final UserDetail userDetail = new UserDetail(username, email, userUid, "","");
 
                                 FirebaseFirestore.getInstance().collection("Users").document(userUid).set(userDetail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

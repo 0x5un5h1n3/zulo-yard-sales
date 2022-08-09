@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.DashboardTabView">
+    tools:context=".ui.home.DashboardFragment">
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnFindYardSale"
-        android:layout_width="171dp"
-        android:layout_height="121dp"
+        android:layout_width="151dp"
+        android:layout_height="144dp"
         android:layout_marginTop="220dp"
         android:backgroundTint="#FF6358"
-        android:text="Find the latest Yard Sales near you!"
+        android:text="Find the Yard Sales near you!"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.891"
@@ -21,12 +21,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFindYardSale4"
+        android:id="@+id/btnViewTransactions"
         android:layout_width="164dp"
         android:layout_height="262dp"
         android:layout_marginTop="220dp"
-        android:backgroundTint="#FAB248"
-        android:text="Find the latest Yard Sales near you!"
+        android:backgroundTint="#F4AD43"
+        android:text="View Transaction History"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.113"
@@ -38,7 +38,7 @@
         android:layout_width="183dp"
         android:layout_height="147dp"
         android:layout_marginTop="48dp"
-        android:backgroundTint="#6382C3"
+        android:backgroundTint="#2382CD"
         android:text="Manage Your Yard Sale Items"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
         android:layout_height="144dp"
         android:layout_marginTop="48dp"
         android:backgroundTint="#5DAE60"
-        android:text="Add new Yard Sale Item"
+        android:text="Add New Yard Sale Item"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.126"

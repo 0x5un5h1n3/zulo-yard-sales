@@ -108,12 +108,12 @@ public class SearchFragment extends Fragment {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product products = document.toObject(Product.class);
-//                                if (currentUser == null) {
-//                                    makeList(products);
-//                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
-//                                    makeList(products);
-//                                }
-                                makeList(products);
+                                if (currentUser == null) {
+                                    makeList(products);
+                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
+                                    makeList(products);
+                                }
+//                                makeList(products);
 
                             }
                             mAllProductAdapter = new AllProductAdapter(mProductList, getActivity());
