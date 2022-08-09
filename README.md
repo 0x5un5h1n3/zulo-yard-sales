@@ -62,7 +62,7 @@ The Zulo users have the ability to;
 - Search Yard Sale Items
 - Delist Items from the Search
 - Approve or Reject Item Reservations
-- Transactions(Sales/Purchases) History
+- Transactions (Sales/Purchases) History
 - Reservation History
 - Update User Profile Details
 - Find Yard Sales Near You on a Map
