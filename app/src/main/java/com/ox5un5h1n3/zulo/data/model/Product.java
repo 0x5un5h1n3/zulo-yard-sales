@@ -6,7 +6,7 @@ public class Product implements Serializable {
     private String productKey;
     private String productOwnerUid;
     private String productName;
-    private String productPrice;
+    private double productPrice;
     private String productDescription;
     private double productLat;
     private double productLng;
@@ -20,7 +20,7 @@ public class Product implements Serializable {
 
     public Product() {}
 
-    public Product(String productKey, String productOwnerUid, String productName, String productPrice, String productDescription, double productLat, double productLng, Boolean isProductReserve, Boolean isRequestApproved, String productImage, String customerName, String customerPhoneNo, String ownerName, Boolean isProductDisplay) {
+    public Product(String productKey, String productOwnerUid, String productName, double productPrice, String productDescription, double productLat, double productLng, Boolean isProductReserve, Boolean isRequestApproved, String productImage, String customerName, String customerPhoneNo, String ownerName, Boolean isProductDisplay) {
         this.productKey = productKey;
         this.productOwnerUid = productOwnerUid;
         this.productName = productName;
@@ -45,11 +45,11 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public String getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
     }
 
