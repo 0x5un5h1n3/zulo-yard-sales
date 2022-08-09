@@ -51,23 +51,23 @@
 
 [![Xeon Inventory Screenshot][product-screenshot]](https://github.com/0x5un5h1n3/xeon-inventory)
 
-Zulo is an easy to use online android application that helps you to find yard sales and marketplaces in your area or list your sale in the Zulo app.
+Zulo is an easy to use online android application that helps you to find yard sales and marketplaces in your area or list your sale in the Zulo app
 
 The Zulo users have the ability to;
 
-- Post their yard sale items
-- Reserve sale items and contact the seller
-- View transaction history
-- Manage and edit yard sale item info
-- Search yard sale items
-- Delist items from the search
-- Approve or reject item reservations
-- Transactions(Sales/Purchases) history
-- Reservation history
-- Update user profile details
-- Find yard sales near you on a map
+- Post their Yard Sale Items
+- Reserve Sale Items and Contact the Seller
+- View Transaction History
+- Manage and Edit Yard Sale Item Info
+- Search Yard Sale Items
+- Delist Items from the Search
+- Approve or Reject Item Reservations
+- Transactions(Sales/Purchases) History
+- Reservation History
+- Update User Profile Details
+- Find Yard Sales Near You on a Map
 
-We can find e-commerce plaforms (Amazon, eBay, Facebook Marketplace) and Ad plaforms as the main competitors which do not have specific options for reserving the item that gives this application an edge over them. Considering this scenario, the scope of this application is fairly wide and useful for the people
+We can find e-commerce plaforms (Amazon, eBay, Facebook Marketplace) and Ad plaforms as the main competitors which do not have specific options for reserving the item that gives this application an edge over them. Considering this scenario, the scope of this application is fairly wide and useful
 
 Additional Features:
 * Supports Material 3 (Material You) theme
