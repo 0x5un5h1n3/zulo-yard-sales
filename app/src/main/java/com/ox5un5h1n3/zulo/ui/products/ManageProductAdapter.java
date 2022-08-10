@@ -161,8 +161,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateReserveProduct).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-//                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
-                Toast.makeText(mActivity.getBaseContext(), "Reservation request sent successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
             }
         });
 

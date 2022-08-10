@@ -1,8 +1,11 @@
 package com.ox5un5h1n3.zulo;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isInternetAvailable();
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -58,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             assert binding.navView != null;
             NavigationUI.setupWithNavController(binding.navView, navController);
+        }
+    }
+
+    private void isInternetAvailable() {
+        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if (info == null) {
+            Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
 //    @Override
@@ -148,4 +159,17 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static boolean isInternetAvailable(Context context) {
+        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        if (info == null) {
+            Toast.makeText(context.getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
