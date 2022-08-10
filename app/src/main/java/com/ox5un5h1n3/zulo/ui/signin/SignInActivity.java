@@ -36,9 +36,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.data.model.UserDetail;
 import com.ox5un5h1n3.zulo.databinding.ActivitySigninBinding;
 import com.ox5un5h1n3.zulo.ui.signup.SignUpActivity;
 
@@ -91,9 +93,14 @@ public class SignInActivity extends AppCompatActivity{
                 if (task.isSuccessful()){
 //
 //
-//                    userId = firebaseAuth.getCurrentUser().getUid();
+                    userId = firebaseAuth.getCurrentUser().getUid();
 //                    DocumentReference documentReference  = firestore.collection("users").document(userId);
 //
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+//                    updateUI(user);
+                    final UserDetail userDetail = new UserDetail(user.getDisplayName(), user.getEmail(), userId, "","");
+                    FirebaseFirestore.getInstance().collection("Users").document(userId).set(userDetail);
+
 //
 //                    FirebaseUser user = firebaseAuth.getCurrentUser();
 //                    updateUI(user);

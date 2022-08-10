@@ -13,6 +13,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
         android:hint="Search by product name"
+        android:inputType="text"
         android:minHeight="48dp" />
 
     <LinearLayout
