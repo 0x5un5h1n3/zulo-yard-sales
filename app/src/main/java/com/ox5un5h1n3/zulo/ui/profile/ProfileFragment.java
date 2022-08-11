@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +34,7 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String userId;
-    private View mLoading;
+    private LottieAnimationView lottieAnimationView;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -74,9 +75,11 @@ public class ProfileFragment extends Fragment {
         phone = view.findViewById(R.id.profilePhone);
         address = view.findViewById(R.id.profileAddress);
         profileIcon = view.findViewById(R.id.profileIcon);
-        mLoading = view.findViewById(R.id.prg_loading);
         mRegisteredUser = view.findViewById(R.id.textViewRegisteredUser);
         mBtnEditProfile = view.findViewById(R.id.btnProfileEditProfile);
+
+        lottieAnimationView = view.findViewById(R.id.lottie_loading);
+        lottieAnimationView.setAnimation(R.raw.profile_loading);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -105,7 +108,7 @@ public class ProfileFragment extends Fragment {
 
 
                 assert userDetail != null;
-                mLoading.setVisibility(View.GONE);
+                lottieAnimationView.setVisibility(View.GONE);
 
                 mRegisteredUser.setVisibility(View.VISIBLE);
                 mBtnEditProfile.setVisibility(View.VISIBLE);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.products.EditProductFragment"
     android:gravity="center"
@@ -13,7 +13,7 @@
         android:id="@+id/imageiewProduct"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_image_24" />
 
@@ -57,6 +57,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/et_p_price"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center"-->
+    <!--        android:hint="Product price"-->
+    <!--        android:inputType="numberDecimal"-->
+    <!--        android:minHeight="48dp" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_product_price_layout"

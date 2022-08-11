@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -33,7 +34,7 @@ public class SearchFragment extends Fragment {
     private EditText mEtSearch;
     private MaterialButton mBtnSearch;
     private MaterialButton mBtnReset;
-    private View mLoading;
+    private LottieAnimationView lottieAnimationView;
     private AllProductAdapter mAllProductAdapter;
     private final List<Product> mProductList = new ArrayList<>();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -64,7 +65,10 @@ public class SearchFragment extends Fragment {
         mEtSearch = view.findViewById(R.id.et_search);
         mBtnSearch = view.findViewById(R.id.btn_search);
         mBtnReset = view.findViewById(R.id.btn_reset);
-        mLoading = view.findViewById(R.id.prg_loading);
+
+        lottieAnimationView = view.findViewById(R.id.lottie_loading);
+        lottieAnimationView.setAnimation(R.raw.loading);
+
         getAllProducts();
         searchButton();
         resetButton();
@@ -121,7 +125,7 @@ public class SearchFragment extends Fragment {
                             mAllProductAdapter = new AllProductAdapter(mProductList, getActivity());
                             mProductRecycler.setAdapter(mAllProductAdapter);
 
-                            mLoading.setVisibility(View.GONE);
+                            lottieAnimationView.setVisibility(View.GONE);
                             mProductRecycler.setVisibility(View.VISIBLE);
 
                         } else {

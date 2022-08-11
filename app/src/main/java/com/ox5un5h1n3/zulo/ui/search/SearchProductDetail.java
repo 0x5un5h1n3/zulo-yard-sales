@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,7 +41,8 @@ public class SearchProductDetail extends Fragment {
 
     private MaterialTextView mProductName;
     private MaterialTextView mProductPrice;
-    private MaterialTextView mProductDescription, mTv1, mTv2;
+    private MaterialTextView mProductDescription, mTvSellerInfo;
+    private MaterialDivider mDv1;
     private ImageView mProductImage;
     private MaterialButton mBtnReserve;
     private MaterialTextView mSellerName;
@@ -85,8 +87,8 @@ public class SearchProductDetail extends Fragment {
         mProductName = view.findViewById(R.id.tv_product_name_det);
         mProductPrice = view.findViewById(R.id.tv_product_price);
         mProductDescription = view.findViewById(R.id.tv_product_desc);
-        mTv1 = view.findViewById(R.id.materialTextView1);
-        mTv2 = view.findViewById(R.id.materialTextView2);
+        mDv1 = view.findViewById(R.id.div_seller_info_divider);
+        mTvSellerInfo = view.findViewById(R.id.tv_seller_info);
 
         mProductImage = view.findViewById(R.id.iv_product);
         mBtnReserve = view.findViewById(R.id.btn_reserve);
@@ -169,8 +171,8 @@ public class SearchProductDetail extends Fragment {
                     mSellerName.setVisibility(View.VISIBLE);
                     mSellerAddress.setVisibility(View.VISIBLE);
                     mSellerMo.setVisibility(View.VISIBLE);
-                    mTv1.setVisibility(View.VISIBLE);
-                    mTv2.setVisibility(View.VISIBLE);
+                    mDv1.setVisibility(View.VISIBLE);
+                    mTvSellerInfo.setVisibility(View.VISIBLE);
                     mBtnReserve.setVisibility(View.VISIBLE);
                     mBtnContactSeller.setVisibility(View.VISIBLE);
                     mLoading.setVisibility(View.GONE);
