@@ -36,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -97,9 +98,11 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     private double currentLng = 0.0;
 
 
+    // require permission for getting location
     private final String[] permissionsForLocation = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
 
-        private final LocationCallback locationCallback = new LocationCallback() {
+    // To receive updated location if user request by location request
+    private final LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull @Nonnull LocationResult locationResult) {
             currentLng = locationResult.getLastLocation().getLongitude();
@@ -118,12 +121,15 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //setup map initially
         setupMap();
 
- //        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        //Getting data of user's last location if exists
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
-
+        //Creating new location request
         createLocationRequest();
+        //Allow-Deny location permission popup
         requestPermissionLauncher.launch(permissionsForLocation);
 
         mFabLocation = view.findViewById(R.id.fab_location);
@@ -131,8 +137,8 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
 
 
         checkLocation();
-
-    }
+        
+        }
 
     private void setupMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
@@ -140,14 +146,15 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
             mapFragment.getMapAsync(this);
         }
     }
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        MapStyleOptions styleOptions = MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style);
+        mGoogleMap.setMapStyle(styleOptions);
+
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         mGoogleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnCameraMoveStartedListener(this);
-
         getAllProduct();
     }
 
@@ -164,6 +171,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         return true;
     }
 
+    //Harsh:
     private void getAllProduct() {
         mProductList.clear();
         mGoogleMap.clear();
@@ -269,12 +277,12 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     @Override
     public void onResume() {
         super.onResume();
-//        if (checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-//            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                //Update current location if available
-//                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-//            }
-//        }
+        if (checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                //Update current location if available
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+            }
+        }
     }
 
     @Override

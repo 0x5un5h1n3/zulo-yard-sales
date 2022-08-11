@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.DashboardFragment">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnViewTransactions"
-        android:layout_width="165dp"
+        android:layout_width="156dp"
         android:layout_height="348dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
@@ -23,13 +26,13 @@
         app:iconGravity="top"
         app:iconSize="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnFindYardSale"
+        app:layout_constraintEnd_toStartOf="@+id/btnSearchYardSaleItems"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddYardSale"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFindYardSale"
+        android:id="@+id/btnSearchYardSaleItems"
         android:layout_width="156dp"
         android:layout_height="156dp"
         android:layout_marginTop="32dp"
@@ -47,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnManageYardSaleProducts" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFindYardSale2"
+        android:id="@+id/btnFindYardSalesOnMap"
         android:layout_width="156dp"
         android:layout_height="156dp"
         android:layout_marginStart="32dp"
@@ -62,7 +65,7 @@
         app:iconSize="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnViewTransactions"
-        app:layout_constraintTop_toBottomOf="@+id/btnFindYardSale"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearchYardSaleItems"
         app:layout_constraintVertical_bias="0.026" />
 
     <com.google.android.material.button.MaterialButton
@@ -101,44 +104,10 @@
         app:layout_constraintEnd_toStartOf="@+id/btnManageYardSaleProducts"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /><![CDATA[
+        app:layout_constraintTop_toTopOf="parent"/>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    \
-        app:layout_constraintStart_toEndOf="@+id/btnAddYardSale"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>

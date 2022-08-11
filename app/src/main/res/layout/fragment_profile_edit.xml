@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/et_phone_no"
+        android:id="@+id/et_confirm_new_password"
         android:layout_width="262dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
@@ -19,10 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_username" />
+        app:layout_constraintTop_toBottomOf="@+id/et_new_password" />
 
     <EditText
-        android:id="@+id/et_username"
+        android:id="@+id/et_new_password"
         android:layout_width="262dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_phone_no" />
+        app:layout_constraintTop_toBottomOf="@+id/et_confirm_new_password" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profileIcon"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnEditProfile"
+        android:id="@+id/btnConfirmResetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"

@@ -13,9 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.dialog.MaterialDialogs;
 import com.ox5un5h1n3.zulo.R;
 
 public class DashboardFragment extends Fragment {
+
+    MaterialAlertDialogBuilder dialog;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -52,5 +56,31 @@ public class DashboardFragment extends Fragment {
                 Navigation.findNavController(l).navigate(R.id.action_navigation_home_to_view_transactions)
         );
 
+        Button findYardSalesOnMap = view.findViewById(R.id.btnFindYardSalesOnMap);
+        findYardSalesOnMap.setOnClickListener(l ->
+                displayFindSaleDialog()
+        );
+
+        Button searchYardSaleItems = view.findViewById(R.id.btnSearchYardSaleItems);
+        searchYardSaleItems.setOnClickListener(l ->
+                displaySearchDialog()
+        );
+
+    }
+
+    private void displaySearchDialog() {
+        dialog = new MaterialAlertDialogBuilder(getActivity());
+        dialog.setTitle("Tip");
+        dialog.setMessage("Use the 'Search' button on the bottom navigation");
+        dialog.setNegativeButton("OK", null);
+        dialog.show();
+    }
+
+    private void displayFindSaleDialog() {
+        dialog = new MaterialAlertDialogBuilder(getActivity());
+        dialog.setTitle("Tip");
+        dialog.setMessage("Use the 'Find Sales' button on the bottom navigation");
+        dialog.setNegativeButton("OK", null);
+        dialog.show();
     }
 }

@@ -28,8 +28,12 @@ import com.ox5un5h1n3.zulo.data.model.UserDetail;
  */
 public class ProfileFragment extends Fragment {
 
-
-
+    TextView username, email, phone, address, profileIcon, mRegisteredUser;
+    Button mBtnEditProfile;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firestore;
+    String userId;
+    private View mLoading;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,10 +65,7 @@ public class ProfileFragment extends Fragment {
         );
 
 
-        TextView username, email, phone, address, profileIcon;
-        FirebaseAuth firebaseAuth;
-        FirebaseFirestore firestore;
-        String userId;
+
 
 
 
@@ -73,6 +74,9 @@ public class ProfileFragment extends Fragment {
         phone = view.findViewById(R.id.profilePhone);
         address = view.findViewById(R.id.profileAddress);
         profileIcon = view.findViewById(R.id.profileIcon);
+        mLoading = view.findViewById(R.id.prg_loading);
+        mRegisteredUser = view.findViewById(R.id.textViewRegisteredUser);
+        mBtnEditProfile = view.findViewById(R.id.btnProfileEditProfile);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -101,21 +105,30 @@ public class ProfileFragment extends Fragment {
 
 
                 assert userDetail != null;
+                mLoading.setVisibility(View.GONE);
+
+                mRegisteredUser.setVisibility(View.VISIBLE);
+                mBtnEditProfile.setVisibility(View.VISIBLE);
                 profileIcon.setText(String.valueOf(documentSnapshot.getString("username").charAt(0)));
+                profileIcon.setVisibility(View.VISIBLE);
 //                profileIcon.setText(String.valueOf(username.getText().charAt(0)));
                 username.setText(documentSnapshot.getString("username"));
+                username.setVisibility(View.VISIBLE);
                 email.setText(documentSnapshot.getString("email"));
+                email.setVisibility(View.VISIBLE);
 
                 if (documentSnapshot.getString("phoneNumber") == null) {
                     phone.setText("Phone");
                 }else{
                     phone.setText(documentSnapshot.getString("phoneNumber"));
+                    phone.setVisibility(View.VISIBLE);
                 }
 
                 if (documentSnapshot.getString("address") == null) {
                     address.setText("Address");
                 }else{
                     address.setText(documentSnapshot.getString("address"));
+                    address.setVisibility(View.VISIBLE);
                 }
             }
         });
