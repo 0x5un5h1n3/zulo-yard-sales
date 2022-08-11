@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.NotNull;
@@ -60,6 +61,7 @@ public class AddNewSalePost extends Fragment {
     private double lng = 0.0;
 
     private ProgressDialog mDialog;
+    MaterialAlertDialogBuilder dialog;
     private Uri uri;
     private String ownerName;
 
@@ -87,12 +89,12 @@ public class AddNewSalePost extends Fragment {
 //        DatabaseReference reference = firebaseDatabase.getReference();
 
 
-        mProductName = view.findViewById(R.id.et_username);
+        mProductName = view.findViewById(R.id.et_new_password);
         mProductPrice = view.findViewById(R.id.productPrice);
         mProductDescription = view.findViewById(R.id.et_address);
         mSubmit = view.findViewById(R.id.btnSubmit);
         mOpenCam = view.findViewById(R.id.btnOpenCamera);
-        mTakePicture = view.findViewById(R.id.btnEditProfile);
+        mTakePicture = view.findViewById(R.id.btnConfirmResetPassword);
 
         mTvChooseImage = view.findViewById(R.id.tv_choose_image);
         mIvProduct = view.findViewById(R.id.imageiewProduct);
@@ -226,7 +228,12 @@ public class AddNewSalePost extends Fragment {
                 mDialog.cancel();
                 startActivity(new Intent(getActivity(), MainActivity.class));
 //                finish();
-                Toast.makeText(getActivity(), "Product Added Successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Product Added Successfully", Toast.LENGTH_SHORT).show();
+                dialog = new MaterialAlertDialogBuilder(getActivity());
+                dialog.setTitle("Message");
+                dialog.setMessage("Product Added Successfully");
+                dialog.setNegativeButton("OK", null);
+                dialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

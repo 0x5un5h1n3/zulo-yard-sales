@@ -28,6 +28,7 @@ public class TransactionsFragment extends Fragment {
     private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
     private TransactionAdapter mTransactionAdapter;
+    private View mLoading;
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -49,30 +50,33 @@ public class TransactionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTransactionsRecycler = view.findViewById(R.id.rcv_transactions);
+        mLoading = view.findViewById(R.id.prg_loading);
 
         getAllTransactions();
     }
-    private void getAllTransactions() {
-        FirebaseFirestore.getInstance().collection("Products").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+private void getAllTransactions() {
+    FirebaseFirestore.getInstance().collection("Products").get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
-                        if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
+                        mLoading.setVisibility(View.GONE);
+                        mTransactionsRecycler.setVisibility(View.VISIBLE);
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Product products = document.toObject(Product.class);
-                                if (products.getRequestApproved()){
-                                    mListOfTransactions.add(products);
-                                }
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Product products = document.toObject(Product.class);
+                            if (products.getRequestApproved()){
+                                mListOfTransactions.add(products);
                             }
-                            mTransactionAdapter = new TransactionAdapter(mListOfTransactions);
-                            mTransactionsRecycler.setAdapter(mTransactionAdapter);
-
-                        } else {
-                            Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                         }
+                        mTransactionAdapter = new TransactionAdapter(mListOfTransactions);
+                        mTransactionsRecycler.setAdapter(mTransactionAdapter);
+
+                    } else {
+                        Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                     }
-                });
-    }
+                }
+            });
+}
 }

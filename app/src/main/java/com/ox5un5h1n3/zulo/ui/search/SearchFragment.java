@@ -33,6 +33,7 @@ public class SearchFragment extends Fragment {
     private EditText mEtSearch;
     private MaterialButton mBtnSearch;
     private MaterialButton mBtnReset;
+    private View mLoading;
     private AllProductAdapter mAllProductAdapter;
     private final List<Product> mProductList = new ArrayList<>();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -63,6 +64,7 @@ public class SearchFragment extends Fragment {
         mEtSearch = view.findViewById(R.id.et_search);
         mBtnSearch = view.findViewById(R.id.btn_search);
         mBtnReset = view.findViewById(R.id.btn_reset);
+        mLoading = view.findViewById(R.id.prg_loading);
         getAllProducts();
         searchButton();
         resetButton();
@@ -97,7 +99,7 @@ public class SearchFragment extends Fragment {
         });
     }
     private void getAllProducts() {
-        mProductList.clear();
+
 
         FirebaseFirestore.getInstance().collection("Products").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -105,7 +107,7 @@ public class SearchFragment extends Fragment {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()) {
-
+                            mProductList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product products = document.toObject(Product.class);
                                 if (currentUser == null) {
@@ -118,6 +120,9 @@ public class SearchFragment extends Fragment {
                             }
                             mAllProductAdapter = new AllProductAdapter(mProductList, getActivity());
                             mProductRecycler.setAdapter(mAllProductAdapter);
+
+                            mLoading.setVisibility(View.GONE);
+                            mProductRecycler.setVisibility(View.VISIBLE);
 
                         } else {
                             Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();

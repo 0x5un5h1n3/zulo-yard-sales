@@ -1,5 +1,7 @@
 package com.ox5un5h1n3.zulo.ui.products;
 
+import static com.ox5un5h1n3.zulo.ui.products.ManageProductAdapter.mManageProductList;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +32,8 @@ public class ManageProductFragment extends Fragment {
 
     private RecyclerView mProductRecycler;
     private ManageProductAdapter mManageProductAdapter;
-    private final List<Product> mProductList = new ArrayList<>();
+    public static List<Product> mProductList = new ArrayList<>();
+    private View mLoading;
 
 
 
@@ -55,6 +58,7 @@ public class ManageProductFragment extends Fragment {
 
 
         mProductRecycler = view.findViewById(R.id.rcv_product);
+        mLoading = view.findViewById(R.id.prg_loading);
 
         FirebaseFirestore.getInstance().collection("Products").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -62,6 +66,9 @@ public class ManageProductFragment extends Fragment {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()) {
+                            mLoading.setVisibility(View.GONE);
+                            mProductRecycler.setVisibility(View.VISIBLE);
+                            mProductList.clear();
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
 

@@ -7,7 +7,21 @@
     android:orientation="vertical"
     tools:context=".ui.home.TransactionsFragment">
 
+    <ProgressBar
+        android:id="@+id/prg_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="64dp"
+        android:indeterminateTint="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/rcv_transactions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

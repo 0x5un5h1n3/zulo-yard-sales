@@ -40,16 +40,18 @@ public class SearchProductDetail extends Fragment {
 
     private MaterialTextView mProductName;
     private MaterialTextView mProductPrice;
-    private MaterialTextView mProductDescription;
+    private MaterialTextView mProductDescription, mTv1, mTv2;
     private ImageView mProductImage;
-    private MaterialButton mReserve;
+    private MaterialButton mBtnReserve;
     private MaterialTextView mSellerName;
     private MaterialTextView mSellerAddress;
     private MaterialTextView mSellerMo;
     private ProgressDialog mDialog;
+    private View mLoading;
+    private MaterialAlertDialogBuilder dialog;
     private Product product;
 
-    private MaterialButton btnContactSeller;
+    private MaterialButton mBtnContactSeller;
 
 
     private String sellerContactNo;
@@ -83,14 +85,17 @@ public class SearchProductDetail extends Fragment {
         mProductName = view.findViewById(R.id.tv_product_name_det);
         mProductPrice = view.findViewById(R.id.tv_product_price);
         mProductDescription = view.findViewById(R.id.tv_product_desc);
+        mTv1 = view.findViewById(R.id.materialTextView1);
+        mTv2 = view.findViewById(R.id.materialTextView2);
 
         mProductImage = view.findViewById(R.id.iv_product);
-        mReserve = view.findViewById(R.id.btn_reserve);
+        mBtnReserve = view.findViewById(R.id.btn_reserve);
         mSellerName = view.findViewById(R.id.tv_seller_name);
         mSellerAddress = view.findViewById(R.id.tv_seller_address);
         mSellerMo = view.findViewById(R.id.tv_seller_mobile);
+        mLoading = view.findViewById(R.id.prg_loading);
 
-        btnContactSeller = view.findViewById(R.id.btn_contact_seller);
+        mBtnContactSeller = view.findViewById(R.id.btn_contact_seller);
 
         getProductData();
         reserveProduct();
@@ -99,7 +104,7 @@ public class SearchProductDetail extends Fragment {
     }
 
     private void dialTheSeller() {
-        btnContactSeller.setOnClickListener(new View.OnClickListener() {
+        mBtnContactSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -110,7 +115,7 @@ public class SearchProductDetail extends Fragment {
     }
 
     public void reserveProduct() {
-        mReserve.setOnClickListener(new View.OnClickListener() {
+        mBtnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -154,12 +159,21 @@ public class SearchProductDetail extends Fragment {
         FirebaseFirestore.getInstance().collection("Users").document(product.getProductOwnerUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+
                 UserDetail userDetail = documentSnapshot.toObject(UserDetail.class);
                 if (userDetail != null){
                     mSellerName.setText("Seller Name : " + userDetail.getUsername());
                     mSellerAddress.setText("Seller address : " + userDetail.getAddress());
                     mSellerMo.setText("Seller phone no. : " + userDetail.getPhoneNumber());
                     sellerContactNo = userDetail.getPhoneNumber();
+                    mSellerName.setVisibility(View.VISIBLE);
+                    mSellerAddress.setVisibility(View.VISIBLE);
+                    mSellerMo.setVisibility(View.VISIBLE);
+                    mTv1.setVisibility(View.VISIBLE);
+                    mTv2.setVisibility(View.VISIBLE);
+                    mBtnReserve.setVisibility(View.VISIBLE);
+                    mBtnContactSeller.setVisibility(View.VISIBLE);
+                    mLoading.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getActivity(), "Seller not found", Toast.LENGTH_SHORT).show();
                 }
@@ -192,7 +206,7 @@ public class SearchProductDetail extends Fragment {
             mDialog.setCancelable(false);
 
             userName = dialogView.findViewById(R.id.et_name);
-            userPhoneNo = dialogView.findViewById(R.id.et_phone_no);
+            userPhoneNo = dialogView.findViewById(R.id.et_confirm_new_password);
 
             MaterialButton dialogBtn_cancel = dialogView.findViewById(R.id.btn_request_reserve);
             dialogBtn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +259,12 @@ public class SearchProductDetail extends Fragment {
                                 public void onSuccess(Void unused) {
                                     mDialog.cancel();
 //                                    activity.finish();
-                                    Toast.makeText(getActivity(), "Reserve request sent successfully", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity(), "Reserve request sent successfully", Toast.LENGTH_SHORT).show();
+                                    dialog = new MaterialAlertDialogBuilder(getActivity());
+                                    dialog.setTitle("Message");
+                                    dialog.setMessage("Reserve request sent successfully");
+                                    dialog.setNegativeButton("OK", null);
+                                    dialog.show();
                                 }
                             });
                         }
@@ -262,7 +281,6 @@ public class SearchProductDetail extends Fragment {
             });
         }
     }
-
 
 
 //    Product product = mProductList.get(getPosition);

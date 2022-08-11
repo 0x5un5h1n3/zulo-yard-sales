@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.NotNull;
@@ -31,6 +32,7 @@ public class ProfileEditFragment extends Fragment {
     EditText mUsername, mPhoneNo, mAddress;
     MaterialButton mSubmit;
     MaterialTextView mDisplayName, mProfileIcon;
+    MaterialAlertDialogBuilder dialog;
     ProgressDialog mDialog;
 
 
@@ -56,9 +58,9 @@ public class ProfileEditFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        mSubmit = view.findViewById(R.id.btnEditProfile);
-        mUsername = view.findViewById(R.id.et_username);
-        mPhoneNo = view.findViewById(R.id.et_phone_no);
+        mSubmit = view.findViewById(R.id.btnConfirmResetPassword);
+        mUsername = view.findViewById(R.id.et_new_password);
+        mPhoneNo = view.findViewById(R.id.et_confirm_new_password);
         mAddress = view.findViewById(R.id.et_address);
         mProfileIcon = view.findViewById(R.id.profileIcon);
         mDisplayName = view.findViewById(R.id.displayName);
@@ -123,7 +125,12 @@ public class ProfileEditFragment extends Fragment {
             public void onSuccess(Void unused) {
                 mDialog.cancel();
 //                finish();
-                Toast.makeText(getActivity(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                dialog = new MaterialAlertDialogBuilder(getActivity());
+                dialog.setTitle("Message");
+                dialog.setMessage("Profile Updated Successfully");
+                dialog.setNegativeButton("OK", null);
+                dialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

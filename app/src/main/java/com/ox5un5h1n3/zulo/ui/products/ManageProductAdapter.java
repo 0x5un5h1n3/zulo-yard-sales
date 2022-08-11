@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
@@ -39,7 +40,9 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
     private final Activity mActivity;
     private ProgressDialog mDialog;
+    MaterialAlertDialogBuilder dialog;
     private String toastMsg = "";
+
     // data is passed into the constructor
     public ManageProductAdapter(List<Product> productList, Activity activity) {
         this.mManageProductList = productList;
@@ -83,10 +86,10 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
                 Map<String, Object> updateProductData = new HashMap<>();
                 if (isChecked){
                     updateProductData.put("productDisplay", true);
-                    toastMsg = "Product visible on for users";
+                    toastMsg = "Product visibility on for users";
                 } else  {
                     updateProductData.put("productDisplay", false);
-                    toastMsg = "Product visible off for users";
+                    toastMsg = "Product visibility off for users";
                 }
                 FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -161,7 +164,13 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateReserveProduct).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
+                dialog = new MaterialAlertDialogBuilder(mActivity.getBaseContext());
+                dialog.setTitle("Message");
+                dialog.setMessage("Proceed successfully");
+                dialog.setNegativeButton("OK", null);
+                dialog.show();
+
             }
         });
 

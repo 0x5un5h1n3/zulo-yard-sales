@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,6 +50,7 @@ public class EditProductFragment extends Fragment {
     private ImageView mIvProduct;
 
     private ProgressDialog mDialog;
+    MaterialAlertDialogBuilder dialog;
     private Uri uri;
     private Product mProduct;
 
@@ -203,7 +205,12 @@ public class EditProductFragment extends Fragment {
             public void onSuccess(Void unused) {
                 mDialog.cancel();
 //                finish();
-                Toast.makeText(getActivity(), "Product Updated Successfully", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Product Updated Successfully", Toast.LENGTH_SHORT).show();
+                dialog = new MaterialAlertDialogBuilder(getActivity());
+                dialog.setTitle("Message");
+                dialog.setMessage("Product Updated Successfully");
+                dialog.setNegativeButton("OK", null);
+                dialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
