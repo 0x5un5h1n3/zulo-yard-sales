@@ -24,36 +24,69 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:scaleType="centerCrop"
-        android:text="Edit Product"
+        android:text="Add Image"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/et_p_name"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_p_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
         android:hint="Product name"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
 
-    <EditText
-        android:id="@+id/et_p_price"
-        android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_p_name"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_p_price_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:hint="Product price"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
 
-    <EditText
-        android:id="@+id/et_p_description"
-        android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_p_price"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_p_description_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="Description"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
+        android:hint="Product description"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_p_description"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_update"

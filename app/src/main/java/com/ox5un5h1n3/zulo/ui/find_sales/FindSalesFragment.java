@@ -73,6 +73,8 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
 
     private final List<Product> mProductList = new ArrayList<>();
 
+
+    // permission checking when user request. Step 1 & 2
     private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
         @Override
         public void onActivityResult(Map<String, Boolean> result) {
@@ -94,6 +96,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         }
     });
 
+    // default lat lng
     private double currentLat = 0.0;
     private double currentLng = 0.0;
 
@@ -137,8 +140,8 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
 
 
         checkLocation();
-        
-        }
+
+    }
 
     private void setupMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
@@ -156,6 +159,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnCameraMoveStartedListener(this);
         getAllProduct();
+        //Add a dark theme to Map
     }
 
     @Override
@@ -213,7 +217,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         }
     }
 
-  protected void createLocationRequest() {
+    protected void createLocationRequest() {
         if (locationRequest == null) {
             locationRequest = LocationRequest.create();
         }
@@ -237,6 +241,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         SettingsClient client = LocationServices.getSettingsClient(getActivity());
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
         task.addOnSuccessListener(getActivity(), new OnSuccessListener<LocationSettingsResponse>() {
+
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
@@ -274,6 +279,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     }
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onResume() {
         super.onResume();

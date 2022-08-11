@@ -25,7 +25,7 @@
         android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/et_confirm_new_password"
+        android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

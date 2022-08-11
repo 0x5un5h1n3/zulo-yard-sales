@@ -1,107 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.AddNewSalePost">
-
-
-    <EditText
-        android:id="@+id/et_new_password"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Product name"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_choose_image" />
-
-    <EditText
-        android:id="@+id/productPrice"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Product price"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_password" />
-
-    <EditText
-        android:id="@+id/et_address"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productPrice" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.products.EditProductFragment"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="32dp">
 
     <ImageView
         android:id="@+id/imageiewProduct"
-        android:layout_width="240dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="84dp"
-        android:baselineAlignBottom="false"
-        android:cropToPadding="false"
-        android:filterTouchesWhenObscured="false"
-        android:fitsSystemWindows="false"
-        android:focusableInTouchMode="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_image_240"
-        tools:src="@drawable/ic_baseline_image_240" />
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_image_24" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_choose_image"
-        android:layout_width="370dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Add Image"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageiewProduct" />
-
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="48dp"
-        android:text="Submit"
-        app:icon="@drawable/ic_baseline_save_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toEndOf="@+id/btnOpenCamera"
-        app:layout_constraintTop_toBottomOf="@+id/et_address" />
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        android:text="Add Image"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnOpenCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="8dp"
         android:text="Open Camera"
         app:icon="@drawable/ic_baseline_photo_camera_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_address" />
+        app:layout_constraintTop_toBottomOf="@+id/et_product_desc_layout" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_product_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Product name"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_product_name"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_product_price_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Product price"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_product_price"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_product_desc_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Product description"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_product_desc"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <Button
+        android:id="@+id/btnSubmitPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Submit Sale Post"
+        app:icon="@drawable/ic_baseline_save_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toEndOf="@+id/btnOpenCamera"
+        app:layout_constraintTop_toBottomOf="@+id/et_product_desc_layout" />
+
+
+</LinearLayout>
