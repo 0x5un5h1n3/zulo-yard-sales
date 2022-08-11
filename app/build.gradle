@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
-//    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -64,4 +64,7 @@ dependencies {
 
     // location
     implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    //lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
 }

@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/reset_email_popup"
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_marginHorizontal="16dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"

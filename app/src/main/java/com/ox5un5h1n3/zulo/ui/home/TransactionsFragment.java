@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.annotations.NotNull;
@@ -28,7 +29,7 @@ public class TransactionsFragment extends Fragment {
     private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
     private TransactionAdapter mTransactionAdapter;
-    private View mLoading;
+    private LottieAnimationView lottieAnimationView;
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -50,7 +51,8 @@ public class TransactionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTransactionsRecycler = view.findViewById(R.id.rcv_transactions);
-        mLoading = view.findViewById(R.id.prg_loading);
+        lottieAnimationView = view.findViewById(R.id.lottie_loading);
+        lottieAnimationView.setAnimation(R.raw.loading);
 
         getAllTransactions();
     }
@@ -61,7 +63,7 @@ private void getAllTransactions() {
                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
                     if (task.isSuccessful()) {
-                        mLoading.setVisibility(View.GONE);
+                        lottieAnimationView.setVisibility(View.GONE);
                         mTransactionsRecycler.setVisibility(View.VISIBLE);
 
                         for (QueryDocumentSnapshot document : task.getResult()) {

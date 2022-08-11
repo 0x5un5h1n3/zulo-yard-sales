@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class ManageProductFragment extends Fragment {
     private RecyclerView mProductRecycler;
     private ManageProductAdapter mManageProductAdapter;
     public static List<Product> mProductList = new ArrayList<>();
-    private View mLoading;
+    private LottieAnimationView lottieAnimationView;
 
 
 
@@ -58,7 +59,9 @@ public class ManageProductFragment extends Fragment {
 
 
         mProductRecycler = view.findViewById(R.id.rcv_product);
-        mLoading = view.findViewById(R.id.prg_loading);
+
+        lottieAnimationView = view.findViewById(R.id.lottie_loading);
+        lottieAnimationView.setAnimation(R.raw.loading);
 
         FirebaseFirestore.getInstance().collection("Products").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -66,7 +69,7 @@ public class ManageProductFragment extends Fragment {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()) {
-                            mLoading.setVisibility(View.GONE);
+                            lottieAnimationView.setVisibility(View.GONE);
                             mProductRecycler.setVisibility(View.VISIBLE);
                             mProductList.clear();
 

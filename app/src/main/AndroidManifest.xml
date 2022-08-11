@@ -22,7 +22,8 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCv40FrxYTVsFOpOmwf19hfLZa68F-gpOs" />
+            android:value="${MAPS_API_KEY}" />
+
 
         <activity
             android:name=".ui.signup.SignUpActivity"
