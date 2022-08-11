@@ -80,7 +80,7 @@ public class SignInActivity extends AppCompatActivity{
 
         }catch (ApiException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Sign in Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -296,7 +296,7 @@ public class SignInActivity extends AppCompatActivity{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Sign in Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -6,49 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileEditFragment">
 
-
-    <EditText
-        android:id="@+id/et_confirm_new_password"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Phone"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_password" />
-
-    <EditText
-        android:id="@+id/et_new_password"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Display name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayName" />
-
-    <EditText
-        android:id="@+id/et_address"
-        android:layout_width="262dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_new_password" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/profileIcon"
         android:layout_width="120dp"
@@ -68,17 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnConfirmResetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="40dp"
-        android:text="Update Profile"
-        app:icon="@drawable/ic_baseline_update_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_address" />
-
     <TextView
         android:id="@+id/displayName"
         android:layout_width="wrap_content"
@@ -91,6 +37,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileIcon" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_display_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Display name"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_display_name"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_phone_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_display_name_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="10" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_address_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_address"
+            android:inputType="textPostalAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUpdateProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="40dp"
+        android:text="Update Profile"
+        app:icon="@drawable/ic_baseline_update_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_address_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

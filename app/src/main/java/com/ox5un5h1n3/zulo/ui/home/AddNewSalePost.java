@@ -89,12 +89,12 @@ public class AddNewSalePost extends Fragment {
 //        DatabaseReference reference = firebaseDatabase.getReference();
 
 
-        mProductName = view.findViewById(R.id.et_new_password);
-        mProductPrice = view.findViewById(R.id.productPrice);
+        mProductName = view.findViewById(R.id.et_product_name);
+        mProductPrice = view.findViewById(R.id.et_product_price);
         mProductDescription = view.findViewById(R.id.et_address);
-        mSubmit = view.findViewById(R.id.btnSubmit);
+        mSubmit = view.findViewById(R.id.btnSubmitPost);
         mOpenCam = view.findViewById(R.id.btnOpenCamera);
-        mTakePicture = view.findViewById(R.id.btnConfirmResetPassword);
+        mTakePicture = view.findViewById(R.id.btnUpdateProfile);
 
         mTvChooseImage = view.findViewById(R.id.tv_choose_image);
         mIvProduct = view.findViewById(R.id.imageiewProduct);
@@ -141,6 +141,7 @@ public class AddNewSalePost extends Fragment {
             }
         });
     }
+
     private void pickImage() {
         mTvChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,16 +179,22 @@ public class AddNewSalePost extends Fragment {
 
                 if (pName.isEmpty()) {
                     Toast.makeText(getActivity(), "Product name is empty", Toast.LENGTH_SHORT).show();
+                    mProductName.setError("Required Field");
+                    mProductName.requestFocus();
                     mDialog.cancel();
                     return;
                 }
                 if (pPrice <= 0.0) {
                     Toast.makeText(getActivity(), "Invalid price", Toast.LENGTH_SHORT).show();
+                    mProductPrice.setError("Required Field");
+                    mProductPrice.requestFocus();
                     mDialog.cancel();
                     return;
                 }
                 if (pDescription.isEmpty()) {
                     Toast.makeText(getActivity(), "Product description is empty", Toast.LENGTH_SHORT).show();
+                    mProductDescription.setError("Required Field");
+                    mProductDescription.requestFocus();
                     mDialog.cancel();
                     return;
                 }

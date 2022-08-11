@@ -58,9 +58,9 @@ public class ProfileEditFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        mSubmit = view.findViewById(R.id.btnConfirmResetPassword);
-        mUsername = view.findViewById(R.id.et_new_password);
-        mPhoneNo = view.findViewById(R.id.et_confirm_new_password);
+        mSubmit = view.findViewById(R.id.btnUpdateProfile);
+        mUsername = view.findViewById(R.id.et_display_name);
+        mPhoneNo = view.findViewById(R.id.et_phone);
         mAddress = view.findViewById(R.id.et_address);
         mProfileIcon = view.findViewById(R.id.profileIcon);
         mDisplayName = view.findViewById(R.id.displayName);

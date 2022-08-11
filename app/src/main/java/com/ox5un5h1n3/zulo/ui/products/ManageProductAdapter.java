@@ -102,19 +102,19 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         });
         if (product.getProductReserve()) {
             holder.mBtnEditProduct.setVisibility(View.GONE);
-            holder.mTvGuestName.setVisibility(View.VISIBLE);
-            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
+//            holder.mTvGuestName.setVisibility(View.VISIBLE);
+//            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
             holder.mBtnRejected.setVisibility(View.VISIBLE);
             holder.mBtnApprove.setVisibility(View.VISIBLE);
-            holder.mTvGuestName.setText("From : " + product.getCustomerName());
-            holder.mTvGuestPhoneNo.setText("Contact no :" + product.getCustomerPhoneNo());
+//            holder.mTvGuestName.setText("From : " + product.getCustomerName());
+//            holder.mTvGuestPhoneNo.setText("Contact no :" + product.getCustomerPhoneNo());
         }
         if (product.getRequestApproved()){
             holder.mBtnEditProduct.setVisibility(View.GONE);
             holder.mBtnRejected.setVisibility(View.GONE);
             holder.mBtnApprove.setVisibility(View.GONE);
-            holder.mTvGuestName.setVisibility(View.VISIBLE);
-            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
+//            holder.mTvGuestName.setVisibility(View.VISIBLE);
+//            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
             holder.mTvProductSoldMsg.setVisibility(View.VISIBLE);
         }
         holder.mBtnApprove.setOnClickListener(new View.OnClickListener() {
@@ -131,13 +131,13 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             @Override
             public void onClick(View v) {
                 updateProductRequest(false, product);
-                holder.mTvGuestName.setText("");
-                holder.mTvGuestPhoneNo.setText("");
+//                holder.mTvGuestName.setText("");
+//                holder.mTvGuestPhoneNo.setText("");
                 holder.mBtnRejected.setVisibility(View.GONE);
                 holder.mBtnApprove.setVisibility(View.GONE);
                 holder.mBtnEditProduct.setVisibility(View.VISIBLE);
-                holder.mTvGuestName.setVisibility(View.GONE);
-                holder.mTvGuestPhoneNo.setVisibility(View.GONE);
+//                holder.mTvGuestName.setVisibility(View.GONE);
+//                holder.mTvGuestPhoneNo.setVisibility(View.GONE);
             }
         });
         holder.mBtnEditProduct.setOnClickListener(new View.OnClickListener() {
@@ -186,8 +186,8 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
         private final TextView mTvProductName;
         private final TextView mTvProductPrice;
-        private final TextView mTvGuestName;
-        private final TextView mTvGuestPhoneNo;
+//        private final TextView mTvGuestName;
+//        private final TextView mTvGuestPhoneNo;
         private final TextView mTvProductSoldMsg;
         private final ImageView mImageView;
         private final MaterialButton mBtnEditProduct;
@@ -199,8 +199,8 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             super(itemView);
             mTvProductName = itemView.findViewById(R.id.tv_product_name);
             mTvProductPrice = itemView.findViewById(R.id.tv_product_price);
-            mTvGuestName = itemView.findViewById(R.id.tv_guest_name);
-            mTvGuestPhoneNo = itemView.findViewById(R.id.tv_guest_number);
+//            mTvGuestName = itemView.findViewById(R.id.tv_guest_name);
+//            mTvGuestPhoneNo = itemView.findViewById(R.id.tv_guest_number);
             mTvProductSoldMsg = itemView.findViewById(R.id.tv_product_sold_msg);
 
             mImageView = itemView.findViewById(R.id.iv_product);

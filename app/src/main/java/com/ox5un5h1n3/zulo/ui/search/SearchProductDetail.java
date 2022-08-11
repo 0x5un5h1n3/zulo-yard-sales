@@ -206,7 +206,7 @@ public class SearchProductDetail extends Fragment {
             mDialog.setCancelable(false);
 
             userName = dialogView.findViewById(R.id.et_name);
-            userPhoneNo = dialogView.findViewById(R.id.et_confirm_new_password);
+            userPhoneNo = dialogView.findViewById(R.id.et_phone);
 
             MaterialButton dialogBtn_cancel = dialogView.findViewById(R.id.btn_request_reserve);
             dialogBtn_cancel.setOnClickListener(new View.OnClickListener() {
