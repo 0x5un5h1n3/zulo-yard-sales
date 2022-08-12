@@ -13,6 +13,7 @@ public class Product implements Serializable {
     private Boolean isProductReserve;
     private Boolean isRequestApproved;
     private String productImage;
+    private String customerId;
     private String customerName;
     private String customerPhoneNo;
     private String ownerName;
@@ -20,7 +21,7 @@ public class Product implements Serializable {
 
     public Product() {}
 
-    public Product(String productKey, String productOwnerUid, String productName, double productPrice, String productDescription, double productLat, double productLng, Boolean isProductReserve, Boolean isRequestApproved, String productImage, String customerName, String customerPhoneNo, String ownerName, Boolean isProductDisplay) {
+    public Product(String productKey, String productOwnerUid, String productName, double productPrice, String productDescription, double productLat, double productLng, Boolean isProductReserve, Boolean isRequestApproved, String productImage, String customerId, String customerName, String customerPhoneNo, String ownerName, Boolean isProductDisplay) {
         this.productKey = productKey;
         this.productOwnerUid = productOwnerUid;
         this.productName = productName;
@@ -31,6 +32,7 @@ public class Product implements Serializable {
         this.isProductReserve = isProductReserve;
         this.isRequestApproved = isRequestApproved;
         this.productImage = productImage;
+        this.customerId = customerId;
         this.customerName = customerName;
         this.customerPhoneNo = customerPhoneNo;
         this.ownerName = ownerName;
@@ -107,6 +109,14 @@ public class Product implements Serializable {
 
     public void setProductImage(String productImage) {
         this.productImage = productImage;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {

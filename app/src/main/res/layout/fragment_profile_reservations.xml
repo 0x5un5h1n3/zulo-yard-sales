@@ -8,12 +8,12 @@
     tools:context=".ui.home.AllTransactionsFragment">
 
     <TextView
-        android:id="@+id/tv_transaction_count"
+        android:id="@+id/tv_reservation_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Transaction Count: 0"
+        android:text="Reservation Count: 0"
         android:textSize="20sp"
         android:visibility="gone" />
 
@@ -32,14 +32,14 @@
         app:lottie_repeatMode="reverse" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/rcv_transactions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="3"
-        tools:listitem="@layout/item_transaction"/>
+        tools:listitem="@layout/item_transaction" />
 
 </LinearLayout>
