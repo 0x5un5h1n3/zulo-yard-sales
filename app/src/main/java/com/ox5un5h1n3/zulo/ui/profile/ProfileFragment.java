@@ -30,7 +30,7 @@ import com.ox5un5h1n3.zulo.data.model.UserDetail;
 public class ProfileFragment extends Fragment {
 
     TextView username, email, phone, address, profileIcon, mRegisteredUser;
-    Button mBtnEditProfile;
+    Button mBtnEditProfile, mBtnTransactionHistory, mBtnReservationHistory;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String userId;
@@ -65,7 +65,15 @@ public class ProfileFragment extends Fragment {
                 Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_profile_edit)
         );
 
+        Button viewTransactionHistory = view.findViewById(R.id.btnTransactionHistory);
+        viewTransactionHistory.setOnClickListener(l ->
+                Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_profile_transaction_history)
+        );
 
+        Button viewReservationHistory = view.findViewById(R.id.btnReservationtionHistory);
+        viewReservationHistory.setOnClickListener(l ->
+                Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_profile_reservation_history)
+        );
 
 
 
@@ -77,6 +85,8 @@ public class ProfileFragment extends Fragment {
         profileIcon = view.findViewById(R.id.profileIcon);
         mRegisteredUser = view.findViewById(R.id.textViewRegisteredUser);
         mBtnEditProfile = view.findViewById(R.id.btnProfileEditProfile);
+        mBtnTransactionHistory = view.findViewById(R.id.btnTransactionHistory);
+        mBtnReservationHistory = view.findViewById(R.id.btnReservationtionHistory);
 
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.profile_loading);
@@ -112,6 +122,9 @@ public class ProfileFragment extends Fragment {
 
                 mRegisteredUser.setVisibility(View.VISIBLE);
                 mBtnEditProfile.setVisibility(View.VISIBLE);
+                mBtnTransactionHistory.setVisibility(View.VISIBLE);
+                mBtnReservationHistory.setVisibility(View.VISIBLE);
+
                 profileIcon.setText(String.valueOf(documentSnapshot.getString("username").charAt(0)));
                 profileIcon.setVisibility(View.VISIBLE);
 //                profileIcon.setText(String.valueOf(username.getText().charAt(0)));
