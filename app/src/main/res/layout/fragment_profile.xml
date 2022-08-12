@@ -15,7 +15,7 @@
         android:text="username@email.com"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profileIcon"
         app:layout_constraintTop_toBottomOf="@+id/profileUsername" />
 
@@ -34,7 +34,7 @@
         android:textIsSelectable="false"
         android:textSize="60sp"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="28dp"
 
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -69,7 +69,7 @@
         android:textColor="@color/primary"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profileIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +83,7 @@
         android:text="Username"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profileIcon"
         app:layout_constraintTop_toBottomOf="@+id/textViewRegisteredUser" />
 
@@ -94,7 +94,7 @@
         android:layout_marginStart="20dp"
         android:text="Phone"
         android:textSize="16sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profileIcon"
         app:layout_constraintTop_toBottomOf="@+id/profileEmail" />
 
@@ -105,7 +105,7 @@
         android:layout_marginStart="20dp"
         android:text="Address"
         android:textSize="16sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profileIcon"
         app:layout_constraintTop_toBottomOf="@+id/profilePhone" />
 
@@ -116,7 +116,7 @@
         android:layout_marginStart="132dp"
         android:layout_marginTop="48dp"
         android:text="Edit Profile"
-        android:visibility="visible"
+        android:visibility="gone"
         app:icon="@drawable/ic_baseline_edit_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileIcon" />
@@ -128,7 +128,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="Transactions"
-        android:visibility="visible"
+        android:visibility="gone"
         app:icon="@android:drawable/ic_menu_recent_history"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnProfileEditProfile" />
@@ -140,7 +140,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="Reservations"
-        android:visibility="visible"
+        android:visibility="gone"
         app:icon="@drawable/ic_reserve_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnProfileEditProfile" />
