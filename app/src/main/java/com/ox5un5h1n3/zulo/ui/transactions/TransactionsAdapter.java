@@ -1,4 +1,4 @@
-package com.ox5un5h1n3.zulo.ui.profile;
+package com.ox5un5h1n3.zulo.ui.transactions;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -19,12 +19,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.MyAllTransactionViewHolder> {
+public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.MyAllTransactionViewHolder> {
 
     private final List<Product> mTransactionList;
 
     // getting list from the constructor
-    public ReservationAdapter(List<Product> TransactionList) {
+    public TransactionsAdapter(List<Product> TransactionList) {
         mTransactionList = TransactionList;
     }
 

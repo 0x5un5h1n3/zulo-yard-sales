@@ -31,7 +31,7 @@ public class ReservationFragment extends Fragment {
 
     private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
-    private ReservationAdapter mReservationAdapter;
+    private TransactionsAdapter mReservationAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mReservationsCount;
 
@@ -103,7 +103,7 @@ private void getTransactions() {
 
                             }
                         }
-                        mReservationAdapter = new ReservationAdapter(mListOfTransactions);
+                        mReservationAdapter = new TransactionsAdapter(mListOfTransactions);
                         mTransactionsRecycler.setAdapter(mReservationAdapter);
 
 

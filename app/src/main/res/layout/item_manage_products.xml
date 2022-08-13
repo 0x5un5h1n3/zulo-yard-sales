@@ -100,8 +100,7 @@
                 android:backgroundTint="@android:color/holo_green_dark"
                 android:text="Approve"
                 android:textAllCaps="false"
-                app:cornerRadius="16dp"
-                app:icon="@drawable/ic_baseline_approve_24" />
+                app:cornerRadius="16dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_reject"
@@ -112,8 +111,7 @@
                 android:backgroundTint="@android:color/holo_red_dark"
                 android:text="Reject"
                 android:textAllCaps="false"
-                app:cornerRadius="16dp"
-                app:icon="@drawable/ic_baseline_reject_24" />
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
 
