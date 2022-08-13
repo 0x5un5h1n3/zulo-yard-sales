@@ -27,6 +27,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
@@ -216,6 +218,7 @@ public class SearchProductDetail extends Fragment {
                 public void onClick(View v) {
                     mDialog.show();
 
+                    String id = (FirebaseAuth.getInstance().getCurrentUser().getUid());
                     String name = userName.getText().toString().trim();
                     String phone = userPhoneNo.getText().toString().trim();
 
@@ -235,7 +238,7 @@ public class SearchProductDetail extends Fragment {
                         return;
                     }
 
-                    checkIsProductReservedAndUpdate(activity, name, phone);
+                    checkIsProductReservedAndUpdate(activity, id, name, phone);
                 }
             });
 
@@ -244,7 +247,7 @@ public class SearchProductDetail extends Fragment {
         }
 
         Product product = mProductList.get(getPosition); //re-check the usability
-        private void checkIsProductReservedAndUpdate(Activity activity, String userName, String userPhoneNo) {
+        private void checkIsProductReservedAndUpdate(Activity activity, String id, String userName, String userPhoneNo) {
             FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -253,6 +256,7 @@ public class SearchProductDetail extends Fragment {
                         if (!product.getProductReserve()){
                             Map<String, Object> updateReserveProduct = new HashMap<>();
                             updateReserveProduct.put("productReserve", true);
+                            updateReserveProduct.put("customerId", id);
                             updateReserveProduct.put("customerName", userName);
                             updateReserveProduct.put("customerPhoneNo", userPhoneNo);
 

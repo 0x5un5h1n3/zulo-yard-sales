@@ -1,14 +1,12 @@
-package com.ox5un5h1n3.zulo.ui.find_sales;
+package com.ox5un5h1n3.zulo;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,10 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -37,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -45,14 +41,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +59,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-public class FindSalesFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveStartedListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveStartedListener {
 
     private FloatingActionButton mFabLocation;
 
@@ -75,7 +70,6 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
 
     private final List<Product> mProductList = new ArrayList<>();
 
-
     // permission checking when user request. Step 1 & 2
     private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
         @Override
@@ -83,13 +77,13 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
             for (Map.Entry<String, Boolean> entry : result.entrySet()) {
                 if (entry.getKey().equals(permissionsForLocation[0])) {
                     if (!entry.getValue()) {
-                        Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
                     } else {
                         checkGps();
                     }
                 } else if (entry.getKey().equals(permissionsForLocation[1])) {
                     if (!entry.getValue()) {
-                        Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
                     } else {
                         checkGps();
                     }
@@ -99,6 +93,8 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     });
 
     // default lat lng
+//    private double currentLat = 0.0;
+//    private double currentLng = 0.0;
     public static double currentLat = 0.0;
     public static double currentLng = 0.0;
 
@@ -115,43 +111,34 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         }
     };
 
+
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map);
+
         //setup map initially
         setupMap();
 
-        //Getting data of user's last location if exists
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        //getting data of user's last location if exists
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //Creating new location request
+        //creating new location request
         createLocationRequest();
         //Allow-Deny location permission popup
         requestPermissionLauncher.launch(permissionsForLocation);
 
-        mFabLocation = view.findViewById(R.id.fab_location);
-        BottomNavigationView navView = view.findViewById(R.id.nav_view);
+        mFabLocation = findViewById(R.id.fab_location);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
 
 
         checkLocation();
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find_sales, container, false);
     }
 
     private void setupMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getParentFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
@@ -170,12 +157,24 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     public boolean onMarkerClick(@NonNull Marker marker) {
         for (int i = 0; i <= mProductList.size(); i++) {
             if (mProductList.get(i).getProductKey().equals(marker.getTag())) {
+                String newLine = System.getProperty("line.separator");
+
+                MaterialAlertDialogBuilder dialog;
+                dialog = new MaterialAlertDialogBuilder(MapActivity.this);
+                dialog.setTitle(mProductList.get(i).getProductName());
+                dialog.setMessage("Description: "+ mProductList.get(i).getProductDescription() + newLine + "Price: "+ mProductList.get(i).getProductPrice());
+                dialog.setNegativeButton("Cancel", null);
+                dialog.show();
+
+//                Toast.makeText(MapActivity.this, mProductList.get(i).getProductName(), Toast.LENGTH_SHORT).show();
+
 //                Intent intent = new Intent(this, ProductDetailActivity.class);
 //                intent.putExtra("Product", mProductList.get(i));
 //                startActivity(intent);
-//                break;
+                break;
             }
         }
+//        Toast.makeText(MapActivity.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -192,14 +191,16 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
 
                                 Product products = document.toObject(Product.class);
 
-                                if (currentUser == null) {
-                                    addListAndDrawMaker(products);
-                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
-                                    addListAndDrawMaker(products);
-                                }
+//                                if (currentUser == null) {
+//                                    addListAndDrawMaker(products);
+//                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
+//                                    addListAndDrawMaker(products);
+//                                }
+
+                                addListAndDrawMaker(products);
                             }
                         } else {
-                            Toast.makeText(getContext(), "Getting error while fetching product", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "Getting error while fetching product", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -220,6 +221,7 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
         }
     }
 
+    //get initial & timelapse location requests every 5 seconds
     protected void createLocationRequest() {
         if (locationRequest == null) {
             locationRequest = LocationRequest.create();
@@ -241,9 +243,9 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     //Get all gps related links
     private void checkGps() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-        SettingsClient client = LocationServices.getSettingsClient(getActivity());
+        SettingsClient client = LocationServices.getSettingsClient(MapActivity.this);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-        task.addOnSuccessListener(getActivity(), new OnSuccessListener<LocationSettingsResponse>() {
+        task.addOnSuccessListener(MapActivity.this, new OnSuccessListener<LocationSettingsResponse>() {
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
@@ -254,13 +256,13 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
             }
         });
 
-        task.addOnFailureListener(getActivity(), new OnFailureListener() {
+        task.addOnFailureListener(MapActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 if (e instanceof ResolvableApiException) {
                     try {
                         ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(getActivity(), 111);
+                        resolvable.startResolutionForResult(MapActivity.this, 111);
                     } catch (IntentSender.SendIntentException sendEx) {
                         Log.e("locationSettingsExp: ", sendEx.getMessage());
                     }
@@ -270,13 +272,12 @@ public class FindSalesFragment extends Fragment implements OnMapReadyCallback, G
     }
 
 
-
-    //Permission of different versions
+    //permission of different versions
     private boolean checkPermission(String permissionName) {
         if (Build.VERSION.SDK_INT >= 23) {
-            return ContextCompat.checkSelfPermission(getContext(), permissionName) == PackageManager.PERMISSION_GRANTED;
+            return ContextCompat.checkSelfPermission(this, permissionName) == PackageManager.PERMISSION_GRANTED;
         } else {
-            return PermissionChecker.checkSelfPermission(getContext(), permissionName) == PermissionChecker.PERMISSION_GRANTED;
+            return PermissionChecker.checkSelfPermission(this, permissionName) == PermissionChecker.PERMISSION_GRANTED;
         }
     }
 

@@ -40,6 +40,8 @@ import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
+import static com.ox5un5h1n3.zulo.MapActivity.currentLat;
+import static com.ox5un5h1n3.zulo.MapActivity.currentLng;
 
 import java.util.Objects;
 
@@ -74,6 +76,11 @@ public class AddNewSalePost extends Fragment {
             });
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -91,10 +98,10 @@ public class AddNewSalePost extends Fragment {
 
         mProductName = view.findViewById(R.id.et_product_name);
         mProductPrice = view.findViewById(R.id.et_product_price);
-        mProductDescription = view.findViewById(R.id.et_address);
+        mProductDescription = view.findViewById(R.id.et_product_desc);
         mSubmit = view.findViewById(R.id.btnSubmitPost);
         mOpenCam = view.findViewById(R.id.btnOpenCamera);
-        mTakePicture = view.findViewById(R.id.btnUpdateProfile);
+//        mTakePicture = view.findViewById(R.id.btnUpdateProfile);
 
         mTvChooseImage = view.findViewById(R.id.tv_choose_image);
         mIvProduct = view.findViewById(R.id.imageiewProduct);
@@ -105,7 +112,7 @@ public class AddNewSalePost extends Fragment {
         mDialog.setCancelable(false);
 
         getUserData();
-//        getPreviousScreenCurrentLocation();
+        getPreviousScreenCurrentLocation();
         submitProductData();
         pickImage();
 
@@ -158,8 +165,8 @@ public class AddNewSalePost extends Fragment {
     }
 
     private void getPreviousScreenCurrentLocation(){
-        lat = 0;
-        lng = 0;
+        lat = currentLat;
+        lng = currentLng;
 //        lat = getIntent().getExtras().getDouble("lat");
 //        lng = getIntent().getExtras().getDouble("lng");
     }
@@ -179,22 +186,16 @@ public class AddNewSalePost extends Fragment {
 
                 if (pName.isEmpty()) {
                     Toast.makeText(getActivity(), "Product name is empty", Toast.LENGTH_SHORT).show();
-                    mProductName.setError("Required Field");
-                    mProductName.requestFocus();
                     mDialog.cancel();
                     return;
                 }
                 if (pPrice <= 0.0) {
                     Toast.makeText(getActivity(), "Invalid price", Toast.LENGTH_SHORT).show();
-                    mProductPrice.setError("Required Field");
-                    mProductPrice.requestFocus();
                     mDialog.cancel();
                     return;
                 }
                 if (pDescription.isEmpty()) {
                     Toast.makeText(getActivity(), "Product description is empty", Toast.LENGTH_SHORT).show();
-                    mProductDescription.setError("Required Field");
-                    mProductDescription.requestFocus();
                     mDialog.cancel();
                     return;
                 }
@@ -203,6 +204,8 @@ public class AddNewSalePost extends Fragment {
                     Toast.makeText(getActivity(), "Product image is empty", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
+                }else{
+
                 }
                 mDialog.setMessage("Uploading product image");
                 final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserProfile/" + System.currentTimeMillis());
@@ -215,7 +218,7 @@ public class AddNewSalePost extends Fragment {
                             return ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Product product = new Product(pKey, pUid, pName, pPrice, pDescription, lat, lng, false, false, uri.toString(),"","", ownerName, true);
+                                    Product product = new Product(pKey, pUid, pName, pPrice, pDescription, lat, lng, false, false, uri.toString(),"","","", ownerName, true);
                                     uploadUserData(product);
                                 }
                             });
@@ -233,7 +236,7 @@ public class AddNewSalePost extends Fragment {
             @Override
             public void onSuccess(Void unused) {
                 mDialog.cancel();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+//                startActivity(new Intent(AddProductActivity.this, HomeActivity.class));
 //                finish();
 //                Toast.makeText(getActivity(), "Product Added Successfully", Toast.LENGTH_SHORT).show();
                 dialog = new MaterialAlertDialogBuilder(getActivity());

@@ -67,8 +67,8 @@
 
         <fragment
             android:id="@+id/subnav_view_transactions"
-            android:name="com.ox5un5h1n3.zulo.ui.home.TransactionsFragment"
-            android:label="Transactions"
+            android:name="com.ox5un5h1n3.zulo.ui.home.AllTransactionsFragment"
+            android:label="Transaction History"
             tools:layout="@layout/fragment_transactions">
         </fragment>
 
@@ -110,24 +110,11 @@
 
 
 
-
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_home"-->
-<!--        android:name="com.ox5un5h1n3.zulo.ui.home.HomeFragment"-->
-<!--        android:label="@string/title_home"-->
-<!--        tools:layout="@layout/fragment_home" />-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_search"-->
-<!--        android:name="com.ox5un5h1n3.zulo.ui.search.SearchFragment"-->
-<!--        android:label="@string/title_search"-->
-<!--        tools:layout="@layout/fragment_search" />-->
-
-        <fragment
-            android:id="@+id/navigation_find_sales"
-            android:name="com.ox5un5h1n3.zulo.ui.find_sales.FindSalesFragment"
-            android:label="@string/title_find_sales"
-            tools:layout="@layout/fragment_transactions" />
+    <activity
+        android:id="@+id/navigation_find_sales"
+        android:name="com.ox5un5h1n3.zulo.MapActivity"
+        android:label="@string/title_find_sales"
+        tools:layout="@layout/activity_map" />
 
     <navigation
         android:id="@+id/navigation_profile_graph"
@@ -145,6 +132,20 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_navigation_profile_main_to_profile_transaction_history"
+                app:destination="@id/subnav_profile_transaction_history"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_navigation_profile_main_to_profile_reservation_history"
+                app:destination="@id/subnav_profile_reservation_history"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         </fragment>
 
         <fragment
@@ -152,14 +153,19 @@
             android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileEditFragment"
             android:label="Edit Profile"
             tools:layout="@layout/fragment_profile_edit" />
+
+        <fragment
+            android:id="@+id/subnav_profile_transaction_history"
+            android:name="com.ox5un5h1n3.zulo.ui.profile.TransactionsFragment"
+            android:label="Transactions"
+            tools:layout="@layout/fragment_profile_transactions" />
+
+        <fragment
+            android:id="@+id/subnav_profile_reservation_history"
+            android:name="com.ox5un5h1n3.zulo.ui.profile.ReservationFragment"
+            android:label="Reservations"
+            tools:layout="@layout/fragment_profile_reservations" />
     </navigation>
-
-<!--    <fragment-->
-<!--        android:id="@+id/navigation_profile"-->
-<!--        android:name="com.ox5un5h1n3.zulo.ui.profile.ProfileFragment"-->
-<!--        android:label="@string/title_profile"-->
-<!--        tools:layout="@layout/fragment_profile" />-->
-
 
 
 </navigation>
