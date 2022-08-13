@@ -53,7 +53,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
 
     Product product;
 
-    // 1st called
     // getting list from the constructor
     public AllProductAdapter(List<Product> productList, Activity activity) {
         mProductList = productList;
@@ -64,7 +63,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
 
     }
 
-    // 3rd called
     @NonNull
     @NotNull
     @Override
@@ -73,7 +71,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
         return new MyAllProductViewHolder(mView);
     }
 
-    //5th called
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyAllProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
