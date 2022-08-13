@@ -12,9 +12,9 @@
         android:title="@string/title_search" />
 
     <item
-        android:id="@+id/navigation_find_sales"
-        android:icon="@drawable/ic_baseline_location_24"
-        android:title="@string/title_find_sales" />
+        android:id="@+id/navigation_transactions"
+        android:icon="@drawable/ic_baseline_transactions_24"
+        android:title="@string/title_transactions" />
 
     <item
         android:id="@+id/navigation_profile_graph"
