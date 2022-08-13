@@ -1,6 +1,7 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,12 @@ import android.widget.Button;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
+import com.ox5un5h1n3.zulo.MapActivity;
 import com.ox5un5h1n3.zulo.R;
+import com.ox5un5h1n3.zulo.ui.signin.SignInActivity;
+import com.ox5un5h1n3.zulo.ui.signup.SignUpActivity;
+
+import java.util.Map;
 
 public class DashboardFragment extends Fragment {
 
@@ -58,7 +64,9 @@ public class DashboardFragment extends Fragment {
 
         Button findYardSalesOnMap = view.findViewById(R.id.btnFindYardSalesOnMap);
         findYardSalesOnMap.setOnClickListener(l ->
-                displayFindSaleDialog()
+//                displayFindSaleDialog()
+
+                startActivity(new Intent(getActivity(), MapActivity.class))
         );
 
         Button searchYardSaleItems = view.findViewById(R.id.btnSearchYardSaleItems);
