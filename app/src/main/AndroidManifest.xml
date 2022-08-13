@@ -20,7 +20,7 @@
         android:theme="@style/Theme.Zulo"
         tools:targetApi="31">
         <activity
-            android:name=".MapActivity"
+            android:name=".ui.home.MapActivity"
             android:exported="false" />
 
         <meta-data

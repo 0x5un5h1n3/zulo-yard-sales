@@ -15,13 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.dialog.MaterialDialogs;
-import com.ox5un5h1n3.zulo.MapActivity;
 import com.ox5un5h1n3.zulo.R;
-import com.ox5un5h1n3.zulo.ui.signin.SignInActivity;
-import com.ox5un5h1n3.zulo.ui.signup.SignUpActivity;
-
-import java.util.Map;
 
 public class DashboardFragment extends Fragment {
 

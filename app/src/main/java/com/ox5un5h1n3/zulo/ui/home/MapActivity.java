@@ -1,4 +1,4 @@
-package com.ox5un5h1n3.zulo;
+package com.ox5un5h1n3.zulo.ui.home;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -12,6 +12,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +50,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,6 +72,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     private final List<Product> mProductList = new ArrayList<>();
+
+    private Marker marker_me;
+
 
     // permission checking when user request. Step 1 & 2
     private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
@@ -118,15 +124,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        //setup map initially
         setupMap();
 
-        //getting data of user's last location if exists
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        /fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //creating new location request
         createLocationRequest();
-        //Allow-Deny location permission popup
         requestPermissionLauncher.launch(permissionsForLocation);
 
         mFabLocation = findViewById(R.id.fab_location);
@@ -146,6 +148,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+
+        mGoogleMap = googleMap;
+        //map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        MapStyleOptions styleOptions = MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.map_style);
+        mGoogleMap.setMapStyle(styleOptions);
+
+
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         mGoogleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
@@ -162,7 +174,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 MaterialAlertDialogBuilder dialog;
                 dialog = new MaterialAlertDialogBuilder(MapActivity.this);
                 dialog.setTitle(mProductList.get(i).getProductName());
-                dialog.setMessage("Description: "+ mProductList.get(i).getProductDescription() + newLine + "Price: "+ mProductList.get(i).getProductPrice());
+                dialog.setMessage("Description: "+ mProductList.get(i).getProductDescription()
+                        + newLine + "Price: "+ mProductList.get(i).getProductPrice());
                 dialog.setNegativeButton("Cancel", null);
                 dialog.show();
 
@@ -211,6 +224,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         //getProductDisplay()  is the Flag used in Product POJO class & in DB. If the value is TRUE it means
         // that we will make it visible;  If the value is FALSE then we will not show it.
         if (product.getProductDisplay()){
+
             mProductList.add(product);
             Objects.requireNonNull(mGoogleMap.addMarker(
                             new MarkerOptions().position(
@@ -219,9 +233,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                                             product.getProductLng()))))
                     .setTag(product.getProductKey());
         }
+
+//        if (product.getProductDisplay()){
+//
+//            mProductList.add(product);
+//            mGoogleMap.addMarker(
+//                            new MarkerOptions().position(
+//                                    new LatLng(
+//                                            product.getProductLat(),
+//                                            product.getProductLng())).icon(BitmapDescriptorFactory.fromResource(R.drawable.sale)))
+//                    .setTag(product.getProductKey());
+//        }
     }
 
-    //get initial & timelapse location requests every 5 seconds
     protected void createLocationRequest() {
         if (locationRequest == null) {
             locationRequest = LocationRequest.create();
@@ -272,7 +296,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
-    //permission of different versions
     private boolean checkPermission(String permissionName) {
         if (Build.VERSION.SDK_INT >= 23) {
             return ContextCompat.checkSelfPermission(this, permissionName) == PackageManager.PERMISSION_GRANTED;

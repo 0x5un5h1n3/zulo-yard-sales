@@ -36,12 +36,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
-import static com.ox5un5h1n3.zulo.MapActivity.currentLat;
-import static com.ox5un5h1n3.zulo.MapActivity.currentLng;
+import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLat;
+import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLng;
 
 import java.util.Objects;
 
