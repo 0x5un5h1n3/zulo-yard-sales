@@ -165,7 +165,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             @Override
             public void onSuccess(Void unused) {
 //                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
-                dialog = new MaterialAlertDialogBuilder(mActivity.getBaseContext());
+                dialog = new MaterialAlertDialogBuilder(mActivity);
                 dialog.setTitle("Message");
                 dialog.setMessage("Proceed successfully");
                 dialog.setNegativeButton("OK", null);
