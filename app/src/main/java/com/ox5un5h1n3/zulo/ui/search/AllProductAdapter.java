@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,6 +80,8 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
         holder.mTvProductDesc.setText(product.getProductDescription());
         holder.mTvProductPrice.setText("$ " + product.getProductPrice());
 
+
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
 
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
