@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +74,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         holder.mTvProductName.setText(product.getProductName());
         holder.mTvProductPrice.setText("$ " + product.getProductPrice());
 
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
 
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
         holder.mSwitch.setChecked(product.getProductDisplay());

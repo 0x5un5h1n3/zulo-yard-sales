@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.mTvSoldByName.setText("Sold by : " + product.getOwnerName());
         holder.mTvReservedByName.setText("Reserved by : " + product.getCustomerName());
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
     }
 
     @Override

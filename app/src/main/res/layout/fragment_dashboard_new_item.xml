@@ -58,14 +58,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/et_p_price"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:gravity="center"-->
-    <!--        android:hint="Product price"-->
-    <!--        android:inputType="numberDecimal"-->
-    <!--        android:minHeight="48dp" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_product_price_layout"

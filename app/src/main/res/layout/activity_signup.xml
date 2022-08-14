@@ -26,25 +26,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/logo_zulo" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/username"-->
-<!--        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="58dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:drawableStart="@drawable/ic_baseline_person_24"-->
-<!--        android:drawablePadding="6dp"-->
-<!--        android:fontFamily="sans-serif"-->
-<!--        android:hint="@string/sign_up_username"-->
-<!--        android:importantForAutofill="no"-->
-<!--        android:inputType="textEmailAddress"-->
-<!--        android:minHeight="48dp"-->
-<!--        android:selectAllOnFocus="true"-->
-<!--        android:singleLine="true"-->
-<!--        android:textSize="16sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_layout"
@@ -107,25 +88,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <EditText-->
-<!--            android:id="@+id/pass"-->
-<!--            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:drawableStart="@drawable/ic_baseline_lock_24"-->
-<!--            android:drawablePadding="6dp"-->
-<!--            android:fontFamily="sans-serif"-->
-<!--            android:hint="@string/sign_in_pass"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="textPassword"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:selectAllOnFocus="true"-->
-<!--            android:singleLine="true"-->
-<!--            android:textSize="16sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/emailAddress" />-->
-<!--    -->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout"
