@@ -47,11 +47,11 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public Double getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Double productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 
