@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,8 @@ public class AllTransactionsFragment extends Fragment {
     private LottieAnimationView lottieAnimationView;
     private TextView mTransactionsCount;
 
+    private SearchView mSvAllTransactionsSearch;
+
     public AllTransactionsFragment() {
         // Required empty public constructor
     }
@@ -54,11 +57,44 @@ public class AllTransactionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTransactionsRecycler = view.findViewById(R.id.rcv_transactions);
+
+        mSvAllTransactionsSearch = view.findViewById(R.id.sv_transactions_search);
+        mSvAllTransactionsSearch.clearFocus();
+
+        mSvAllTransactionsSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+
+
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
         mTransactionsCount = view.findViewById(R.id.tv_transaction_count);
 
         getAllTransactions();
+    }
+
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for(Product product : mListOfTransactions){
+            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        }else{
+            mTransactionAdapter.setFilteredTransactionList(filteredList);
+        }
     }
 
     private void getAllTransactions() {
@@ -71,6 +107,7 @@ public class AllTransactionsFragment extends Fragment {
                             lottieAnimationView.setVisibility(View.GONE);
                             mTransactionsRecycler.setVisibility(View.VISIBLE);
                             mTransactionsCount.setVisibility(View.VISIBLE);
+                            mSvAllTransactionsSearch.setVisibility(View.VISIBLE);
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product products = document.toObject(Product.class);

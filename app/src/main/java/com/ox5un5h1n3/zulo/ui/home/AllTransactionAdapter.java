@@ -1,9 +1,11 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class AllTransactionAdapter extends RecyclerView.Adapter<AllTransactionAdapter.MyAllTransactionViewHolder> {
 
-    private final List<Product> mTransactionList;
+    private List<Product> mTransactionList;
 
     // getting list from the constructor
     public AllTransactionAdapter(List<Product> TransactionList) {
@@ -45,11 +47,18 @@ public class AllTransactionAdapter extends RecyclerView.Adapter<AllTransactionAd
         holder.mTvSoldByName.setText("Sold by : " + product.getOwnerName());
         holder.mTvReservedByName.setText("Reserved by : " + product.getCustomerName());
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
+
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
     }
 
     @Override
     public int getItemCount() {
         return mTransactionList.size();
+    }
+
+    public void setFilteredTransactionList(List<Product> filteredList) {
+        this.mTransactionList = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder{
