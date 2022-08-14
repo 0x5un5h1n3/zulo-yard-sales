@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,13 +31,15 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private RecyclerView mProductRecycler;
-    private EditText mEtSearch;
+    private SearchView mSvSearch;
     private MaterialButton mBtnSearch;
     private MaterialButton mBtnReset;
     private LottieAnimationView lottieAnimationView;
     private AllProductAdapter mAllProductAdapter;
-    private final List<Product> mProductList = new ArrayList<>();
+    private  List<Product> mProductList = new ArrayList<>();
     private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    
+    private List<Product> productList;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -62,23 +64,55 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mProductRecycler = view.findViewById(R.id.rcv_product);
-        mEtSearch = view.findViewById(R.id.et_search);
-        mBtnSearch = view.findViewById(R.id.btn_search);
-        mBtnReset = view.findViewById(R.id.btn_reset);
+
+        mSvSearch = view.findViewById(R.id.sv_search);
+        mSvSearch.clearFocus();
+
+
+
+        mSvSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+//        mBtnSearch = view.findViewById(R.id.btn_search);
+//        mBtnReset = view.findViewById(R.id.btn_reset);
 
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
 
         getAllProducts();
-        searchButton();
-        resetButton();
+//        searchButton();
+//        resetButton();
+    }
+
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for(Product product : mProductList){
+            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        }else{
+            mAllProductAdapter.setFilteredSearchList(filteredList);
+        }
     }
 
     private void searchButton() {
         mBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchedText = mEtSearch.getText().toString().trim();
+                String searchedText = mSvSearch.getSuggestionsAdapter().toString().trim();
                 if (searchedText.isEmpty()){
                     Toast.makeText(getActivity(), "Please enter search text", Toast.LENGTH_SHORT).show();
                     return;
@@ -97,11 +131,12 @@ public class SearchFragment extends Fragment {
         mBtnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEtSearch.setText("");
+//                mEtSearch.setText("");
                 getAllProducts();
             }
         });
     }
+
     private void getAllProducts() {
 
 
@@ -127,6 +162,7 @@ public class SearchFragment extends Fragment {
 
                             lottieAnimationView.setVisibility(View.GONE);
                             mProductRecycler.setVisibility(View.VISIBLE);
+                            mSvSearch.setVisibility(View.VISIBLE);
 
                         } else {
                             Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();

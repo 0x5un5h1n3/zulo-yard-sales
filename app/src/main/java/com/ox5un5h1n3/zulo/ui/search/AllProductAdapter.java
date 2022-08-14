@@ -52,7 +52,13 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
     private MaterialTextView mSellerAddress;
     private MaterialTextView mSellerMo;
 
-    Product product;
+//    Product product;
+
+    public void setFilteredSearchList(List<Product> filteredList){
+        this.mProductList = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     // getting list from the constructor
     public AllProductAdapter(List<Product> productList, Activity activity) {
