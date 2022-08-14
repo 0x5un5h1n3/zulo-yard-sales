@@ -14,7 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +49,10 @@ import com.ox5un5h1n3.zulo.data.model.Product;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
 import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLat;
 import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLng;
+
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
 
 import java.util.Objects;
 
@@ -65,6 +77,9 @@ public class AddNewSalePost extends Fragment {
     MaterialAlertDialogBuilder dialog;
     private Uri uri;
     private String ownerName;
+
+    private InterstitialAd mInterstitialAd;
+
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), imageUri -> {
@@ -129,6 +144,43 @@ public class AddNewSalePost extends Fragment {
             }
 
         });
+
+        //admob ads
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(getActivity(),"ca-app-pub-3940256099942544/1033173712", adRequest, //sample ad
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                    }
+                });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(getActivity());
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                }
+
+            }
+        },1500);
+
+
 
     }
 
@@ -243,6 +295,7 @@ public class AddNewSalePost extends Fragment {
                 dialog.setMessage("Product Added Successfully");
                 dialog.setNegativeButton("OK", null);
                 dialog.show();
+                assert getParentFragment() != null;
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

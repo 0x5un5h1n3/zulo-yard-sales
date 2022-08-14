@@ -160,16 +160,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static boolean isInternetAvailable(Context context) {
-        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-
-        if (info == null) {
-            Toast.makeText(context.getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
-            return true;
-        }
-    }
 
 }
