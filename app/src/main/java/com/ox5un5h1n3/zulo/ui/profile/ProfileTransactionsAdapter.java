@@ -47,7 +47,7 @@ public class ProfileTransactionsAdapter extends RecyclerView.Adapter<ProfileTran
         holder.mTvReservedByName.setText("Reserved by : " + product.getCustomerName());
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
 
-        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_recycleview));
     }
 
     @Override

@@ -72,9 +72,10 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
         Product product = mManageProductList.get(position);
         holder.mTvProductName.setText(product.getProductName());
+        holder.mTvProductDescription.setText(product.getProductDescription());
         holder.mTvProductPrice.setText("$ " + product.getProductPrice());
 
-        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_recycleview));
 
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
         holder.mSwitch.setChecked(product.getProductDisplay());
@@ -187,6 +188,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView mTvProductName;
+        private final TextView mTvProductDescription;
         private final TextView mTvProductPrice;
 //        private final TextView mTvGuestName;
 //        private final TextView mTvGuestPhoneNo;
@@ -200,6 +202,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         public ProductViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             mTvProductName = itemView.findViewById(R.id.tv_product_name);
+            mTvProductDescription = itemView.findViewById(R.id.tv_product_desc);
             mTvProductPrice = itemView.findViewById(R.id.tv_product_price);
 //            mTvGuestName = itemView.findViewById(R.id.tv_guest_name);
 //            mTvGuestPhoneNo = itemView.findViewById(R.id.tv_guest_number);

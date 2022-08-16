@@ -40,7 +40,7 @@
         android:backgroundTint="#FF6358"
         android:paddingTop="30dp"
         android:paddingBottom="20dp"
-        android:text="Search the Yard Sales Items"
+        android:text="Search Yard Sales Items"
         app:cornerRadius="20dp"
         app:icon="@drawable/img_dash_search"
         app:iconGravity="top"

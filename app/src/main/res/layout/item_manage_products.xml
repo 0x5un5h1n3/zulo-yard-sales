@@ -53,6 +53,14 @@
                     android:textSize="20sp"/>
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_product_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="20sp"
+                    tools:text="Description" />
+
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_product_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,8 +82,9 @@
             android:id="@+id/btn_edit_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
             android:text="Edit Product"
             android:textAllCaps="false"
             app:cornerRadius="16dp"
