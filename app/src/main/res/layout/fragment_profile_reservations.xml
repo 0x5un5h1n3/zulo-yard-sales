@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.home.AllTransactionsFragment">
+    tools:context=".ui.profile.ProfileReservationFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_profile_reservations_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/search_view_bg"
+        android:visibility="gone"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search..." />
 
     <TextView
         android:id="@+id/tv_reservation_count"
@@ -13,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Reservation Count: 0"
+        android:text="Total Reservation Count: 0"
         android:textSize="20sp"
         android:visibility="gone" />
 

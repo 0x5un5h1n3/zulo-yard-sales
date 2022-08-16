@@ -20,12 +20,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.MyAllTransactionViewHolder> {
+public class ProfileTransactionsAdapter extends RecyclerView.Adapter<ProfileTransactionsAdapter.MyAllTransactionViewHolder> {
 
-    private final List<Product> mTransactionList;
+    private List<Product> mTransactionList;
 
     // getting list from the constructor
-    public TransactionsAdapter(List<Product> TransactionList) {
+    public ProfileTransactionsAdapter(List<Product> TransactionList) {
         mTransactionList = TransactionList;
     }
 
@@ -53,6 +53,16 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     @Override
     public int getItemCount() {
         return mTransactionList.size();
+    }
+
+    public void setFilteredProfileTransactionList(List<Product> filteredList) {
+        this.mTransactionList = filteredList;
+        notifyDataSetChanged();
+    }
+
+    public void setFilteredProfileReservationList(List<Product> filteredList) {
+        this.mTransactionList = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder{

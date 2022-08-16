@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.MyAllTransactionViewHolder> {
 
-    private final List<Product> mTransactionList;
+    private List<Product> mTransactionList;
 
     // getting list from the constructor
     public TransactionsAdapter(List<Product> TransactionList) {

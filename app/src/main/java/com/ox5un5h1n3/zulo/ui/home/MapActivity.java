@@ -124,11 +124,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        //setup map initially
         setupMap();
 
-        /fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        //getting data of user's last location if exists
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        //creating new location request
         createLocationRequest();
+        //Allow-Deny location permission popup
         requestPermissionLauncher.launch(permissionsForLocation);
 
         mFabLocation = findViewById(R.id.fab_location);
@@ -162,6 +166,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mGoogleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnCameraMoveStartedListener(this);
+        //For getting products
         getAllProduct();
     }
 
@@ -246,6 +251,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 //        }
     }
 
+    //get initial & timelapse location requests every 5 seconds
     protected void createLocationRequest() {
         if (locationRequest == null) {
             locationRequest = LocationRequest.create();
@@ -296,6 +302,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
+    //permission of different versions
     private boolean checkPermission(String permissionName) {
         if (Build.VERSION.SDK_INT >= 23) {
             return ContextCompat.checkSelfPermission(this, permissionName) == PackageManager.PERMISSION_GRANTED;
