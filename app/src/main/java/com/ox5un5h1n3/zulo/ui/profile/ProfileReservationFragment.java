@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,15 +28,17 @@ import com.ox5un5h1n3.zulo.data.model.UserDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationFragment extends Fragment {
+public class ProfileReservationFragment extends Fragment {
 
     private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
-    private TransactionsAdapter mReservationAdapter;
+    private ProfileTransactionsAdapter mReservationAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mReservationsCount;
 
-    public ReservationFragment() {
+    private SearchView mSvProfileReservationSearch;
+
+    public ProfileReservationFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +58,43 @@ public class ReservationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTransactionsRecycler = view.findViewById(R.id.rcv_transactions);
+
+        mSvProfileReservationSearch = view.findViewById(R.id.sv_profile_reservations_search);
+        mSvProfileReservationSearch.clearFocus();
+
+        mSvProfileReservationSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
         mReservationsCount = view.findViewById(R.id.tv_reservation_count);
 
         getTransactions();
+    }
+
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for(Product product : mListOfTransactions){
+            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        }else{
+            mReservationAdapter.setFilteredProfileReservationList(filteredList);
+        }
     }
 
 private void getTransactions() {
@@ -72,6 +107,7 @@ private void getTransactions() {
                         lottieAnimationView.setVisibility(View.GONE);
                         mTransactionsRecycler.setVisibility(View.VISIBLE);
                         mReservationsCount.setVisibility(View.VISIBLE);
+                        mSvProfileReservationSearch.setVisibility(View.VISIBLE);
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Product products = document.toObject(Product.class);
@@ -96,14 +132,14 @@ private void getTransactions() {
                                 if(!products.getRequestApproved()){
                                         mListOfTransactions.add(products);
                                          int count = mListOfTransactions.size();
-                                        mReservationsCount.setText("Reservation Count: "+ count);
+                                        mReservationsCount.setText("Total Reservation Count: "+ count);
 
                                     }
                                 }
 
                             }
                         }
-                        mReservationAdapter = new TransactionsAdapter(mListOfTransactions);
+                        mReservationAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
                         mTransactionsRecycler.setAdapter(mReservationAdapter);
 
 

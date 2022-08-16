@@ -117,7 +117,7 @@ public class AllTransactionsFragment extends Fragment {
                                 if (products.getRequestApproved()){
                                         mListOfTransactions.add(products);
                                         int count = mListOfTransactions.size();
-                                        mTransactionsCount.setText("Transaction Count: "+ count);
+                                        mTransactionsCount.setText("Total Transaction Count: "+ count);
 
                                 }
                             }

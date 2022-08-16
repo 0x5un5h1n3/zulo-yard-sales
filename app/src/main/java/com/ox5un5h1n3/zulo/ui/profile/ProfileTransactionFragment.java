@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,15 +27,17 @@ import com.ox5un5h1n3.zulo.data.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionsFragment extends Fragment {
+public class ProfileTransactionFragment extends Fragment {
 
     private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
-    private TransactionsAdapter mTransactionAdapter;
+    private ProfileTransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mTransactionsCount;
 
-    public TransactionsFragment() {
+    private SearchView mSvProfileTransactionsSearch;
+
+    public ProfileTransactionFragment() {
         // Required empty public constructor
     }
 
@@ -54,6 +57,23 @@ public class TransactionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTransactionsRecycler = view.findViewById(R.id.rcv_transactions);
+
+        mSvProfileTransactionsSearch = view.findViewById(R.id.sv_profile_transactions_search);
+        mSvProfileTransactionsSearch.clearFocus();
+
+        mSvProfileTransactionsSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
         mTransactionsCount = view.findViewById(R.id.tv_transaction_count);
@@ -61,7 +81,22 @@ public class TransactionsFragment extends Fragment {
         getTransactions();
     }
 
-private void getTransactions() {
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for(Product product : mListOfTransactions){
+            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+        }
+
+        if(filteredList.isEmpty()){
+//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        }else{
+            mTransactionAdapter.setFilteredProfileTransactionList(filteredList);
+        }
+    }
+
+    private void getTransactions() {
     FirebaseFirestore.getInstance().collection("Products").get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -71,6 +106,7 @@ private void getTransactions() {
                         lottieAnimationView.setVisibility(View.GONE);
                         mTransactionsRecycler.setVisibility(View.VISIBLE);
                         mTransactionsCount.setVisibility(View.VISIBLE);
+                        mSvProfileTransactionsSearch.setVisibility(View.VISIBLE);
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Product products = document.toObject(Product.class);
@@ -82,13 +118,13 @@ private void getTransactions() {
                                     mListOfTransactions.add(products);
 
                                     int count = mListOfTransactions.size();
-                                    mTransactionsCount.setText("Transaction Count: "+ count);
+                                    mTransactionsCount.setText("Total Transaction Count: "+ count);
 
                                 }
                             }
                         }
 
-                        mTransactionAdapter = new TransactionsAdapter(mListOfTransactions);
+                        mTransactionAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
                         mTransactionsRecycler.setAdapter(mTransactionAdapter);
 
 
