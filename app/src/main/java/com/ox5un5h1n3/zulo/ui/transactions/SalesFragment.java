@@ -32,7 +32,7 @@ public class SalesFragment extends Fragment {
     private RecyclerView mTransactionsRecycler;
     private TransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
-    private TextView mTransactionsCount;
+    private TextView mTransactionsCount, mTransactionsTotal;
 
 
     public SalesFragment() {
@@ -58,6 +58,7 @@ public class SalesFragment extends Fragment {
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
         mTransactionsCount = view.findViewById(R.id.tv_transaction_count);
+        mTransactionsTotal = view.findViewById(R.id.tv_transaction_total);
 
         getTransactions();
     }
@@ -72,6 +73,7 @@ public class SalesFragment extends Fragment {
                             lottieAnimationView.setVisibility(View.GONE);
                             mTransactionsRecycler.setVisibility(View.VISIBLE);
                             mTransactionsCount.setVisibility(View.VISIBLE);
+                            mTransactionsTotal.setVisibility(View.VISIBLE);
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product products = document.toObject(Product.class);
@@ -82,6 +84,14 @@ public class SalesFragment extends Fragment {
 
                                         int count = mListOfTransactions.size();
                                         mTransactionsCount.setText("Sales Count: " + count);
+
+                                        double total = 0;
+
+                                        for(Product product: mListOfTransactions){
+                                            double value = product.getProductPrice();
+                                            total += value;
+                                            mTransactionsTotal.setText("You have earned: $ " + total);
+                                        }
 
                                     }
                                 }

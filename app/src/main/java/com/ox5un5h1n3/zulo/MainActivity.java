@@ -71,37 +71,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        startActivity(intent);
-//
-//
-////        MaterialAlertDialogBuilder newAlertDialog;
-////        newAlertDialog = new MaterialAlertDialogBuilder(this);
-////        newAlertDialog
-////                .setTitle("Closing Activity").setMessage("Are you sure you want to closethis activity?")
-////                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialog, int which) {
-////                        finish();
-////                        Toast.makeText(MainActivity.this, "Activity closed",Toast.LENGTH_SHORT).show();
-////                    }
-////                }).setNegativeButton("No", null).show();
-//    }
 
-
-
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if(user == null){
-//            startActivity(new Intent(MainActivity.this, SignInActivity.class));
-//        }
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -123,17 +93,10 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.logout) {
-//            finish();
-//            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-//            startActivity(intent);
-//        }
-//        return super.onOptionsItemSelected(item);
 
         if (item.getItemId() == R.id.logout) {
 
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
-//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Are you sure you want to sign out?");
             builder.setCancelable(true);
 
@@ -159,6 +122,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

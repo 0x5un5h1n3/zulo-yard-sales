@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.transactions.SalesFragment">
+    tools:context=".ui.transactions.PurchasesFragment">
 
     <TextView
         android:id="@+id/tv_transaction_count"
@@ -14,6 +14,16 @@
         android:layout_marginTop="18dp"
         android:gravity="center"
         android:text="Purchase Count: 0"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_transaction_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="You have spent: $ 0"
         android:textSize="18sp"
         android:visibility="gone" />
 

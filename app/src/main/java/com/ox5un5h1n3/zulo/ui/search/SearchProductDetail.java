@@ -1,7 +1,7 @@
 package com.ox5un5h1n3.zulo.ui.search;
 
-import static com.ox5un5h1n3.zulo.ui.search.AllProductAdapter.getPosition;
-import static com.ox5un5h1n3.zulo.ui.search.AllProductAdapter.mProductList;
+import static com.ox5un5h1n3.zulo.ui.search.AllProductsAdapter.getPosition;
+import static com.ox5un5h1n3.zulo.ui.search.AllProductsAdapter.mProductList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
