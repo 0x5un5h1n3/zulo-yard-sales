@@ -1,5 +1,16 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -7,18 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.FragmentActivity;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.IntentSender;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,7 +32,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -45,8 +43,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -64,17 +60,29 @@ import javax.annotation.Nonnull;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraMoveStartedListener {
 
-    private FloatingActionButton mFabLocation;
-
-    private GoogleMap mGoogleMap;
-    private LocationRequest locationRequest;
-    private FusedLocationProviderClient fusedLocationClient;
-    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    // default lat lng
+    public static double currentLat = 0.0;
+    public static double currentLng = 0.0;
 
     private final List<Product> mProductList = new ArrayList<>();
 
-    private Marker marker_me;
+    // require permission for getting location
+    private final String[] permissionsForLocation = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    private FloatingActionButton mFabLocation;
+    private GoogleMap mGoogleMap;
 
+    // To receive updated location if user request by location request
+    private final LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(@NonNull @Nonnull LocationResult locationResult) {
+            currentLng = locationResult.getLastLocation().getLongitude();
+            currentLat = locationResult.getLastLocation().getLatitude();
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 11.0f));
+        }
+    };
+
+    private LocationRequest locationRequest;
+    private FusedLocationProviderClient fusedLocationClient;
 
     // permission checking when user request. Step 1 & 2
     private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
@@ -98,27 +106,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     });
 
-    // default lat lng
-//    private double currentLat = 0.0;
-//    private double currentLng = 0.0;
-    public static double currentLat = 0.0;
-    public static double currentLng = 0.0;
-
-    // require permission for getting location
-    private final String[] permissionsForLocation = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-
-    // To receive updated location if user request by location request
-    private final LocationCallback locationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(@NonNull @Nonnull LocationResult locationResult) {
-            currentLng = locationResult.getLastLocation().getLongitude();
-            currentLat = locationResult.getLastLocation().getLatitude();
-            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLng), 11.0f));
-        }
-    };
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,9 +125,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mFabLocation = findViewById(R.id.fab_location);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-
         checkLocation();
-
     }
 
     private void setupMap() {
@@ -154,13 +139,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
         mGoogleMap = googleMap;
-        //map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-
         MapStyleOptions styleOptions = MapStyleOptions.loadRawResourceStyle(getApplicationContext(), R.raw.map_style);
         mGoogleMap.setMapStyle(styleOptions);
-
 
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         mGoogleMap = googleMap;
@@ -179,20 +160,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 MaterialAlertDialogBuilder dialog;
                 dialog = new MaterialAlertDialogBuilder(MapActivity.this);
                 dialog.setTitle(mProductList.get(i).getProductName());
-                dialog.setMessage("Description: "+ mProductList.get(i).getProductDescription()
-                        + newLine + "Price: "+ mProductList.get(i).getProductPrice());
+                dialog.setMessage("Description: " + mProductList.get(i).getProductDescription()
+                        + newLine + "Price: " + mProductList.get(i).getProductPrice());
                 dialog.setNegativeButton("Cancel", null);
                 dialog.show();
-
-//                Toast.makeText(MapActivity.this, mProductList.get(i).getProductName(), Toast.LENGTH_SHORT).show();
-
-//                Intent intent = new Intent(this, ProductDetailActivity.class);
-//                intent.putExtra("Product", mProductList.get(i));
-//                startActivity(intent);
                 break;
             }
         }
-//        Toast.makeText(MapActivity.this, "onMarkerClick", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -209,12 +183,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                                 Product products = document.toObject(Product.class);
 
-//                                if (currentUser == null) {
-//                                    addListAndDrawMaker(products);
-//                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
-//                                    addListAndDrawMaker(products);
-//                                }
-
                                 addListAndDrawMaker(products);
                             }
                         } else {
@@ -224,11 +192,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 });
     }
 
-    private void addListAndDrawMaker(Product product){
+    private void addListAndDrawMaker(Product product) {
 
         //getProductDisplay()  is the Flag used in Product POJO class & in DB. If the value is TRUE it means
         // that we will make it visible;  If the value is FALSE then we will not show it.
-        if (product.getProductDisplay()){
+        if (product.getProductDisplay()) {
 
             mProductList.add(product);
             Objects.requireNonNull(mGoogleMap.addMarker(
@@ -239,16 +207,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     .setTag(product.getProductKey());
         }
 
-//        if (product.getProductDisplay()){
-//
-//            mProductList.add(product);
-//            mGoogleMap.addMarker(
-//                            new MarkerOptions().position(
-//                                    new LatLng(
-//                                            product.getProductLat(),
-//                                            product.getProductLng())).icon(BitmapDescriptorFactory.fromResource(R.drawable.sale)))
-//                    .setTag(product.getProductKey());
-//        }
     }
 
     //get initial & timelapse location requests every 5 seconds
@@ -328,9 +286,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onPause();
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
+
     @Override
     public void onCameraMoveStarted(int i) {
-        if (i == REASON_GESTURE){
+        if (i == REASON_GESTURE) {
             fusedLocationClient.removeLocationUpdates(locationCallback);
         }
     }

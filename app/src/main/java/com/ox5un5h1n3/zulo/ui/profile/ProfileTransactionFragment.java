@@ -29,8 +29,8 @@ import java.util.List;
 
 public class ProfileTransactionFragment extends Fragment {
 
-    private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
+    private RecyclerView mTransactionsRecycler;
     private ProfileTransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mTransactionsCount;
@@ -83,55 +83,56 @@ public class ProfileTransactionFragment extends Fragment {
 
     private void filterList(String text) {
         List<Product> filteredList = new ArrayList<>();
-        for(Product product : mListOfTransactions){
-            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+        for (Product product : mListOfTransactions) {
+            if (product.getProductName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(product);
             }
         }
 
-        if(filteredList.isEmpty()){
-//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
-        }else{
+        if (filteredList.isEmpty()) {
+            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        } else {
             mTransactionAdapter.setFilteredProfileTransactionList(filteredList);
         }
     }
 
     private void getTransactions() {
-    FirebaseFirestore.getInstance().collection("Products").get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+        FirebaseFirestore.getInstance().collection("Products").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
-                    if (task.isSuccessful()) {
-                        lottieAnimationView.setVisibility(View.GONE);
-                        mTransactionsRecycler.setVisibility(View.VISIBLE);
-                        mTransactionsCount.setVisibility(View.VISIBLE);
-                        mSvProfileTransactionsSearch.setVisibility(View.VISIBLE);
+                        if (task.isSuccessful()) {
+                            lottieAnimationView.setVisibility(View.GONE);
+                            mTransactionsRecycler.setVisibility(View.VISIBLE);
+                            mTransactionsCount.setVisibility(View.VISIBLE);
+                            mSvProfileTransactionsSearch.setVisibility(View.VISIBLE);
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Product products = document.toObject(Product.class);
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Product products = document.toObject(Product.class);
 
-                            if (products.getRequestApproved()){
-                                if (products.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                || (products.getCustomerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                )){
-                                    mListOfTransactions.add(products);
+                                if (products.getRequestApproved()) {
+                                    if (products.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            || (products.getCustomerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    )) {
+                                        mListOfTransactions.add(products);
 
-                                    int count = mListOfTransactions.size();
-                                    mTransactionsCount.setText("Total Transaction Count: "+ count);
+                                        int count = mListOfTransactions.size();
+                                        mTransactionsCount.setText("Total Transaction Count: " + count);
 
+                                    }
                                 }
                             }
+
+                            mTransactionAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
+                            mTransactionsRecycler.setAdapter(mTransactionAdapter);
+
+
+                        } else {
+                            Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                         }
-
-                        mTransactionAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
-                        mTransactionsRecycler.setAdapter(mTransactionAdapter);
-
-
-                    } else {
-                        Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-}
+                });
+
+    }
 }

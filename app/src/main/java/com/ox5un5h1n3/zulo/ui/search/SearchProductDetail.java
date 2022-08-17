@@ -28,7 +28,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
@@ -61,7 +60,6 @@ public class SearchProductDetail extends Fragment {
     private String sellerContactNo;
 
 
-
     public SearchProductDetail() {
         // Required empty public constructor
     }
@@ -84,7 +82,6 @@ public class SearchProductDetail extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         mProductName = view.findViewById(R.id.tv_product_name_det);
         mProductPrice = view.findViewById(R.id.tv_product_price);
@@ -112,7 +109,7 @@ public class SearchProductDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+sellerContactNo));
+                intent.setData(Uri.parse("tel:" + sellerContactNo));
                 startActivity(intent);
             }
         });
@@ -123,13 +120,7 @@ public class SearchProductDetail extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                Toast.makeText(getActivity(), "reserveProduct()", Toast.LENGTH_SHORT).show();
-
-//                ViewDialog viewDialog = new ViewDialog();
-//                viewDialog.showDialog(getActivity());
-
-//                checkIsProductReservedAndUpdate();
-                ViewMaterialDialog viewDialog = new ViewMaterialDialog();;
+                ViewMaterialDialog viewDialog = new ViewMaterialDialog();
                 viewDialog.showDialog(getActivity());
             }
         });
@@ -138,23 +129,9 @@ public class SearchProductDetail extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void getProductData() {
-//        product = (Product) getIntent().getSerializableExtra("Product");
-//        product = (Product) getActivity().getIntent().getSerializableExtra("Product");
-//
-//        product = (Product) getActivity().getIntent().getSerializableExtra("Product");
-//        Bundle bundle = this.getArguments();
-//        if (bundle != null) {
-//            bundle.putSerializable("Product", product);
-//        }
 
-//        product = (Product) getActivity().getIntent().getSerializableExtra("Product");
-//        product = (Product) getActivity().getIntent().getExtras().getSerializable("Product");
-
-//        int position = 0;
         Product product = mProductList.get(getPosition);
 
-//        mProductName.setText("Hello");
-//        Toast.makeText(getActivity(), product.getProductName(), Toast.LENGTH_SHORT).show();
         mProductName.setText(product.getProductName());
         mProductPrice.setText("Product Price : " + product.getProductPrice());
         mProductDescription.setText("Product description : " + product.getProductDescription());
@@ -165,7 +142,7 @@ public class SearchProductDetail extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 UserDetail userDetail = documentSnapshot.toObject(UserDetail.class);
-                if (userDetail != null){
+                if (userDetail != null) {
                     mSellerName.setText("Seller Name : " + userDetail.getUsername());
                     mSellerAddress.setText("Seller address : " + userDetail.getAddress());
                     mSellerMo.setText("Seller phone no. : " + userDetail.getPhoneNumber());
@@ -187,23 +164,19 @@ public class SearchProductDetail extends Fragment {
     }
 
 
-
     public class ViewMaterialDialog {
 
         EditText userName;
         EditText userPhoneNo;
+        Product product = mProductList.get(getPosition); //re-check the usability
         private ProgressDialog mDialog;
 
-        public void showDialog(Activity activity){
-//            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
-//            LayoutInflater inflater = activity.getLayoutInflater();
-//            View dialogView = inflater.inflate(R.layout.add_user_info, null);
-//            builder.setView(dialogView);
+        public void showDialog(Activity activity) {
 
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.add_user_info, null);
-        builder.setView(dialogView);
+            LayoutInflater inflater = activity.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_add_user_info, null);
+            builder.setView(dialogView);
 
             mDialog = new ProgressDialog(activity);
             mDialog.setMessage("Reserving product");
@@ -222,17 +195,17 @@ public class SearchProductDetail extends Fragment {
                     String name = userName.getText().toString().trim();
                     String phone = userPhoneNo.getText().toString().trim();
 
-                    if (name.isEmpty()){
+                    if (name.isEmpty()) {
                         Toast.makeText(getActivity(), "Name is empty", Toast.LENGTH_SHORT).show();
                         mDialog.cancel();
                         return;
                     }
-                    if (phone.isEmpty()){
+                    if (phone.isEmpty()) {
                         Toast.makeText(getActivity(), "Phone number is empty", Toast.LENGTH_SHORT).show();
                         mDialog.cancel();
                         return;
                     }
-                    if (phone.length() != 10){
+                    if (phone.length() != 10) {
                         Toast.makeText(getActivity(), "Invalid. Please enter a 10 digit number.", Toast.LENGTH_SHORT).show();
                         mDialog.cancel();
                         return;
@@ -246,14 +219,13 @@ public class SearchProductDetail extends Fragment {
             alertDialog.show();
         }
 
-        Product product = mProductList.get(getPosition); //re-check the usability
         private void checkIsProductReservedAndUpdate(Activity activity, String id, String userName, String userPhoneNo) {
             FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     Product product = documentSnapshot.toObject(Product.class);
-                    if (product != null){
-                        if (!product.getProductReserve()){
+                    if (product != null) {
+                        if (!product.getProductReserve()) {
                             Map<String, Object> updateReserveProduct = new HashMap<>();
                             updateReserveProduct.put("productReserve", true);
                             updateReserveProduct.put("customerId", id);
@@ -264,8 +236,6 @@ public class SearchProductDetail extends Fragment {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     mDialog.cancel();
-//                                    activity.finish();
-//                                    Toast.makeText(getActivity(), "Reserve request sent successfully", Toast.LENGTH_SHORT).show();
                                     dialog = new MaterialAlertDialogBuilder(getActivity());
                                     dialog.setTitle("Message");
                                     dialog.setMessage("Reserve request sent successfully");
@@ -273,57 +243,15 @@ public class SearchProductDetail extends Fragment {
                                     dialog.show();
                                 }
                             });
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getActivity(), "Someone has already requested for this product", Toast.LENGTH_LONG).show();
-//                            activity.finish();
                         }
                     } else {
                         Toast.makeText(getActivity(), "This product might be removed", Toast.LENGTH_LONG).show();
-//                        activity.finish();
                     }
                     mDialog.dismiss();
                 }
             });
         }
     }
-
-
-//    Product product = mProductList.get(getPosition);
-        private void checkIsProductReservedAndUpdate() {
-            FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Product product = documentSnapshot.toObject(Product.class);
-                    UserDetail userDetail = documentSnapshot.toObject(UserDetail.class);
-                    if (product != null){
-                        if (!product.getProductReserve()){
-                            Map<String, Object> updateReserveProduct = new HashMap<>();
-                            updateReserveProduct.put("productReserve", true);
-                            updateReserveProduct.put("customerName", userDetail.getUsername());
-                            updateReserveProduct.put("customerPhoneNo", userDetail.getPhoneNumber());
-
-                            FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateReserveProduct).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    mDialog.cancel();
-//                                    activity.finish();
-                                    Toast.makeText(getActivity(), "Reserve request sent successfully", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "Someone already requested for this product", Toast.LENGTH_LONG).show();
-//                            activity.finish();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "This product might be removed", Toast.LENGTH_LONG).show();
-//                        activity.finish();
-                    }
-                    mDialog.dismiss();
-                }
-            });
-        }
-
-
-    }
+}

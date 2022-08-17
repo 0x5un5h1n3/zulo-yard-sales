@@ -22,11 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
 
     TextView username, email, phone, address, profileIcon, mRegisteredUser;
@@ -76,8 +71,6 @@ public class ProfileFragment extends Fragment {
         );
 
 
-
-
         username = view.findViewById(R.id.profileUsername);
         email = view.findViewById(R.id.profileEmail);
         phone = view.findViewById(R.id.profilePhone);
@@ -96,17 +89,6 @@ public class ProfileFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
 
         userId = firebaseAuth.getCurrentUser().getUid();
-
-//        CollectionReference users = firestore.collection("users");
-//        users.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                for(QueryDocumentSnapshot snapshot : task.getResult()){
-//                    Log.i(TAG, snapshot.getData().toString());
-//                }
-//            }
-//        });
-
 
         DocumentReference docRef = firestore.collection("Users").document(userId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -135,55 +117,19 @@ public class ProfileFragment extends Fragment {
 
                 if (documentSnapshot.getString("phoneNumber") == null) {
                     phone.setText("Phone");
-                }else{
+                } else {
                     phone.setText(documentSnapshot.getString("phoneNumber"));
                     phone.setVisibility(View.VISIBLE);
                 }
 
                 if (documentSnapshot.getString("address") == null) {
                     address.setText("Address");
-                }else{
+                } else {
                     address.setText(documentSnapshot.getString("address"));
                     address.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-
-
-
-//        DocumentReference docRef = firestore.collection("users").document(userId);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Toast.makeText(getActivity().getApplicationContext(), "Data Found!", Toast.LENGTH_SHORT);
-//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-//                    } else {
-//                        Toast.makeText(getActivity().getApplicationContext(), "Data Not!", Toast.LENGTH_SHORT);
-//
-//                        Log.d(TAG, "No such document");
-//                    }
-//                } else {
-//                    Toast.makeText(getActivity().getApplicationContext(), "Unsuccessful!", Toast.LENGTH_SHORT);
-//
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
-
-
-//        DocumentReference documentReference  = firestore.collection("users").document(userId);
-//        documentReference.addSnapshotListener((Executor) this, new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-//                username.setText(documentSnapshot.getString("username"));
-//                email.setText(documentSnapshot.getString("email"));
-//                phone.setText(documentSnapshot.getString("phone"));
-//
-//            }
-//        });
     }
 }

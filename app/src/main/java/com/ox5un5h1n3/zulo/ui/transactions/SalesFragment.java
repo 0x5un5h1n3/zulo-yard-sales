@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,11 +28,12 @@ import java.util.List;
 
 public class SalesFragment extends Fragment {
 
-    private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
+    private RecyclerView mTransactionsRecycler;
     private TransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mTransactionsCount;
+
 
     public SalesFragment() {
         // Required empty public constructor
@@ -62,39 +62,39 @@ public class SalesFragment extends Fragment {
         getTransactions();
     }
 
-private void getTransactions() {
-    FirebaseFirestore.getInstance().collection("Products").get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+    private void getTransactions() {
+        FirebaseFirestore.getInstance().collection("Products").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
-                    if (task.isSuccessful()) {
-                        lottieAnimationView.setVisibility(View.GONE);
-                        mTransactionsRecycler.setVisibility(View.VISIBLE);
-                        mTransactionsCount.setVisibility(View.VISIBLE);
+                        if (task.isSuccessful()) {
+                            lottieAnimationView.setVisibility(View.GONE);
+                            mTransactionsRecycler.setVisibility(View.VISIBLE);
+                            mTransactionsCount.setVisibility(View.VISIBLE);
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Product products = document.toObject(Product.class);
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Product products = document.toObject(Product.class);
 
-                            if (products.getRequestApproved()){
-                                if (products.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                    mListOfTransactions.add(products);
+                                if (products.getRequestApproved()) {
+                                    if (products.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                        mListOfTransactions.add(products);
 
-                                    int count = mListOfTransactions.size();
-                                    mTransactionsCount.setText("Sales Count: "+ count);
+                                        int count = mListOfTransactions.size();
+                                        mTransactionsCount.setText("Sales Count: " + count);
 
+                                    }
                                 }
                             }
+
+                            mTransactionAdapter = new TransactionsAdapter(mListOfTransactions);
+                            mTransactionsRecycler.setAdapter(mTransactionAdapter);
+
+
+                        } else {
+                            Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                         }
-
-                        mTransactionAdapter = new TransactionsAdapter(mListOfTransactions);
-                        mTransactionsRecycler.setAdapter(mTransactionAdapter);
-
-
-                    } else {
-                        Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-}
+                });
+    }
 }

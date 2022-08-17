@@ -30,15 +30,14 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
+    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     private RecyclerView mProductRecycler;
     private SearchView mSvSearch;
     private MaterialButton mBtnSearch;
     private MaterialButton mBtnReset;
     private LottieAnimationView lottieAnimationView;
     private AllProductAdapter mAllProductAdapter;
-    private  List<Product> mProductList = new ArrayList<>();
-    private final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-    
+    private List<Product> mProductList = new ArrayList<>();
     private List<Product> productList;
 
     public SearchFragment() {
@@ -69,7 +68,6 @@ public class SearchFragment extends Fragment {
         mSvSearch.clearFocus();
 
 
-
         mSvSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -82,63 +80,29 @@ public class SearchFragment extends Fragment {
                 return true;
             }
         });
-//        mBtnSearch = view.findViewById(R.id.btn_search);
-//        mBtnReset = view.findViewById(R.id.btn_reset);
 
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
 
         getAllProducts();
-//        searchButton();
-//        resetButton();
     }
 
     private void filterList(String text) {
         List<Product> filteredList = new ArrayList<>();
-        for(Product product : mProductList){
-            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+        for (Product product : mProductList) {
+            if (product.getProductName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(product);
             }
         }
 
-        if(filteredList.isEmpty()){
-//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
-        }else{
+        if (filteredList.isEmpty()) {
+            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        } else {
             mAllProductAdapter.setFilteredSearchList(filteredList);
         }
     }
 
-    private void searchButton() {
-        mBtnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchedText = mSvSearch.getSuggestionsAdapter().toString().trim();
-                if (searchedText.isEmpty()){
-                    Toast.makeText(getActivity(), "Please enter search text", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                final List<Product> mSearchedProductList = new ArrayList<>();
-                for (int i = 0; i < mProductList.size(); i++){
-                    if (searchedText.equals(mProductList.get(i).getProductName())){
-                        mSearchedProductList.add(mProductList.get(i));
-                    }
-                }
-                mAllProductAdapter.addNewList(mSearchedProductList);
-            }
-        });
-    }
-    private void resetButton() {
-        mBtnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                mEtSearch.setText("");
-                getAllProducts();
-            }
-        });
-    }
-
     private void getAllProducts() {
-
 
         FirebaseFirestore.getInstance().collection("Products").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -151,7 +115,7 @@ public class SearchFragment extends Fragment {
                                 Product products = document.toObject(Product.class);
                                 if (currentUser == null) {
                                     makeList(products);
-                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())){
+                                } else if (!currentUser.getUid().equals(products.getProductOwnerUid())) {
                                     makeList(products);
                                 }
 //                                makeList(products);
@@ -170,8 +134,9 @@ public class SearchFragment extends Fragment {
                     }
                 });
     }
-    private void makeList(Product product){
-        if (product.getProductDisplay()){
+
+    private void makeList(Product product) {
+        if (product.getProductDisplay()) {
             mProductList.add(product);
         }
     }

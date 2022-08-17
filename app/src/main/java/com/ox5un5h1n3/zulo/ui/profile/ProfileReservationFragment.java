@@ -23,15 +23,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
-import com.ox5un5h1n3.zulo.data.model.UserDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileReservationFragment extends Fragment {
 
-    private RecyclerView mTransactionsRecycler;
     private final List<Product> mListOfTransactions = new ArrayList<>();
+    private RecyclerView mTransactionsRecycler;
     private ProfileTransactionsAdapter mReservationAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mReservationsCount;
@@ -84,69 +83,55 @@ public class ProfileReservationFragment extends Fragment {
 
     private void filterList(String text) {
         List<Product> filteredList = new ArrayList<>();
-        for(Product product : mListOfTransactions){
-            if(product.getProductName().toLowerCase().contains(text.toLowerCase())){
+        for (Product product : mListOfTransactions) {
+            if (product.getProductName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(product);
             }
         }
 
-        if(filteredList.isEmpty()){
-//            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
-        }else{
+        if (filteredList.isEmpty()) {
+            Toast.makeText(getActivity(), "No such item found", Toast.LENGTH_SHORT).show();
+        } else {
             mReservationAdapter.setFilteredProfileReservationList(filteredList);
         }
     }
 
-private void getTransactions() {
-    FirebaseFirestore.getInstance().collection("Products").get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+    private void getTransactions() {
+        FirebaseFirestore.getInstance().collection("Products").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
 
-                    if (task.isSuccessful()) {
-                        lottieAnimationView.setVisibility(View.GONE);
-                        mTransactionsRecycler.setVisibility(View.VISIBLE);
-                        mReservationsCount.setVisibility(View.VISIBLE);
-                        mSvProfileReservationSearch.setVisibility(View.VISIBLE);
+                        if (task.isSuccessful()) {
+                            lottieAnimationView.setVisibility(View.GONE);
+                            mTransactionsRecycler.setVisibility(View.VISIBLE);
+                            mReservationsCount.setVisibility(View.VISIBLE);
+                            mSvProfileReservationSearch.setVisibility(View.VISIBLE);
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Product products = document.toObject(Product.class);
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Product products = document.toObject(Product.class);
 
-                            UserDetail userDetail = document.toObject(UserDetail.class);
+                                if (products.getProductReserve()) {
+                                    if (products.getCustomerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                        if (!products.getRequestApproved()) {
+                                            mListOfTransactions.add(products);
+                                            int count = mListOfTransactions.size();
+                                            mReservationsCount.setText("Total Reservation Count: " + count);
 
-
-
-//                            if (products.getRequestApproved()){
-//                                if (products.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-//                                    mListOfTransactions.add(products);
-//
-//                                    int count = mListOfTransactions.size();
-//                                    mTransactionsCount.setText("Transaction Count: "+ count);
-//
-//                                }
-//                            }
-
-
-                            if (products.getProductReserve()){
-                                    if (products.getCustomerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                                if(!products.getRequestApproved()){
-                                        mListOfTransactions.add(products);
-                                         int count = mListOfTransactions.size();
-                                        mReservationsCount.setText("Total Reservation Count: "+ count);
-
+                                        }
                                     }
+
                                 }
-
                             }
+                            mReservationAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
+                            mTransactionsRecycler.setAdapter(mReservationAdapter);
+
+
+                        } else {
+                            Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                         }
-                        mReservationAdapter = new ProfileTransactionsAdapter(mListOfTransactions);
-                        mTransactionsRecycler.setAdapter(mReservationAdapter);
-
-
-                    } else {
-                        Toast.makeText(getActivity(), "Error getting products", Toast.LENGTH_SHORT).show();
                     }
-                }
-            });
-}
+                });
+
+    }
 }

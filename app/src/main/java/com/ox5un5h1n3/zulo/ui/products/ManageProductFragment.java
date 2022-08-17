@@ -1,7 +1,5 @@
 package com.ox5un5h1n3.zulo.ui.products;
 
-import static com.ox5un5h1n3.zulo.ui.products.ManageProductAdapter.mManageProductList;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,19 +29,17 @@ import java.util.List;
 
 public class ManageProductFragment extends Fragment {
 
+    public static List<Product> mProductList = new ArrayList<>();
     private RecyclerView mProductRecycler;
     private ManageProductAdapter mManageProductAdapter;
-    public static List<Product> mProductList = new ArrayList<>();
     private LottieAnimationView lottieAnimationView;
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +51,6 @@ public class ManageProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
 
         mProductRecycler = view.findViewById(R.id.rcv_product);
@@ -77,7 +72,8 @@ public class ManageProductFragment extends Fragment {
 
                                 Product product = document.toObject(Product.class);
 
-                                if (product.getProductOwnerUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                if (product.getProductOwnerUid().equals(FirebaseAuth.getInstance()
+                                        .getCurrentUser().getUid())) {
                                     mProductList.add(product);
                                 }
 
