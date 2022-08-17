@@ -18,19 +18,11 @@
         app:iconifiedByDefault="false"
         app:queryHint="Search..." />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal" />
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_loading"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 

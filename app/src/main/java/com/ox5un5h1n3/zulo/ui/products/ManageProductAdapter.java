@@ -24,6 +24,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
+import com.ox5un5h1n3.zulo.utils.NotificationUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -81,9 +82,13 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
                 if (isChecked) {
                     updateProductData.put("productDisplay", true);
                     toastMsg = "Product visibility on for users";
+                    NotificationUtil.createChannel(mActivity.getBaseContext(), "zulo_notification_channel_id");
+                    NotificationUtil.setNotification(mActivity.getBaseContext(),"Zulo Yard Sales",product.getProductName()+" - Product visibility on for users",200);
                 } else {
                     updateProductData.put("productDisplay", false);
                     toastMsg = "Product visibility off for users";
+                    NotificationUtil.createChannel(mActivity.getBaseContext(), "zulo_notification_channel_id");
+                    NotificationUtil.setNotification(mActivity.getBaseContext(),"Zulo Yard Sales",product.getProductName()+" - Product visibility off for users",200);
                 }
                 FirebaseFirestore.getInstance().collection("Products")
                         .document(product.getProductKey()).update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -146,9 +151,12 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
                     public void onSuccess(Void unused) {
                         dialog = new MaterialAlertDialogBuilder(mActivity);
                         dialog.setTitle("Message");
-                        dialog.setMessage("Proceed successfully");
+                        dialog.setMessage("Transaction proceed successfully");
                         dialog.setNegativeButton("OK", null);
                         dialog.show();
+
+                        NotificationUtil.createChannel(mActivity.getBaseContext(),"zulo_notification_channel_id");
+                        NotificationUtil.setNotification(mActivity.getBaseContext(),"Zulo Yard Sales",product.getProductName()+" transaction proceed successfully",200);
 
                     }
                 });

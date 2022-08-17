@@ -129,20 +129,20 @@ public class SignInActivity extends AppCompatActivity {
         inflater = this.getLayoutInflater();
 
 
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                              @Override
-                                              public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
-                                                  if (firebaseAuth.getCurrentUser() != null) {
-                                                      // already logged in, go to MainActivity
-                                                      finish();
-                                                      startActivity((new Intent(SignInActivity.this, MainActivity.class)));
-                                                  } else {
-                                                      // initiate sign-in
-                                                      signInUser();
-                                                  }
-                                              }
-                                          }
-        );
+//        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+//                                              @Override
+//                                              public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+//                                                  if (firebaseAuth.getCurrentUser() != null) {
+//                                                      // already logged in, go to MainActivity
+//                                                      finish();
+//                                                      startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+//                                                  } else {
+//                                                      // initiate sign-in
+//                                                      signInUser();
+//                                                  }
+//                                              }
+//                                          }
+//        );
 
         super.onCreate(savedInstanceState);
 
@@ -268,11 +268,28 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // redirect to MainActivity
+
+////                  email verification
+//                    FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//                    assert user != null;
+//                    if(user.isEmailVerified()){
+//                        // redirect to MainActivity
+//                        progressBar.setVisibility(View.VISIBLE);
+//                        finish();
+//                        Toast.makeText(SignInActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
+//                        startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+//                    }else{
+//                        Toast.makeText(SignInActivity.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();
+//                    }
+
+
+                    // redirect to MainActivity (without email verification)
                     progressBar.setVisibility(View.VISIBLE);
                     finish();
                     Toast.makeText(SignInActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
                     startActivity((new Intent(SignInActivity.this, MainActivity.class)));
+
                 } else {
 
                     progressBar.setVisibility(View.GONE);

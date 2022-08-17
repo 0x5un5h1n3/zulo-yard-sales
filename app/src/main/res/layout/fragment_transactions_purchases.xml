@@ -14,14 +14,14 @@
         android:layout_marginTop="18dp"
         android:gravity="center"
         android:text="Purchase Count: 0"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_loading"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="114dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.532"

@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
+import com.ox5un5h1n3.zulo.utils.NotificationUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -241,6 +242,9 @@ public class SearchProductDetail extends Fragment {
                                     dialog.setMessage("Reserve request sent successfully");
                                     dialog.setNegativeButton("OK", null);
                                     dialog.show();
+
+                                    NotificationUtil.createChannel(getActivity(),"zulo_notification_channel_id");
+                                    NotificationUtil.setNotification(getActivity(),"Zulo Yard Sales",product.getProductName()+" - Reserve request sent successfully",200);
                                 }
                             });
                         } else {
