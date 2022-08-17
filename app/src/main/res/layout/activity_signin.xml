@@ -33,40 +33,39 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:hint="@string/sign_in_email"
         android:layout_marginTop="32dp"
-        app:startIconDrawable="@drawable/ic_baseline_email_24"
+        android:hint="@string/sign_in_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:startIconDrawable="@drawable/ic_baseline_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailAddress"
-            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:hint="@string/sign_in_pass"
         android:layout_marginTop="8dp"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        android:hint="@string/sign_in_pass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailAddress_layout">
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress_layout"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/pass"
-            android:imeActionLabel="@string/sign_in_sign_in"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:imeActionLabel="@string/sign_in_sign_in"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

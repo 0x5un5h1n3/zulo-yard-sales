@@ -3,16 +3,15 @@ package com.ox5un5h1n3.zulo.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ox5un5h1n3.zulo.R;
@@ -29,16 +28,13 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
 
 
         Button addYardSaleItem = view.findViewById(R.id.btnAddYardSale);
@@ -58,8 +54,6 @@ public class DashboardFragment extends Fragment {
 
         Button findYardSalesOnMap = view.findViewById(R.id.btnFindYardSalesOnMap);
         findYardSalesOnMap.setOnClickListener(l ->
-//                displayFindSaleDialog()
-
                 startActivity(new Intent(getActivity(), MapActivity.class))
         );
 
@@ -74,14 +68,6 @@ public class DashboardFragment extends Fragment {
         dialog = new MaterialAlertDialogBuilder(getActivity());
         dialog.setTitle("Tip");
         dialog.setMessage("Use the 'Search' button on the bottom navigation");
-        dialog.setNegativeButton("OK", null);
-        dialog.show();
-    }
-
-    private void displayFindSaleDialog() {
-        dialog = new MaterialAlertDialogBuilder(getActivity());
-        dialog.setTitle("Tip");
-        dialog.setMessage("Use the 'Find Sales' button on the bottom navigation");
         dialog.setNegativeButton("OK", null);
         dialog.show();
     }

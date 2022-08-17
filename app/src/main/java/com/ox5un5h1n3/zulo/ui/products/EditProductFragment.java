@@ -42,18 +42,15 @@ import java.util.Objects;
 
 public class EditProductFragment extends Fragment {
 
+    MaterialAlertDialogBuilder dialog;
     private EditText mProductName;
     private EditText mProductPrice;
     private EditText mProductDescription;
     private MaterialButton mUpdate;
     private MaterialTextView mTvChooseImage;
     private ImageView mIvProduct;
-
     private ProgressDialog mDialog;
-    MaterialAlertDialogBuilder dialog;
     private Uri uri;
-    private Product mProduct;
-
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), imageUri -> {
                 if (imageUri != null) {
@@ -68,7 +65,6 @@ public class EditProductFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,7 +75,6 @@ public class EditProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         mProductName = view.findViewById(R.id.et_p_name);
         mProductPrice = view.findViewById(R.id.et_p_price);
@@ -95,15 +90,11 @@ public class EditProductFragment extends Fragment {
         getSelectedProductDataFromFirebase();
         submitProductData();
         pickImage();
+
     }
 
 
     private void getSelectedProductDataFromFirebase() {
-//        mProduct = (Product) getActivity().getIntent().getSerializableExtra("Product");
-
-//        Product product = mProductList.get(getPosition);
-//        Toast.makeText(getActivity(), product.getProductName(), Toast.LENGTH_SHORT).show();
-
         Product mProduct = mManageProductList.get(getManageProductPosition);
 
         mProductName.setText(mProduct.getProductName());
@@ -172,7 +163,8 @@ public class EditProductFragment extends Fragment {
                 } else {
 
                     mDialog.setMessage("Updating product image");
-                    final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserProfile/" + System.currentTimeMillis());
+                    final StorageReference ref = FirebaseStorage.getInstance().getReference()
+                            .child("UserProfile/" + System.currentTimeMillis());
                     UploadTask uploadTask = ref.putFile(uri);
                     uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -200,24 +192,23 @@ public class EditProductFragment extends Fragment {
     }
 
     private void uploadUserData(String productKey, Map<String, Object> updateProductData) {
-        FirebaseFirestore.getInstance().collection("Products").document(productKey).update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                mDialog.cancel();
-//                finish();
-//                Toast.makeText(getActivity(), "Product Updated Successfully", Toast.LENGTH_SHORT).show();
-                dialog = new MaterialAlertDialogBuilder(getActivity());
-                dialog.setTitle("Message");
-                dialog.setMessage("Product Updated Successfully");
-                dialog.setNegativeButton("OK", null);
-                dialog.show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                mDialog.cancel();
-                Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
+        FirebaseFirestore.getInstance().collection("Products").document(productKey)
+                .update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        mDialog.cancel();
+                        dialog = new MaterialAlertDialogBuilder(getActivity());
+                        dialog.setTitle("Message");
+                        dialog.setMessage("Product Updated Successfully");
+                        dialog.setNegativeButton("OK", null);
+                        dialog.show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        mDialog.cancel();
+                        Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

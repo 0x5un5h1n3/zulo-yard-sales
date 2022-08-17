@@ -19,7 +19,8 @@ public class Product implements Serializable {
     private String ownerName;
     private Boolean isProductDisplay;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(String productKey, String productOwnerUid, String productName, double productPrice, String productDescription, double productLat, double productLng, Boolean isProductReserve, Boolean isRequestApproved, String productImage, String customerId, String customerName, String customerPhoneNo, String ownerName, Boolean isProductDisplay) {
         this.productKey = productKey;

@@ -4,6 +4,13 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -12,14 +19,6 @@ import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Patterns;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
 import com.google.android.gms.auth.api.identity.Identity;
@@ -36,7 +35,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ox5un5h1n3.zulo.MainActivity;
 import com.ox5un5h1n3.zulo.R;
@@ -44,19 +42,13 @@ import com.ox5un5h1n3.zulo.data.model.UserDetail;
 import com.ox5un5h1n3.zulo.databinding.ActivitySigninBinding;
 import com.ox5un5h1n3.zulo.ui.signup.SignUpActivity;
 
-public class SignInActivity extends AppCompatActivity{
+public class SignInActivity extends AppCompatActivity {
 
+    LayoutInflater inflater;
     private EditText editTextEmail, editTextPassword;
-    //    private MaterialButton btnForgotPassword, signUp, signUpSignIn;
     private ProgressBar progressBar;
     private MaterialAlertDialogBuilder reset_alert;
-    //    private AlertDialog.Builder reset_alert;
-    LayoutInflater inflater;
-
     private String userId;
-    private FirebaseFirestore firestore;
-
-
 
 
     private FirebaseAuth firebaseAuth;
@@ -78,7 +70,7 @@ public class SignInActivity extends AppCompatActivity{
             String idToken = credential.getGoogleIdToken();
             firebaseAuthWithGoogle(idToken);
 
-        }catch (ApiException e) {
+        } catch (ApiException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Sign in Failed", Toast.LENGTH_SHORT).show();
         }
@@ -90,40 +82,13 @@ public class SignInActivity extends AppCompatActivity{
         authResultTask.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-//
-//
-                    userId = firebaseAuth.getCurrentUser().getUid();
-//                    DocumentReference documentReference  = firestore.collection("users").document(userId);
-//
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-//                    updateUI(user);
-                    final UserDetail userDetail = new UserDetail(user.getDisplayName(), user.getEmail(), userId, "","");
-                    FirebaseFirestore.getInstance().collection("Users").document(userId).set(userDetail);
+                if (task.isSuccessful()) {
 
-//
-//                    FirebaseUser user = firebaseAuth.getCurrentUser();
-//                    updateUI(user);
-//
-//                    Map<String, Object> mapUser = new HashMap<>();
-//                    mapUser.put("username", user.getDisplayName());
-//                    mapUser.put("email", user.getEmail());
-//
-//                    documentReference.set(mapUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void unused) {
-//                            Toast.makeText(SignInActivity.this, "User Id"+ userId +"Display Name"+user.getDisplayName() , Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(SignInActivity.this, "User Id Failed"+ userId +"Display Name"+user.getDisplayName() , Toast.LENGTH_SHORT).show();
-//
-////                            Log.d(TAG , "onFailure: "+e.toString());
-//                            Toast.makeText(SignInActivity.this, "User Id"+ userId +"Error"+e.toString(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    });
+                    userId = firebaseAuth.getCurrentUser().getUid();
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                    final UserDetail userDetail = new UserDetail(user.getDisplayName(), user.getEmail(), userId, "", "");
+                    FirebaseFirestore.getInstance().collection("Users").document(userId).set(userDetail);
                     finish();
                     startActivity((new Intent(SignInActivity.this, MainActivity.class)));
                 } else {
@@ -132,13 +97,9 @@ public class SignInActivity extends AppCompatActivity{
                 }
 
 
-
-
-
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-//                    Toast.makeText(SignInActivity.this, user.getEmail()+" signed in!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(SignInActivity.this, user.getDisplayName()+" signed in!", Toast.LENGTH_SHORT).show();
-                    goToMainActivity(user);
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                Toast.makeText(SignInActivity.this, user.getDisplayName() + " signed in!", Toast.LENGTH_SHORT).show();
+                goToMainActivity(user);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -149,14 +110,11 @@ public class SignInActivity extends AppCompatActivity{
     }
 
     private void goToMainActivity(FirebaseUser user) {
-        if(user != null){
+        if (user != null) {
             finish();
             startActivity((new Intent(SignInActivity.this, MainActivity.class)));
         }
     }
-
-//    private SignUpActivity registerViewModel;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -171,12 +129,11 @@ public class SignInActivity extends AppCompatActivity{
         inflater = this.getLayoutInflater();
 
 
-
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
                                               @Override
                                               public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
                                                   if (firebaseAuth.getCurrentUser() != null) {
-                                                      // already logged in, go to home screen
+                                                      // already logged in, go to MainActivity
                                                       finish();
                                                       startActivity((new Intent(SignInActivity.this, MainActivity.class)));
                                                   } else {
@@ -186,18 +143,6 @@ public class SignInActivity extends AppCompatActivity{
                                               }
                                           }
         );
-
-//        signUp = (MaterialButton) findViewById(R.id.btnSignUp);
-//        signUp.setOnClickListener(SignUpActivity.this);
-
-//        signUpSignIn = (MaterialButton) findViewById(R.id.btnSignUpSignIn);
-//        signUpSignIn.setOnClickListener(SignUpActivity.this);
-
-//        editTextUsername = (EditText) findViewById(R.id.username);
-//        editTextEmail = (EditText) findViewById(R.id.emailAddress);
-//        editTextPassword = (EditText) findViewById(R.id.pass);
-//        editTextRePassword = (EditText) findViewById(R.id.rePass);
-
 
         super.onCreate(savedInstanceState);
 
@@ -210,14 +155,6 @@ public class SignInActivity extends AppCompatActivity{
         final Button signInWithGoogleButton = binding.btnSignInWithGoogle;
 
         signInSignUpButton.setOnClickListener(view -> {
-//            MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-//
-//            dialog.setMessage("A temporary password will be sent to your inputted username/email earlier...");
-//
-//            dialog.setNegativeButton("Cancel", null);
-//            dialog.setPositiveButton("Proceed", null);
-//
-//            dialog.show();
             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
         });
 
@@ -233,9 +170,8 @@ public class SignInActivity extends AppCompatActivity{
         // if you forgot your password
         forgotButton.setOnClickListener(view -> {
 
-            View pop_view = inflater.inflate(R.layout.reset_pass_popup, null);
+            View pop_view = inflater.inflate(R.layout.dialog_reset_pass, null);
 
-//            reset_alert.setTitle("Reset forgotten password")
             reset_alert.setTitle("Reset forgotten password")
                     .setMessage("Enter your email to receive password reset link")
                     .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
@@ -244,7 +180,7 @@ public class SignInActivity extends AppCompatActivity{
                             //validate email address
                             EditText email = pop_view.findViewById(R.id.reset_email_popup);
 
-                            if (email.getText().toString().isEmpty()){
+                            if (email.getText().toString().isEmpty()) {
                                 email.setError("Required Field!");
                                 return;
                             }
@@ -264,17 +200,9 @@ public class SignInActivity extends AppCompatActivity{
                     }).setNegativeButton("Cancel", null)
                     .setView(pop_view)
                     .create().show();
-
-//            MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(this);
-//
-//            dialog.setMessage("A link to reset your Zulo account password will be sent to your inputted email earlier...");
-//
-//            dialog.setNegativeButton("Cancel", null);
-//            dialog.setPositiveButton("Proceed", null);
-//
-//            dialog.show();
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -318,27 +246,19 @@ public class SignInActivity extends AppCompatActivity{
         String pass = editTextPassword.getText().toString().trim();
 
 
-
-
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTextEmail.setError("Email is required!");
             editTextEmail.requestFocus();
             return;
-        }
-
-        else if(!email.contains("@")){
+        } else if (!email.contains("@")) {
             editTextEmail.setError("Please provide a valid email!");
             editTextEmail.requestFocus();
             return;
-        }
-
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please provide a valid email!");
             editTextEmail.requestFocus();
             return;
-        }
-
-        else if(pass.isEmpty()){
+        } else if (pass.isEmpty()) {
             editTextPassword.setError("Password is required!");
             editTextPassword.requestFocus();
             return;
@@ -348,23 +268,6 @@ public class SignInActivity extends AppCompatActivity{
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
-
-                    //email verification
-//                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//                    if(user.isEmailVerified()){
-//                        // redirect to MainActivity
-//                        progressBar.setVisibility(View.VISIBLE);
-//                        Toast.makeText(SignInActivity.this, "User signed in successfully!", Toast.LENGTH_SHORT).show();
-//                        startActivity((new Intent(SignInActivity.this, MainActivity.class)));
-//                    }else{
-//                        Toast.makeText(SignInActivity.this, "Check your email to verify your account!", Toast.LENGTH_LONG).show();
-//
-//                    }
-
-
-
                     // redirect to MainActivity
                     progressBar.setVisibility(View.VISIBLE);
                     finish();
@@ -380,14 +283,6 @@ public class SignInActivity extends AppCompatActivity{
 
 
     }
-
-
-//    private void showRegisterSuccess(RegisterUserState model) {
-//        // Initiate successful logged in experience -> Home interface
-//        Intent intent = new Intent(LoginActivity.this,
-//                MainActivity.class);
-//        startActivity(intent);
-//    }
 
 }
 

@@ -36,12 +36,10 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
 
     public static List<Product> mManageProductList;
     public static int getManageProductPosition;
-
-    Product product;
-
     private final Activity mActivity;
-    private ProgressDialog mDialog;
+    Product product;
     MaterialAlertDialogBuilder dialog;
+    private ProgressDialog mDialog;
     private String toastMsg = "";
 
     // data is passed into the constructor
@@ -59,13 +57,6 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        //        Button editProducts = view.findViewById(R.id.btn_edit_product);
-//        editProducts.setOnClickListener(l ->
-//                        Toast.makeText(getActivity(), "Hehe", Toast.LENGTH_SHORT).show()
-////                Navigation.findNavController(l).navigate(R.id.action_navigation_profile_main_to_manage_products_edit_product)
-//        );
-
         mDialog = new ProgressDialog(holder.itemView.getContext());
         mDialog.setMessage("Updating visibility of product");
         mDialog.setCancelable(false);
@@ -87,37 +78,33 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mDialog.show();
                 Map<String, Object> updateProductData = new HashMap<>();
-                if (isChecked){
+                if (isChecked) {
                     updateProductData.put("productDisplay", true);
                     toastMsg = "Product visibility on for users";
-                } else  {
+                } else {
                     updateProductData.put("productDisplay", false);
                     toastMsg = "Product visibility off for users";
                 }
-                FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        mDialog.cancel();
-                        Toast.makeText(holder.itemView.getContext(), toastMsg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                FirebaseFirestore.getInstance().collection("Products")
+                        .document(product.getProductKey()).update(updateProductData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                mDialog.cancel();
+                                Toast.makeText(holder.itemView.getContext(), toastMsg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
+
         if (product.getProductReserve()) {
             holder.mBtnEditProduct.setVisibility(View.GONE);
-//            holder.mTvGuestName.setVisibility(View.VISIBLE);
-//            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
             holder.mBtnRejected.setVisibility(View.VISIBLE);
             holder.mBtnApprove.setVisibility(View.VISIBLE);
-//            holder.mTvGuestName.setText("From : " + product.getCustomerName());
-//            holder.mTvGuestPhoneNo.setText("Contact no :" + product.getCustomerPhoneNo());
         }
-        if (product.getRequestApproved()){
+        if (product.getRequestApproved()) {
             holder.mBtnEditProduct.setVisibility(View.GONE);
             holder.mBtnRejected.setVisibility(View.GONE);
             holder.mBtnApprove.setVisibility(View.GONE);
-//            holder.mTvGuestName.setVisibility(View.VISIBLE);
-//            holder.mTvGuestPhoneNo.setVisibility(View.VISIBLE);
             holder.mTvProductSoldMsg.setVisibility(View.VISIBLE);
         }
         holder.mBtnApprove.setOnClickListener(new View.OnClickListener() {
@@ -134,48 +121,37 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             @Override
             public void onClick(View v) {
                 updateProductRequest(false, product);
-//                holder.mTvGuestName.setText("");
-//                holder.mTvGuestPhoneNo.setText("");
                 holder.mBtnRejected.setVisibility(View.GONE);
                 holder.mBtnApprove.setVisibility(View.GONE);
                 holder.mBtnEditProduct.setVisibility(View.VISIBLE);
-//                holder.mTvGuestName.setVisibility(View.GONE);
-//                holder.mTvGuestPhoneNo.setVisibility(View.GONE);
             }
         });
         holder.mBtnEditProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mActivity, EditProductActivity.class);
-//                intent.putExtra("Product", product);
-//                mActivity.startActivity(intent);
-
                 getManageProductPosition = position;
 
-
-//                Toast.makeText(mActivity.getApplicationContext(), product.getProductName(), Toast.LENGTH_SHORT).show();
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_home_main_to_manage_products_to_edit_product);
-//                Toast.makeText(mActivity.getBaseContext(), "mBtnEditProduct.setOnClickListener", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void updateProductRequest(boolean isApproved, Product product) {
         Map<String, Object> updateReserveProduct = new HashMap<>();
         updateReserveProduct.put("productReserve", isApproved);
         updateReserveProduct.put("requestApproved", isApproved);
-        FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).update(updateReserveProduct).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-//                Toast.makeText(mActivity.getBaseContext(), "Proceed successfully", Toast.LENGTH_SHORT).show();
-                dialog = new MaterialAlertDialogBuilder(mActivity);
-                dialog.setTitle("Message");
-                dialog.setMessage("Proceed successfully");
-                dialog.setNegativeButton("OK", null);
-                dialog.show();
+        FirebaseFirestore.getInstance().collection("Products")
+                .document(product.getProductKey()).update(updateReserveProduct).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        dialog = new MaterialAlertDialogBuilder(mActivity);
+                        dialog.setTitle("Message");
+                        dialog.setMessage("Proceed successfully");
+                        dialog.setNegativeButton("OK", null);
+                        dialog.show();
 
-            }
-        });
+                    }
+                });
 
 
     }
@@ -185,13 +161,11 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         return mManageProductList.size();
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvProductName;
         private final TextView mTvProductDescription;
         private final TextView mTvProductPrice;
-//        private final TextView mTvGuestName;
-//        private final TextView mTvGuestPhoneNo;
         private final TextView mTvProductSoldMsg;
         private final ImageView mImageView;
         private final MaterialButton mBtnEditProduct;
@@ -204,8 +178,6 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             mTvProductName = itemView.findViewById(R.id.tv_product_name);
             mTvProductDescription = itemView.findViewById(R.id.tv_product_desc);
             mTvProductPrice = itemView.findViewById(R.id.tv_product_price);
-//            mTvGuestName = itemView.findViewById(R.id.tv_guest_name);
-//            mTvGuestPhoneNo = itemView.findViewById(R.id.tv_guest_number);
             mTvProductSoldMsg = itemView.findViewById(R.id.tv_product_sold_msg);
 
             mImageView = itemView.findViewById(R.id.iv_product);

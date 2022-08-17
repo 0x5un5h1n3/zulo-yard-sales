@@ -87,24 +87,24 @@ public class ProfileEditFragment extends Fragment {
                 String address = mAddress.getText().toString().trim();
 
 
-                if (userName.isEmpty()){
+                if (userName.isEmpty()) {
                     Toast.makeText(getActivity(), "Display name is empty", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
                 }
 
-                if (phoneNo.isEmpty()){
+                if (phoneNo.isEmpty()) {
                     Toast.makeText(getActivity(), "Phone number is empty", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
                 }
-                if (address.isEmpty()){
+                if (address.isEmpty()) {
                     Toast.makeText(getActivity(), "address is empty", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
                 }
 
-                if (10 > phoneNo.length()){
+                if (10 > phoneNo.length()) {
                     Toast.makeText(getActivity(), "Invalid phone number", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
@@ -120,26 +120,25 @@ public class ProfileEditFragment extends Fragment {
         updatedProfileData.put("username", userName);
         updatedProfileData.put("phoneNumber", phoneNo);
         updatedProfileData.put("address", address);
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(updatedProfileData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                mDialog.cancel();
-//                finish();
-//                Toast.makeText(getActivity(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
-                dialog = new MaterialAlertDialogBuilder(getActivity());
-                dialog.setTitle("Message");
-                dialog.setMessage("Profile Updated Successfully");
-                dialog.setNegativeButton("OK", null);
-                dialog.show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                mDialog.cancel();
-                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(updatedProfileData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        mDialog.cancel();
+                        dialog = new MaterialAlertDialogBuilder(getActivity());
+                        dialog.setTitle("Message");
+                        dialog.setMessage("Profile Updated Successfully");
+                        dialog.setNegativeButton("OK", null);
+                        dialog.show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        mDialog.cancel();
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                    }
+                });
     }
 
     private void getCurrentUserDataFromFirebase() {
@@ -147,12 +146,10 @@ public class ProfileEditFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 UserDetail userDetail = documentSnapshot.toObject(UserDetail.class);
-                if (userDetail != null){
+                if (userDetail != null) {
 
                     mProfileIcon.setText(String.valueOf(documentSnapshot.getString("username").charAt(0)));
-//                profileIcon.setText(String.valueOf(username.getText().charAt(0)));
                     mDisplayName.setText(documentSnapshot.getString("username"));
-
 
                     mUsername.setText(userDetail.getUsername());
                     mPhoneNo.setText(userDetail.getPhoneNumber());

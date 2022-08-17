@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.DashboardFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewTransactions"
+            android:layout_width="156dp"
+            android:layout_height="345dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#F4AD43"
+            android:paddingTop="120dp"
+            android:paddingBottom="100dp"
+            android:text="View Transaction History"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/img_dash_transactions"
+            app:iconGravity="top"
+            app:iconSize="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSearchYardSaleItems"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddYardSale"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSearchYardSaleItems"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#FF6358"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="Search Yard Sales Items"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/img_dash_search"
+            app:iconGravity="top"
+            app:iconSize="45dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnViewTransactions"
+            app:layout_constraintTop_toBottomOf="@+id/btnManageYardSaleProducts" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFindYardSalesOnMap"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#B032E7"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="Find Yard Sales near you"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/img_dash_find_sale"
+            app:iconGravity="top"
+            app:iconSize="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnViewTransactions"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearchYardSaleItems"
+            app:layout_constraintVertical_bias="0.026" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManageYardSaleProducts"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#2382CD"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="Manage Your Yard Sale Items"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/img_dash_manage"
+            app:iconGravity="top"
+            app:iconSize="45dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAddYardSale"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddYardSale"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#5DAE60"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="Add New Yard Sale Item"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/img_dash_add_sale"
+            app:iconGravity="top"
+            app:iconSize="45dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnManageYardSaleProducts"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

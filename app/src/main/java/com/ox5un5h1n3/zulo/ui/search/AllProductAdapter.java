@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textview.MaterialTextView;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 
@@ -29,25 +28,8 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
 
     public static List<Product> mProductList;
     public static int getPosition;
-    private Activity mActivity;
-
-    private MaterialTextView mProductName;
-    private MaterialTextView mProductPrice;
-    private MaterialTextView mProductDescription;
-    private ImageView mProductImage;
     MaterialAlertDialogBuilder dialog;
-
-    private MaterialTextView mSellerName;
-    private MaterialTextView mSellerAddress;
-    private MaterialTextView mSellerMo;
-
-//    Product product;
-
-    public void setFilteredSearchList(List<Product> filteredList){
-        this.mProductList = filteredList;
-        notifyDataSetChanged();
-    }
-
+    private Activity mActivity;
 
     // getting list from the constructor
     public AllProductAdapter(List<Product> productList, Activity activity) {
@@ -55,8 +37,10 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
         mActivity = activity;
     }
 
-    public AllProductAdapter() {
 
+    public void setFilteredSearchList(List<Product> filteredList) {
+        this.mProductList = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -85,34 +69,30 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
 
                 getPosition = position;
 
-
-
-
-
-                        Navigation.findNavController(view).navigate(R.id.action_navigation_search_main_to_search_item_details);
-
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_main_to_search_item_details);
 
 
             }
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return mProductList.size();
     }
 
-    public static class MyAllProductViewHolder extends RecyclerView.ViewHolder{
+    public void addNewList(List<Product> mNewProductList) {
+        mProductList = mNewProductList;
+        notifyDataSetChanged();
+    }
+
+    public static class MyAllProductViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvProductName;
         private final TextView mTvProductDesc;
         private final TextView mTvProductPrice;
         private final ImageView mImageView;
         private final MaterialCardView cvProduct;
-
-
 
 
         public MyAllProductViewHolder(@NonNull @NotNull View itemView) {
@@ -123,9 +103,5 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductAdapter.My
             mImageView = itemView.findViewById(R.id.iv_product);
             cvProduct = itemView.findViewById(R.id.cv_product);
         }
-    }
-    public void addNewList(List<Product> mNewProductList){
-        mProductList = mNewProductList;
-        notifyDataSetChanged();
     }
 }

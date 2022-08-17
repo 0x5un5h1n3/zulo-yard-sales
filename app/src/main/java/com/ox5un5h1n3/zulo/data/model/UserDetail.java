@@ -7,7 +7,8 @@ public class UserDetail {
     private String phoneNumber;
     private String address;
 
-    public UserDetail() {}
+    public UserDetail() {
+    }
 
     public UserDetail(String username, String email, String userUid, String phoneNumber, String address) {
         this.username = username;

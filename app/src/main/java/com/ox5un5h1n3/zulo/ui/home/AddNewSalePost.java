@@ -1,21 +1,14 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
+import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLat;
+import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLng;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,11 +18,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,12 +50,6 @@ import com.google.firebase.storage.UploadTask;
 import com.ox5un5h1n3.zulo.R;
 import com.ox5un5h1n3.zulo.data.model.Product;
 import com.ox5un5h1n3.zulo.data.model.UserDetail;
-import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLat;
-import static com.ox5un5h1n3.zulo.ui.home.MapActivity.currentLng;
-
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-
 
 import java.util.Objects;
 
@@ -61,7 +58,7 @@ public class AddNewSalePost extends Fragment {
 
     FirebaseFirestore firestore;
     FirebaseStorage firebaseStorage;
-
+    MaterialAlertDialogBuilder dialog;
     private EditText mProductName;
     private EditText mProductPrice;
     private EditText mProductDescription;
@@ -72,15 +69,8 @@ public class AddNewSalePost extends Fragment {
     private ImageView mIvProduct;
     private double lat = 0.0;
     private double lng = 0.0;
-
     private ProgressDialog mDialog;
-    MaterialAlertDialogBuilder dialog;
     private Uri uri;
-    private String ownerName;
-
-    private InterstitialAd mInterstitialAd;
-
-
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), imageUri -> {
                 if (imageUri != null) {
@@ -88,6 +78,8 @@ public class AddNewSalePost extends Fragment {
                     mIvProduct.setImageURI(imageUri);
                 }
             });
+    private String ownerName;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,29 +91,22 @@ public class AddNewSalePost extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard_new_item, container, false);
+        return inflater.inflate(R.layout.fragment_home_new_item, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = firebaseDatabase.getReference();
-
-
         mProductName = view.findViewById(R.id.et_product_name);
         mProductPrice = view.findViewById(R.id.et_product_price);
         mProductDescription = view.findViewById(R.id.et_product_desc);
         mSubmit = view.findViewById(R.id.btnSubmitPost);
         mOpenCam = view.findViewById(R.id.btnOpenCamera);
-//        mTakePicture = view.findViewById(R.id.btnUpdateProfile);
-
         mTvChooseImage = view.findViewById(R.id.tv_choose_image);
         mIvProduct = view.findViewById(R.id.imageiewProduct);
 
-
-        mDialog = new ProgressDialog(getContext());//Recheck
+        mDialog = new ProgressDialog(getContext());
         mDialog.setMessage("Adding Product");
         mDialog.setCancelable(false);
 
@@ -136,7 +121,7 @@ public class AddNewSalePost extends Fragment {
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 5);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 5);
                 } else {
                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                     startActivity(intent);
@@ -145,24 +130,26 @@ public class AddNewSalePost extends Fragment {
 
         });
 
-        //admob ads
+        //initialize AdMob Interstitial ad
         MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(getActivity(),"ca-app-pub-3940256099942544/1033173712", adRequest, //sample ad
+//        InterstitialAd.load(getActivity(),"ca-app-pub-8130491741259680/1133559948", adRequest, //original ad
+        InterstitialAd.load(getActivity(), "ca-app-pub-3940256099942544/1033173712", adRequest, //sample ad
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
+                        // The mInterstitialAd reference will be null until an ad is loaded.
                         mInterstitialAd = interstitialAd;
                     }
 
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
                         mInterstitialAd = null;
                     }
                 });
@@ -178,8 +165,7 @@ public class AddNewSalePost extends Fragment {
                 }
 
             }
-        },1500);
-
+        }, 1500);
 
 
     }
@@ -215,11 +201,9 @@ public class AddNewSalePost extends Fragment {
         });
     }
 
-    private void getPreviousScreenCurrentLocation(){
+    private void getPreviousScreenCurrentLocation() {
         lat = currentLat;
         lng = currentLng;
-//        lat = getIntent().getExtras().getDouble("lat");
-//        lng = getIntent().getExtras().getDouble("lng");
     }
 
     private void submitProductData() {
@@ -251,15 +235,16 @@ public class AddNewSalePost extends Fragment {
                     return;
                 }
 
-                if (uri == null){
+                if (uri == null) {
                     Toast.makeText(getActivity(), "Product image is empty", Toast.LENGTH_SHORT).show();
                     mDialog.cancel();
                     return;
-                }else{
+                } else {
 
                 }
                 mDialog.setMessage("Uploading product image");
-                final StorageReference ref = FirebaseStorage.getInstance().getReference().child("UserProfile/" + System.currentTimeMillis());
+                final StorageReference ref = FirebaseStorage.getInstance().getReference()
+                        .child("UserProfile/" + System.currentTimeMillis());
                 UploadTask uploadTask = ref.putFile(uri);
                 uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
@@ -269,7 +254,7 @@ public class AddNewSalePost extends Fragment {
                             return ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Product product = new Product(pKey, pUid, pName, pPrice, pDescription, lat, lng, false, false, uri.toString(),"","","", ownerName, true);
+                                    Product product = new Product(pKey, pUid, pName, pPrice, pDescription, lat, lng, false, false, uri.toString(), "", "", "", ownerName, true);
                                     uploadUserData(product);
                                 }
                             });
@@ -283,27 +268,27 @@ public class AddNewSalePost extends Fragment {
     }
 
     private void uploadUserData(Product product) {
-        FirebaseFirestore.getInstance().collection("Products").document(product.getProductKey()).set(product).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                mDialog.cancel();
-//                startActivity(new Intent(AddProductActivity.this, HomeActivity.class));
-//                finish();
-//                Toast.makeText(getActivity(), "Product Added Successfully", Toast.LENGTH_SHORT).show();
-                dialog = new MaterialAlertDialogBuilder(getActivity());
-                dialog.setTitle("Message");
-                dialog.setMessage("Product Added Successfully");
-                dialog.setNegativeButton("OK", null);
-                dialog.show();
-                assert getParentFragment() != null;
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                mDialog.cancel();
-                Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+        FirebaseFirestore.getInstance().collection("Products")
+                .document(product.getProductKey()).set(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        mDialog.cancel();
 
+                        dialog = new MaterialAlertDialogBuilder(getActivity());
+                        dialog.setTitle("Message");
+                        dialog.setMessage("Product Added Successfully");
+                        dialog.setNegativeButton("OK", null);
+                        dialog.show();
+
+                        assert getParentFragment() != null;
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        mDialog.cancel();
+                        Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }

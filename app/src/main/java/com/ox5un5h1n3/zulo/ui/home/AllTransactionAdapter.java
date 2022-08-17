@@ -1,7 +1,6 @@
 package com.ox5un5h1n3.zulo.ui.home;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class AllTransactionAdapter extends RecyclerView.Adapter<AllTransactionAd
         holder.mTvReservedByName.setText("Reserved by : " + product.getCustomerName());
         Glide.with(holder.itemView).load(product.getProductImage()).into(holder.mImageView);
 
-        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_three));
+        holder.itemView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.anim_recycleview));
     }
 
     @Override
@@ -61,7 +60,7 @@ public class AllTransactionAdapter extends RecyclerView.Adapter<AllTransactionAd
         notifyDataSetChanged();
     }
 
-    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder{
+    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvProductName;
         private final TextView mTvProductPrice;

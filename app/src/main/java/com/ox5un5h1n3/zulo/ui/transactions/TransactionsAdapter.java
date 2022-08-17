@@ -54,7 +54,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         return mTransactionList.size();
     }
 
-    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder{
+    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvProductName;
         private final TextView mTvProductPrice;

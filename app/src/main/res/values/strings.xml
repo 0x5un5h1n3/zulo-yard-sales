@@ -26,11 +26,10 @@
     <string name="title_transactions">Transactions</string>
     <string name="title_profile">Profile</string>
 
+    <!-- Other -->
     <string name="action_logout">Logout</string>
     <string name="action_forgot_pass">Forgot password</string>
+
     <string name="web_client_id">759023485238-1812lsc5tk6dfoqb404ss22q32ci0c7t.apps.googleusercontent.com</string>
-
-    <string name="direction_api_key">AIzaSyAmk1mM-v09GAzWj3_0S18La5TwFfmIwZY</string>
-
 
 </resources>
