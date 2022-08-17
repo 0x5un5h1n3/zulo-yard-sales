@@ -30,7 +30,7 @@ public class AllTransactionsFragment extends Fragment {
 
     private final List<Product> mListOfTransactions = new ArrayList<>();
     private RecyclerView mTransactionsRecycler;
-    private AllTransactionAdapter mTransactionAdapter;
+    private AllTransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
     private TextView mTransactionsCount;
 
@@ -119,7 +119,7 @@ public class AllTransactionsFragment extends Fragment {
 
                                 }
                             }
-                            mTransactionAdapter = new AllTransactionAdapter(mListOfTransactions);
+                            mTransactionAdapter = new AllTransactionsAdapter(mListOfTransactions);
                             mTransactionsRecycler.setAdapter(mTransactionAdapter);
 
 

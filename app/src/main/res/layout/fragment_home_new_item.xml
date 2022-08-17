@@ -38,7 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_product_desc_layout" />
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_product_name_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -96,7 +95,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <Button
         android:id="@+id/btnSubmitPost"
         android:layout_width="wrap_content"
@@ -108,6 +106,5 @@
         app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toEndOf="@+id/btnOpenCamera"
         app:layout_constraintTop_toBottomOf="@+id/et_product_desc_layout" />
-
 
 </LinearLayout>

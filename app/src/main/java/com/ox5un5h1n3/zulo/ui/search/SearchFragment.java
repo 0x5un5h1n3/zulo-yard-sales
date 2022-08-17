@@ -36,7 +36,7 @@ public class SearchFragment extends Fragment {
     private MaterialButton mBtnSearch;
     private MaterialButton mBtnReset;
     private LottieAnimationView lottieAnimationView;
-    private AllProductAdapter mAllProductAdapter;
+    private AllProductsAdapter mAllProductAdapter;
     private List<Product> mProductList = new ArrayList<>();
     private List<Product> productList;
 
@@ -121,7 +121,7 @@ public class SearchFragment extends Fragment {
 //                                makeList(products);
 
                             }
-                            mAllProductAdapter = new AllProductAdapter(mProductList, getActivity());
+                            mAllProductAdapter = new AllProductsAdapter(mProductList, getActivity());
                             mProductRecycler.setAdapter(mAllProductAdapter);
 
                             lottieAnimationView.setVisibility(View.GONE);

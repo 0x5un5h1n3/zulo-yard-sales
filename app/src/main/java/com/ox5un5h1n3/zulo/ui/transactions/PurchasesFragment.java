@@ -32,7 +32,7 @@ public class PurchasesFragment extends Fragment {
     private RecyclerView mTransactionsRecycler;
     private TransactionsAdapter mTransactionAdapter;
     private LottieAnimationView lottieAnimationView;
-    private TextView mTransactionsCount;
+    private TextView mTransactionsCount, mTransactionsTotal;
 
     public PurchasesFragment() {
         // Required empty public constructor
@@ -57,6 +57,7 @@ public class PurchasesFragment extends Fragment {
         lottieAnimationView = view.findViewById(R.id.lottie_loading);
         lottieAnimationView.setAnimation(R.raw.loading);
         mTransactionsCount = view.findViewById(R.id.tv_transaction_count);
+        mTransactionsTotal = view.findViewById(R.id.tv_transaction_total);
 
         getTransactions();
     }
@@ -71,6 +72,7 @@ public class PurchasesFragment extends Fragment {
                             lottieAnimationView.setVisibility(View.GONE);
                             mTransactionsRecycler.setVisibility(View.VISIBLE);
                             mTransactionsCount.setVisibility(View.VISIBLE);
+                            mTransactionsTotal.setVisibility(View.VISIBLE);
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Product products = document.toObject(Product.class);
@@ -81,6 +83,14 @@ public class PurchasesFragment extends Fragment {
 
                                         int count = mListOfTransactions.size();
                                         mTransactionsCount.setText("Purchase Count: " + count);
+
+                                        double total = 0;
+
+                                        for(Product product: mListOfTransactions){
+                                            double value = product.getProductPrice();
+                                            total += value;
+                                            mTransactionsTotal.setText("You have spent: $ " + total);
+                                        }
 
                                     }
                                 }
