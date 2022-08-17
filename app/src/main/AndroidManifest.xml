@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,9 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zulo"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.home.MapActivity"
-            android:exported="false" />
+
+        <receiver android:name=".BroadcastReceiver.NotificationReminderBroadcast" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -33,7 +35,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8130491741259680~2091418396" />
 
-
+        <activity
+            android:name=".ui.home.MapActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false"

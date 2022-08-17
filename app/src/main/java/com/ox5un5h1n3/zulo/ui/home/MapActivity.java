@@ -161,7 +161,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 dialog = new MaterialAlertDialogBuilder(MapActivity.this);
                 dialog.setTitle(mProductList.get(i).getProductName());
                 dialog.setMessage("Description: " + mProductList.get(i).getProductDescription()
-                        + newLine + "Price: " + mProductList.get(i).getProductPrice());
+                        + newLine + "Price: $" + mProductList.get(i).getProductPrice());
                 dialog.setNegativeButton("Cancel", null);
                 dialog.show();
                 break;

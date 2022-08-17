@@ -65,7 +65,7 @@ public class ProfileTransactionsAdapter extends RecyclerView.Adapter<ProfileTran
         notifyDataSetChanged();
     }
 
-    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder{
+    public static class MyAllTransactionViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvProductName;
         private final TextView mTvProductPrice;
